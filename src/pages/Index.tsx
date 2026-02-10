@@ -1,34 +1,40 @@
-import Header from "@/components/Header";
-import HeroSection from "@/components/HeroSection";
-import StatsSection from "@/components/StatsSection";
-import ServicesSection from "@/components/ServicesSection";
-import CommunityImpactSection from "@/components/CommunityImpactSection";
-import AboutSection from "@/components/AboutSection";
-import TrustSection from "@/components/TrustSection";
-import PricingSection from "@/components/PricingSection";
-import FutureSection from "@/components/FutureSection";
-import ContactSection from "@/components/ContactSection";
-import Footer from "@/components/Footer";
-import WhatsAppButton from "@/components/WhatsAppButton";
-import ScrollToTop from "@/components/ScrollToTop";
+import Navbar from "@/components/Navbar";
+import Hero from "@/components/Hero";
+import KenteStrip from "@/components/KenteStrip";
+import Stats from "@/components/Stats";
+import Services from "@/components/Services";
+import About from "@/components/About";
+import Team from "@/components/Team";
+import Testimonials from "@/components/Testimonials";
+import Future from "@/components/Future";
+import Contact from "@/components/Contact";
+import FooterNew from "@/components/FooterNew";
+import WhatsAppButtonNew from "@/components/WhatsAppButtonNew";
+import ScrollToTopNew from "@/components/ScrollToTopNew";
 
 const Index = () => (
-  <div className="min-h-screen bg-background">
-    <Header />
+  <div className="min-h-screen bg-bg-dark">
+    <Navbar />
     <main>
-      <HeroSection />
-      <StatsSection />
-      <ServicesSection />
-      <CommunityImpactSection />
-      <AboutSection />
-      <TrustSection />
-      <PricingSection />
-      <FutureSection />
-      <ContactSection />
+      <Hero />
+      <KenteStrip />
+      <Stats />
+      <KenteStrip />
+      <Services />
+      <KenteStrip />
+      <About />
+      <KenteStrip />
+      <Team />
+      <KenteStrip />
+      <Testimonials />
+      <KenteStrip />
+      <Future />
+      <KenteStrip />
+      <Contact />
     </main>
-    <Footer />
-    <WhatsAppButton />
-    <ScrollToTop />
+    <FooterNew />
+    <WhatsAppButtonNew />
+    <ScrollToTopNew />
   </div>
 );
 

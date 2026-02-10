@@ -15,7 +15,7 @@ export default {
     extend: {
       fontFamily: {
         heading: ['"Playfair Display"', 'serif'],
-        body: ['"DM Sans"', 'sans-serif'],
+        body: ['"Inter"', 'sans-serif'],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -51,6 +51,22 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        // Custom project colors
+        "bg-dark": "#0A0A0F",
+        "bg-card": "#12121A",
+        "bg-elevated": "#1A1A25",
+        "warm-cream": "#FFFBF0",
+        "warm-cream-dark": "#F5EFE0",
+        "teal-primary": "#2DD4A8",
+        "teal-glow": "#14B88E",
+        "amber-accent": "#F5A623",
+        "terracotta": "#D4654A",
+        "rose-accent": "#E8526E",
+        "text-primary": "#F0EDE6",
+        "text-secondary": "#9B9BA3",
+        "text-dark": "#1A1A25",
+        "glass-border": "rgba(255,255,255,0.08)",
+        "glass-bg": "rgba(255,255,255,0.04)",
         charcoal: "hsl(var(--charcoal))",
         cream: "hsl(var(--cream))",
         "dusty-rose": "hsl(var(--dusty-rose))",
