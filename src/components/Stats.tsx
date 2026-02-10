@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { useCountUp } from "@/hooks/useCountUp";
 
 const DATA = [
-  { end: 5, suffix: "+", label: "Years Serving" },
+  { end: 13, suffix: "+", label: "Years Serving" },
   { end: 8, suffix: "", label: "Core Services" },
   { end: 3, suffix: "", label: "Clinic Locations" },
   { end: 10000, suffix: "+", label: "Patients Treated" },

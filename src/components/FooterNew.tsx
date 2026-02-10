@@ -64,7 +64,7 @@ const FooterNew = () => (
     </div>
 
     <div className="container max-w-6xl mt-12 pt-8 border-t border-glass-border flex flex-col sm:flex-row justify-between items-center gap-2">
-      <p className="text-xs text-text-secondary/60">© 2025 Lynda Michelle Medical Centre Ltd. All rights reserved.</p>
+      <p className="text-xs text-text-secondary/60">© 2026 Lynda Michelle Medical Centre Ltd. All rights reserved.</p>
       <p className="text-xs text-text-secondary/40">Built with care for our community</p>
     </div>
   </footer>

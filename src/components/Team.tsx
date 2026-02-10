@@ -1,32 +1,35 @@
 import { motion } from "framer-motion";
+import joshuaImg from "@/assets/team-joshua.jpeg";
+import jenniferImg from "@/assets/team-jennifer.jpeg";
+import lydiaImg from "@/assets/team-lydia.jpeg";
 
 const MEMBERS = [
   {
     name: "Dr. Joshua Tugumisirize",
-    role: "Medical Director",
+    role: "Director & Medical Doctor",
     color: "text-teal-primary",
-    gradient: "from-teal-primary/30 to-teal-glow/20",
     bio: "Leading clinical excellence and community health strategy.",
     initials: "JT",
     size: "w-40 h-40 md:w-56 md:h-56",
+    image: joshuaImg,
   },
   {
-    name: "Jenipher Nakyejjusa",
+    name: "Jennifer Nakyejjusa",
     role: "Registered Midwife",
     color: "text-amber-accent",
-    gradient: "from-amber-accent/30 to-terracotta/20",
     bio: "Providing compassionate maternal and reproductive care.",
     initials: "JN",
     size: "w-48 h-48 md:w-64 md:h-64",
+    image: jenniferImg,
   },
   {
     name: "Lydia Tugumisirize",
-    role: "Senior Nurse",
+    role: "Founder & Senior Midwife",
     color: "text-rose-accent",
-    gradient: "from-rose-accent/30 to-amber-accent/20",
     bio: "Dedicated nursing care with a personal touch.",
     initials: "LT",
     size: "w-40 h-40 md:w-56 md:h-56",
+    image: lydiaImg,
   },
 ];
 
@@ -58,9 +61,9 @@ const Team = () => (
             style={{ marginLeft: i > 0 ? "-1.5rem" : 0, zIndex: i === 1 ? 10 : 5 - i }}
           >
             <div
-              className={`${m.size} rounded-full overflow-hidden border-4 border-bg-card bg-gradient-to-br ${m.gradient} flex items-center justify-center relative transition-all duration-500 group-hover:scale-110 group-hover:z-50 group-hover:shadow-[0_0_40px_rgba(45,212,168,0.2)]`}
+              className={`${m.size} rounded-full overflow-hidden border-4 border-bg-card relative transition-all duration-500 group-hover:scale-110 group-hover:z-50 group-hover:shadow-[0_0_40px_rgba(45,212,168,0.2)]`}
             >
-              <span className="font-heading text-3xl md:text-4xl font-bold text-white/30">{m.initials}</span>
+              <img src={m.image} alt={m.name} className="w-full h-full object-cover" loading="lazy" />
             </div>
           </motion.div>
         ))}

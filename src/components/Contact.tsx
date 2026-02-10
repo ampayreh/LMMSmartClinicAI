@@ -67,12 +67,18 @@ const Contact = () => {
               </div>
             </div>
 
-            {/* Map placeholder */}
-            <div className="mt-8 rounded-2xl aspect-video bg-bg-elevated border border-glass-border flex items-center justify-center">
-              <div className="text-center text-text-secondary/30">
-                <MapPin className="w-8 h-8 mx-auto mb-2" />
-                <span className="text-sm">Map</span>
-              </div>
+            {/* Google Map */}
+            <div className="mt-8 rounded-2xl aspect-video overflow-hidden border border-glass-border">
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3989.7!2d32.45!3d0.25!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2sBudo-Kimbejja%2C+Nsangi%2C+Wakiso+District%2C+Uganda!5e0!3m2!1sen!2sug!4v1700000000000"
+                width="100%"
+                height="100%"
+                style={{ border: 0 }}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                title="Lynda Michelle Medical Centre Location"
+              />
             </div>
           </motion.div>
 

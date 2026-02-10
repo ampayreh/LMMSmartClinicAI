@@ -1,10 +1,13 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
+import joshuaImg from "@/assets/team-joshua.jpeg";
+import jenniferImg from "@/assets/team-jennifer.jpeg";
+import lydiaImg from "@/assets/team-lydia.jpeg";
 
 const TEAM = [
-  { name: "Dr. Joshua Tugumisirize", role: "Medical Director", initials: "JT", gradient: "from-primary to-secondary" },
-  { name: "Jenipher Nakyejjusa", role: "Registered Nurse", initials: "JN", gradient: "from-secondary to-accent" },
-  { name: "Lydia Tugumisirize", role: "Senior Midwife", initials: "LT", gradient: "from-accent to-dusty-rose" },
+  { name: "Dr. Joshua Tugumisirize", role: "Director & Medical Doctor", initials: "JT", image: joshuaImg },
+  { name: "Jennifer Nakyejjusa", role: "Registered Midwife", initials: "JN", image: jenniferImg },
+  { name: "Lydia Tugumisirize", role: "Founder & Senior Midwife", initials: "LT", image: lydiaImg },
 ];
 
 const TeamSection = () => {
@@ -39,9 +42,9 @@ const TeamSection = () => {
               <motion.div
                 animate={{ scale: hovered === i ? 1.15 : 1 }}
                 transition={{ type: "spring", stiffness: 300 }}
-                className={`relative flex h-28 w-28 sm:h-36 sm:w-36 items-center justify-center rounded-full bg-gradient-to-br ${member.gradient} shadow-lg border-4 border-background`}
+                className="relative flex h-28 w-28 sm:h-36 sm:w-36 items-center justify-center rounded-full shadow-lg border-4 border-background overflow-hidden"
               >
-                <span className="font-heading text-2xl sm:text-3xl font-bold text-white">{member.initials}</span>
+                <img src={member.image} alt={member.name} className="w-full h-full object-cover" loading="lazy" />
               </motion.div>
               <motion.div
                 initial={{ opacity: 0, height: 0 }}
