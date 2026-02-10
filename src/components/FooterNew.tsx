@@ -1,3 +1,5 @@
+import { Facebook, Instagram } from "lucide-react";
+
 const QUICK_LINKS = [
   { label: "Services", href: "#services" },
   { label: "About Us", href: "#about" },
@@ -20,16 +22,22 @@ const FooterNew = () => (
     <div className="container max-w-6xl grid grid-cols-1 md:grid-cols-4 gap-12">
       <div>
         <div className="flex items-center gap-2 mb-3">
-          <span className="text-xl font-heading font-[800] text-teal-primary">LM</span>
+          <span className="text-xl font-heading font-[800] text-teal-primary">LMM</span>
           <span className="text-lg font-semibold text-text-primary">Lynda Michelle</span>
         </div>
         <p className="text-sm text-text-secondary leading-relaxed">
           Providing compassionate, accessible healthcare to families in Wakiso District, Uganda.
         </p>
-        <div className="mt-6 flex gap-2">
-          {[1, 2, 3].map((i) => (
-            <div key={i} className="w-9 h-9 rounded-full bg-white/5 border border-white/10 hover:bg-teal-primary/20 hover:border-teal-primary/30 transition-all" />
-          ))}
+        <div className="mt-6 flex gap-3">
+          <a href="#" aria-label="Facebook" className="w-9 h-9 rounded-full bg-white/5 border border-white/10 hover:bg-teal-primary/20 hover:border-teal-primary/30 transition-all flex items-center justify-center">
+            <Facebook className="w-4 h-4 text-text-secondary" />
+          </a>
+          <a href="#" aria-label="X (Twitter)" className="w-9 h-9 rounded-full bg-white/5 border border-white/10 hover:bg-teal-primary/20 hover:border-teal-primary/30 transition-all flex items-center justify-center">
+            <svg className="w-4 h-4 text-text-secondary" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          </a>
+          <a href="#" aria-label="Instagram" className="w-9 h-9 rounded-full bg-white/5 border border-white/10 hover:bg-teal-primary/20 hover:border-teal-primary/30 transition-all flex items-center justify-center">
+            <Instagram className="w-4 h-4 text-text-secondary" />
+          </a>
         </div>
       </div>
 
