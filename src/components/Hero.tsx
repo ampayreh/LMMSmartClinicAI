@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { ChevronDown } from "lucide-react";
+import heroImage from "@/assets/hero-consultation.png";
 
 const HEADLINE = "Compassionate Healthcare for Every Family";
 const BLOBS = [
@@ -96,14 +97,8 @@ const Hero = () => (
         transition={{ delay: 0.8, duration: 1 }}
         className="hidden lg:block relative"
       >
-        <div className="relative w-full aspect-square max-w-md mx-auto rounded-3xl overflow-hidden bg-gradient-to-br from-teal-primary/20 via-amber-accent/10 to-rose-accent/15">
-          {/* Spinning ring */}
-          <div className="absolute w-[110%] h-[110%] -top-[5%] -left-[5%] rounded-full border-2 border-dashed border-teal-primary/15 animate-[spin_30s_linear_infinite]" />
-          {/* Medical cross */}
-          <svg className="absolute inset-0 m-auto w-24 h-24 text-white/10" viewBox="0 0 100 100" fill="currentColor">
-            <rect x="35" y="10" width="30" height="80" rx="4" />
-            <rect x="10" y="35" width="80" height="30" rx="4" />
-          </svg>
+        <div className="relative w-full aspect-[4/3] max-w-lg mx-auto rounded-3xl overflow-hidden">
+          <img src={heroImage} alt="Doctor consulting with a mother and child at Lynda Michelle Medical Centre" className="w-full h-full object-cover" />
           {/* Badge */}
           <div className="absolute bottom-4 right-4 bg-white/10 backdrop-blur-md border border-white/10 rounded-2xl px-4 py-3 text-center">
             <span className="block text-2xl font-bold text-teal-primary">10,000+</span>
