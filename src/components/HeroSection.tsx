@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { Phone, MessageCircle, MapPin } from "lucide-react";
 
 const charVariant = {
   hidden: { opacity: 0, y: 20 },
@@ -9,14 +10,13 @@ const charVariant = {
   }),
 };
 
-const headline = "Compassionate Healthcare for Every Family";
+const headline = "Family-Centered Healthcare for Every Stage of Life";
 
 const HeroSection = () => (
   <section className="relative min-h-screen">
     <div className="flex flex-col-reverse lg:flex-row min-h-screen">
       {/* Left — Text */}
       <div className="relative flex flex-col justify-center bg-charcoal px-6 py-16 lg:w-[45%] lg:px-12 xl:px-20 lg:py-24">
-        {/* Kente stripe */}
         <div className="kente-stripe absolute top-0 left-0 right-0 h-2" />
 
         <motion.h1
@@ -38,7 +38,7 @@ const HeroSection = () => (
           transition={{ delay: 2, duration: 0.6 }}
           className="mt-6 max-w-md text-base leading-relaxed text-white/70 sm:text-lg"
         >
-          Serving the Budo-Kimbejja community with accessible, quality medical care since 2019
+          Affordable, compassionate, and respectful care for women, children, and the wider community in Buddo-Kimbejja, Wakiso District.
         </motion.p>
 
         <motion.div
@@ -48,16 +48,29 @@ const HeroSection = () => (
           className="mt-8 flex flex-wrap gap-3"
         >
           <a
-            href="#services"
-            className="rounded-full bg-primary px-7 py-3 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90"
+            href="https://wa.me/256702322356"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 rounded-full bg-primary px-7 py-3 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90"
           >
-            Explore Our Services
+            <MessageCircle className="h-4 w-4" />
+            WhatsApp Us
           </a>
           <a
-            href="#contact"
-            className="rounded-full border border-white/30 px-7 py-3 text-sm font-semibold text-white transition-colors hover:bg-white/10"
+            href="tel:+256702322356"
+            className="inline-flex items-center gap-2 rounded-full border border-white/30 px-7 py-3 text-sm font-semibold text-white transition-colors hover:bg-white/10"
           >
-            Contact Us
+            <Phone className="h-4 w-4" />
+            Call Now
+          </a>
+          <a
+            href="https://maps.google.com/?q=Budo-Kimbejja,+Nsangi,+Wakiso+District,+Uganda"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 rounded-full border border-white/30 px-7 py-3 text-sm font-semibold text-white transition-colors hover:bg-white/10"
+          >
+            <MapPin className="h-4 w-4" />
+            Get Directions
           </a>
         </motion.div>
 
@@ -67,15 +80,14 @@ const HeroSection = () => (
           transition={{ delay: 2.6, duration: 0.6 }}
           className="mt-10 flex flex-wrap gap-x-4 gap-y-2 text-xs text-white/50"
         >
-          <span>✦ Licensed by Uganda Medical Council</span>
-          <span>✦ Marie Stopes Partner</span>
+          <span>✦ Licensed Health Unit</span>
+          <span>✦ Experienced Team</span>
           <span>✦ Est. 2019</span>
         </motion.div>
       </div>
 
       {/* Right — Image placeholder with gradient mesh */}
       <div className="relative flex items-center justify-center bg-cream lg:w-[55%] min-h-[50vh] lg:min-h-0 overflow-hidden">
-        {/* Gradient mesh background */}
         <div
           className="absolute inset-0"
           style={{
@@ -83,7 +95,6 @@ const HeroSection = () => (
               "radial-gradient(circle at 30% 40%, hsl(37 92% 50% / 0.25) 0%, transparent 50%), radial-gradient(circle at 70% 60%, hsl(178 80% 25% / 0.2) 0%, transparent 50%), radial-gradient(circle at 50% 80%, hsl(4 82% 80% / 0.2) 0%, transparent 45%)",
           }}
         />
-        {/* Morphing blobs */}
         {[0, 1, 2].map((i) => (
           <motion.div
             key={i}
@@ -106,12 +117,7 @@ const HeroSection = () => (
             transition={{ duration: 12, repeat: Infinity, ease: "easeInOut", delay: i * 2 }}
           />
         ))}
-        {/* Medical cross watermark */}
-        <svg
-          className="relative z-10 w-24 h-24 text-primary/10"
-          viewBox="0 0 100 100"
-          fill="currentColor"
-        >
+        <svg className="relative z-10 w-24 h-24 text-primary/10" viewBox="0 0 100 100" fill="currentColor">
           <rect x="35" y="10" width="30" height="80" rx="4" />
           <rect x="10" y="35" width="80" height="30" rx="4" />
         </svg>

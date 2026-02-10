@@ -1,12 +1,11 @@
 import { motion } from "framer-motion";
 import {
-  Stethoscope,
   Baby,
+  Stethoscope,
   FlaskConical,
   Syringe,
   Pill,
-  Scissors,
-  Users,
+  Heart,
   Home,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
@@ -23,11 +22,32 @@ interface Service {
 const SERVICES: Service[] = [
   {
     icon: Baby,
-    title: "Maternal & Reproductive Health",
-    desc: "Antenatal care, safe deliveries, post-abortion care, and family planning services partnered with Marie Stopes International.",
+    title: "Antenatal & Delivery Care",
+    desc: "Comprehensive pregnancy monitoring, safe deliveries by experienced midwives, and postnatal follow-up for mother and baby.",
     colSpan: "md:col-span-2",
     rowSpan: "md:row-span-2",
     featured: true,
+  },
+  {
+    icon: Heart,
+    title: "Family Planning",
+    desc: "Injectable contraceptives, IUD and implant insertions and removals, and reproductive health counselling.",
+    colSpan: "md:col-span-2",
+    rowSpan: "",
+  },
+  {
+    icon: Syringe,
+    title: "Immunization",
+    desc: "Child and adult vaccination following national health guidelines and schedules.",
+    colSpan: "",
+    rowSpan: "",
+  },
+  {
+    icon: FlaskConical,
+    title: "Laboratory & Diagnostics",
+    desc: "HIV, typhoid, syphilis, HCG, blood sugar testing and more — results the same day.",
+    colSpan: "",
+    rowSpan: "",
   },
   {
     icon: Stethoscope,
@@ -37,44 +57,16 @@ const SERVICES: Service[] = [
     rowSpan: "",
   },
   {
-    icon: FlaskConical,
-    title: "Laboratory & Diagnostics",
-    desc: "Comprehensive testing including HIV, typhoid, syphilis, HCG, and blood sugar.",
-    colSpan: "",
-    rowSpan: "",
-  },
-  {
-    icon: Syringe,
-    title: "Immunization",
-    desc: "Child and adult vaccination following national health guidelines.",
-    colSpan: "",
-    rowSpan: "",
-  },
-  {
     icon: Pill,
     title: "Pharmacy",
-    desc: "Prescription and over-the-counter medications available on-site.",
+    desc: "Prescription and over-the-counter medications available on-site at affordable prices.",
     colSpan: "md:col-span-2",
-    rowSpan: "",
-  },
-  {
-    icon: Scissors,
-    title: "Minor Surgery",
-    desc: "Wound care, abscess drainage, and other minor surgical procedures.",
-    colSpan: "",
-    rowSpan: "",
-  },
-  {
-    icon: Users,
-    title: "Community Health Education",
-    desc: "Health awareness programs and community outreach initiatives.",
-    colSpan: "",
     rowSpan: "",
   },
   {
     icon: Home,
     title: "Home-Based Care",
-    desc: "Domiciliary services for elderly and housebound patients.",
+    desc: "Domiciliary services for elderly and housebound patients in the community.",
     colSpan: "md:col-span-2",
     rowSpan: "",
   },
