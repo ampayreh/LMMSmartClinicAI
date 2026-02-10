@@ -1,6 +1,7 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { CheckCircle } from "lucide-react";
+import futureHospitalImage from "@/assets/future-hospital.png";
 
 const FEATURES = [
   "Inpatient Wards & Private Rooms",
@@ -68,7 +69,15 @@ const Future = () => {
         </motion.div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-          <HospitalSVG inView={inView} />
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="rounded-3xl overflow-hidden shadow-xl"
+          >
+            <img src={futureHospitalImage} alt="Architectural render of the future Lynda Michelle Modern Hospital" className="w-full h-full object-cover" />
+          </motion.div>
 
           <motion.div
             initial={{ opacity: 0, x: 40 }}
