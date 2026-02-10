@@ -3,9 +3,9 @@ import { motion, useInView } from "framer-motion";
 
 const STATS = [
   { value: 5, suffix: "+", label: "Years Serving" },
-  { value: 8, suffix: "", label: "Core Services" },
-  { value: 3, suffix: "", label: "Clinic Locations" },
+  { value: 7, suffix: "", label: "Core Services" },
   { value: 10000, suffix: "+", label: "Patients Treated" },
+  { value: 100, suffix: "%", label: "Community Focus" },
 ];
 
 function AnimatedCounter({ target, suffix, inView }: { target: number; suffix: string; inView: boolean }) {
@@ -27,7 +27,6 @@ function AnimatedCounter({ target, suffix, inView }: { target: number; suffix: s
     requestAnimationFrame(step);
   }, [inView, target]);
 
-  const display = target >= 1000 ? `${(count / 1000).toFixed(count >= target ? 0 : 1).replace(/\.0$/, ",")}000` : String(count);
   const formatted = target >= 10000 ? `${Math.floor(count / 1000)},${String(count % 1000).padStart(3, "0")}` : String(count);
 
   return (

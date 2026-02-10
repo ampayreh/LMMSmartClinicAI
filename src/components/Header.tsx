@@ -5,7 +5,7 @@ import { Menu, X } from "lucide-react";
 const NAV_LINKS = [
   { label: "Services", href: "#services" },
   { label: "About", href: "#about" },
-  { label: "Our Team", href: "#team" },
+  { label: "Pricing", href: "#pricing" },
   { label: "Contact", href: "#contact" },
 ];
 
@@ -72,7 +72,6 @@ const Header = () => {
         </nav>
       </motion.header>
 
-      {/* Mobile fullscreen overlay */}
       <AnimatePresence>
         {open && (
           <motion.div
