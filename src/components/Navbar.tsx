@@ -24,7 +24,7 @@ const Navbar = () => {
       >
         <div className="flex items-center justify-between rounded-full bg-white/[0.07] backdrop-blur-xl border border-white/[0.08] shadow-2xl px-5 py-2.5 md:px-6 md:py-3">
           <a href="#" className="flex items-center gap-2">
-            <span className="text-xl font-heading font-[800] text-teal-primary">LM</span>
+            <span className="text-xl font-heading font-[800] text-teal-primary">LMM</span>
             <span className="hidden sm:inline text-sm font-semibold text-text-primary">Lynda Michelle</span>
           </a>
 
