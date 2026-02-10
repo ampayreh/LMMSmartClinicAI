@@ -1,76 +1,123 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/sheet";
 
 const NAV_LINKS = [
-  { label: "About", href: "#about" },
   { label: "Services", href: "#services" },
-  { label: "Why Us", href: "#why-us" },
+  { label: "About", href: "#about" },
+  { label: "Our Team", href: "#team" },
   { label: "Contact", href: "#contact" },
 ];
 
 const Header = () => {
   const [open, setOpen] = useState(false);
+  const [visible, setVisible] = useState(true);
+  const lastScroll = useRef(0);
 
-  const handleClick = () => setOpen(false);
+  useEffect(() => {
+    const onScroll = () => {
+      const y = window.scrollY;
+      setVisible(y < 80 || y < lastScroll.current);
+      lastScroll.current = y;
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  useEffect(() => {
+    if (open) document.body.style.overflow = "hidden";
+    else document.body.style.overflow = "";
+    return () => { document.body.style.overflow = ""; };
+  }, [open]);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-border/50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80">
-      <div className="container flex h-16 items-center justify-between">
-        <a href="#" className="flex items-center gap-2">
-          <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary">
-            <span className="text-lg font-bold text-primary-foreground">LM</span>
+    <>
+      <motion.header
+        initial={{ y: 0 }}
+        animate={{ y: visible ? 0 : -100 }}
+        transition={{ duration: 0.3 }}
+        className="fixed top-4 left-1/2 z-50 -translate-x-1/2 w-[92%] max-w-3xl"
+      >
+        <nav className="flex items-center justify-between gap-4 rounded-full bg-white/70 px-5 py-2.5 shadow-lg shadow-charcoal/5 backdrop-blur-xl border border-border/50">
+          <a href="#" className="font-heading text-lg font-bold tracking-tight text-primary">
+            LMMC
+          </a>
+
+          <div className="hidden items-center gap-1 md:flex">
+            {NAV_LINKS.map((l) => (
+              <a
+                key={l.href}
+                href={l.href}
+                className="rounded-full px-3.5 py-1.5 text-sm font-medium text-foreground/70 transition-colors hover:text-primary hover:bg-primary/5"
+              >
+                {l.label}
+              </a>
+            ))}
           </div>
-          <span className="text-lg font-bold text-foreground">
-            Lynda Michelle<span className="hidden sm:inline"> Medical Centre</span>
-          </span>
-        </a>
 
-        {/* Desktop nav */}
-        <nav className="hidden items-center gap-1 md:flex">
-          {NAV_LINKS.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              className="rounded-md px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
-            >
-              {link.label}
-            </a>
-          ))}
-          <Button asChild size="sm" className="ml-2">
-            <a href="#contact">Get in Touch</a>
-          </Button>
+          <a
+            href="#contact"
+            className="hidden md:inline-flex items-center rounded-full bg-primary px-5 py-2 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90"
+          >
+            Book Now
+          </a>
+
+          <button
+            onClick={() => setOpen(true)}
+            className="md:hidden p-1.5 text-foreground"
+            aria-label="Open menu"
+          >
+            <Menu className="h-5 w-5" />
+          </button>
         </nav>
+      </motion.header>
 
-        {/* Mobile nav */}
-        <Sheet open={open} onOpenChange={setOpen}>
-          <SheetTrigger asChild className="md:hidden">
-            <Button variant="ghost" size="icon" aria-label="Open menu">
-              <Menu className="h-5 w-5" />
-            </Button>
-          </SheetTrigger>
-          <SheetContent side="right" className="w-72">
-            <SheetTitle className="text-lg font-bold text-primary">Menu</SheetTitle>
-            <nav className="mt-6 flex flex-col gap-2">
-              {NAV_LINKS.map((link) => (
-                <a
-                  key={link.href}
-                  href={link.href}
-                  onClick={handleClick}
-                  className="rounded-md px-4 py-3 text-base font-medium text-foreground transition-colors hover:bg-muted"
+      {/* Mobile fullscreen overlay */}
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            initial={{ clipPath: "circle(0% at calc(100% - 2.5rem) 2.5rem)" }}
+            animate={{ clipPath: "circle(150% at calc(100% - 2.5rem) 2.5rem)" }}
+            exit={{ clipPath: "circle(0% at calc(100% - 2.5rem) 2.5rem)" }}
+            transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
+            className="fixed inset-0 z-[60] bg-charcoal flex flex-col items-center justify-center"
+          >
+            <button
+              onClick={() => setOpen(false)}
+              className="absolute top-6 right-6 text-white"
+              aria-label="Close menu"
+            >
+              <X className="h-7 w-7" />
+            </button>
+            <nav className="flex flex-col items-center gap-6">
+              {NAV_LINKS.map((l, i) => (
+                <motion.a
+                  key={l.href}
+                  href={l.href}
+                  onClick={() => setOpen(false)}
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.15 + i * 0.08 }}
+                  className="font-heading text-4xl font-bold text-white hover:text-secondary transition-colors"
                 >
-                  {link.label}
-                </a>
+                  {l.label}
+                </motion.a>
               ))}
-              <Button asChild className="mt-4" onClick={handleClick}>
-                <a href="#contact">Get in Touch</a>
-              </Button>
+              <motion.a
+                href="#contact"
+                onClick={() => setOpen(false)}
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.5 }}
+                className="mt-4 rounded-full bg-primary px-8 py-3 text-lg font-semibold text-primary-foreground"
+              >
+                Book Now
+              </motion.a>
             </nav>
-          </SheetContent>
-        </Sheet>
-      </div>
-    </header>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
   );
 };
 
