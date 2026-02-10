@@ -31,7 +31,7 @@ const Hero = () => (
           className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-teal-primary/10 border border-teal-primary/20 mb-8"
         >
           <span className="w-2 h-2 rounded-full bg-teal-primary animate-pulse" />
-          <span className="text-teal-primary text-xs font-semibold uppercase tracking-wider">Serving Wakiso District Since 2019</span>
+          <span className="text-teal-primary text-xs font-semibold uppercase tracking-wider">Serving Wakiso District Since 2012</span>
         </motion.div>
 
         <h1
@@ -76,7 +76,7 @@ const Hero = () => (
         >
           <a
             href="#services"
-            className="bg-teal-primary text-bg-dark px-8 py-3.5 rounded-full font-semibold text-sm uppercase tracking-wider hover:shadow-[0_0_30px_rgba(45,212,168,0.4)] hover:scale-105 transition-all"
+            className="bg-teal-primary text-bg-dark px-8 py-3.5 rounded-full font-semibold text-sm hover:shadow-[0_0_30px_rgba(45,212,168,0.4)] hover:scale-105 transition-all"
           >
             Our Services
           </a>
