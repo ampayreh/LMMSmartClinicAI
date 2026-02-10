@@ -1,11 +1,7 @@
 import { useState } from "react";
+import { motion } from "framer-motion";
 import { MapPin, Phone, Mail, Clock } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
-import { useFadeIn } from "@/hooks/useFadeIn";
 import { z } from "zod";
 
 const contactSchema = z.object({
@@ -15,7 +11,6 @@ const contactSchema = z.object({
 });
 
 const ContactSection = () => {
-  const ref = useFadeIn();
   const { toast } = useToast();
   const [form, setForm] = useState({ name: "", phone: "", message: "" });
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -32,134 +27,107 @@ const ContactSection = () => {
       return;
     }
     setErrors({});
-    toast({
-      title: "Message sent!",
-      description: "Thank you for reaching out. We'll get back to you soon.",
-    });
+    toast({ title: "Message sent!", description: "Thank you for reaching out. We'll get back to you soon." });
     setForm({ name: "", phone: "", message: "" });
   };
 
+  const INFO = [
+    { icon: MapPin, label: "Location", lines: ["Plot 1246, Budo-Kimbejja, Nsangi", "Wakiso District, Uganda", "P.O. Box 148398, Kampala GPO"] },
+    { icon: Phone, label: "Phone", lines: ["+256 702 322 356"], href: "tel:+256702322356" },
+    { icon: Mail, label: "Email", lines: ["admin@lyndamichellemed.com"], href: "mailto:admin@lyndamichellemed.com" },
+    { icon: Clock, label: "Hours", lines: ["Mon–Sat: 8:00 AM – 6:00 PM", "Sunday: Emergency Only"] },
+  ];
+
   return (
-    <section id="contact" className="bg-muted/50 py-20 md:py-28">
-      <div
-        ref={ref as React.RefObject<HTMLDivElement>}
-        className="container fade-in-section"
-      >
-        <h2 className="mb-12 text-center text-3xl font-bold text-foreground md:text-4xl">
-          Contact Us
-        </h2>
+    <section id="contact" className="relative py-20 md:py-28">
+      {/* Teal gradient background */}
+      <div className="absolute inset-0 bg-gradient-to-br from-primary via-primary/95 to-primary/80" />
 
-        <div className="mx-auto grid max-w-5xl gap-10 lg:grid-cols-2">
-          {/* Info */}
-          <div className="space-y-6">
-            <div className="flex items-start gap-3">
-              <MapPin className="mt-1 h-5 w-5 shrink-0 text-primary" />
-              <div>
-                <p className="font-medium text-foreground">Location</p>
-                <p className="text-sm text-muted-foreground">
-                  Plot 1246, Budo-Kimbejja, Nsangi, Wakiso District, Uganda
-                </p>
-                <p className="text-sm text-muted-foreground">P.O. Box 148398, Kampala GPO</p>
-              </div>
-            </div>
-            <div className="flex items-start gap-3">
-              <Phone className="mt-1 h-5 w-5 shrink-0 text-primary" />
-              <div>
-                <p className="font-medium text-foreground">Phone</p>
-                <a
-                  href="tel:+256702322356"
-                  className="text-sm text-muted-foreground hover:text-primary"
-                >
-                  +256 702 322 356
-                </a>
-              </div>
-            </div>
-            <div className="flex items-start gap-3">
-              <Mail className="mt-1 h-5 w-5 shrink-0 text-primary" />
-              <div>
-                <p className="font-medium text-foreground">Email</p>
-                <a
-                  href="mailto:admin@lyndamichellemed.com"
-                  className="text-sm text-muted-foreground hover:text-primary"
-                >
-                  admin@lyndamichellemed.com
-                </a>
-              </div>
-            </div>
-            <div className="flex items-start gap-3">
-              <Clock className="mt-1 h-5 w-5 shrink-0 text-primary" />
-              <div>
-                <p className="font-medium text-foreground">Operating Hours</p>
-                <p className="text-sm text-muted-foreground">
-                  Monday – Saturday: 8:00 AM – 6:00 PM
-                </p>
-                <p className="text-sm text-muted-foreground">Sunday: Emergency services only</p>
-              </div>
+      <div className="container relative z-10">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="mx-auto max-w-3xl rounded-3xl bg-card p-8 shadow-2xl md:p-12"
+        >
+          <h2 className="text-center font-heading text-3xl font-bold text-foreground md:text-4xl mb-8">
+            Get In Touch
+          </h2>
+
+          <div className="grid gap-10 md:grid-cols-2">
+            {/* Info */}
+            <div className="space-y-5">
+              {INFO.map((item) => (
+                <div key={item.label} className="flex gap-3">
+                  <item.icon className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
+                  <div>
+                    <p className="font-semibold text-foreground text-sm">{item.label}</p>
+                    {item.lines.map((line, j) =>
+                      item.href ? (
+                        <a key={j} href={item.href} className="block text-sm text-muted-foreground hover:text-primary transition-colors">
+                          {line}
+                        </a>
+                      ) : (
+                        <p key={j} className="text-sm text-muted-foreground">{line}</p>
+                      )
+                    )}
+                  </div>
+                </div>
+              ))}
             </div>
 
-            {/* Map */}
-            <div className="overflow-hidden rounded-xl border border-border">
-              <iframe
-                title="Lynda Michelle Medical Centre Location"
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15959.5!2d32.48!3d0.27!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2sBudo-Kimbejja%2C%20Wakiso%20District%2C%20Uganda!5e0!3m2!1sen!2sug!4v1700000000000"
-                width="100%"
-                height="220"
-                style={{ border: 0 }}
-                allowFullScreen
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-              />
-            </div>
+            {/* Form */}
+            <form onSubmit={handleSubmit} noValidate className="space-y-4">
+              <div>
+                <input
+                  placeholder="Your Name"
+                  value={form.name}
+                  onChange={(e) => setForm({ ...form, name: e.target.value })}
+                  className="w-full rounded-2xl border border-border bg-background px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/30"
+                />
+                {errors.name && <p className="mt-1 text-xs text-destructive">{errors.name}</p>}
+              </div>
+              <div>
+                <input
+                  placeholder="Phone Number"
+                  value={form.phone}
+                  onChange={(e) => setForm({ ...form, phone: e.target.value })}
+                  className="w-full rounded-2xl border border-border bg-background px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/30"
+                />
+                {errors.phone && <p className="mt-1 text-xs text-destructive">{errors.phone}</p>}
+              </div>
+              <div>
+                <textarea
+                  placeholder="Your Message"
+                  rows={4}
+                  value={form.message}
+                  onChange={(e) => setForm({ ...form, message: e.target.value })}
+                  className="w-full rounded-2xl border border-border bg-background px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/30 resize-none"
+                />
+                {errors.message && <p className="mt-1 text-xs text-destructive">{errors.message}</p>}
+              </div>
+              <button
+                type="submit"
+                className="w-full rounded-full bg-secondary py-3 text-sm font-semibold text-secondary-foreground transition-colors hover:bg-secondary/90"
+              >
+                Send Message
+              </button>
+            </form>
           </div>
+        </motion.div>
 
-          {/* Form */}
-          <form
-            onSubmit={handleSubmit}
-            className="space-y-5 rounded-2xl border border-border bg-card p-6 shadow-sm md:p-8"
-            noValidate
-          >
-            <h3 className="text-xl font-semibold text-foreground">Send us a message</h3>
-            <div className="space-y-2">
-              <Label htmlFor="name">Name</Label>
-              <Input
-                id="name"
-                placeholder="Your name"
-                value={form.name}
-                onChange={(e) => setForm({ ...form, name: e.target.value })}
-              />
-              {errors.name && (
-                <p className="text-sm text-destructive">{errors.name}</p>
-              )}
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="phone">Phone</Label>
-              <Input
-                id="phone"
-                placeholder="Your phone number"
-                value={form.phone}
-                onChange={(e) => setForm({ ...form, phone: e.target.value })}
-              />
-              {errors.phone && (
-                <p className="text-sm text-destructive">{errors.phone}</p>
-              )}
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="message">Message</Label>
-              <Textarea
-                id="message"
-                placeholder="How can we help you?"
-                rows={4}
-                value={form.message}
-                onChange={(e) => setForm({ ...form, message: e.target.value })}
-              />
-              {errors.message && (
-                <p className="text-sm text-destructive">{errors.message}</p>
-              )}
-            </div>
-            <Button type="submit" className="w-full">
-              Send Message
-            </Button>
-          </form>
+        {/* Map */}
+        <div className="mx-auto mt-8 max-w-3xl overflow-hidden rounded-3xl shadow-lg">
+          <iframe
+            title="Lynda Michelle Medical Centre Location"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15959.5!2d32.48!3d0.27!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2sBudo-Kimbejja%2C%20Wakiso%20District%2C%20Uganda!5e0!3m2!1sen!2sug!4v1700000000000"
+            width="100%"
+            height="250"
+            style={{ border: 0 }}
+            allowFullScreen
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+          />
         </div>
       </div>
     </section>
