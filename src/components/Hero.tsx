@@ -22,9 +22,52 @@ const Hero = () => (
       />
     ))}
 
-    <div className="container relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center pt-28 pb-16">
-      {/* Left */}
-      <div>
+    {/* Mobile hero image */}
+    <div className="lg:hidden absolute inset-x-0 top-0 h-[50vh] z-0">
+      <img
+        src={heroImage}
+        alt="Doctor consulting with a mother and child at Lynda Michelle Medical Centre"
+        className="w-full h-full object-cover"
+      />
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-bg-dark" />
+    </div>
+
+    {/* Desktop hero image — large, edge-to-edge right, masked */}
+    <motion.div
+      initial={{ opacity: 0, scale: 1.02 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ delay: 0.4, duration: 1.2 }}
+      className="hidden lg:block absolute top-0 right-0 w-[58%] h-[85vh]"
+      style={{
+        maskImage:
+          "linear-gradient(to right, transparent 0%, black 30%), linear-gradient(to top, transparent 0%, black 20%)",
+        WebkitMaskImage:
+          "linear-gradient(to right, transparent 0%, black 30%), linear-gradient(to top, transparent 0%, black 20%)",
+        maskComposite: "intersect",
+        WebkitMaskComposite: "source-in",
+      }}
+    >
+      <img
+        src={heroImage}
+        alt="Doctor consulting with a mother and child at Lynda Michelle Medical Centre"
+        className="w-full h-full object-cover"
+      />
+    </motion.div>
+
+    {/* Badge — floating over bottom-right of image */}
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: 1.6 }}
+      className="hidden lg:block absolute bottom-[18vh] right-8 z-20 bg-white/10 backdrop-blur-md border border-white/10 rounded-2xl px-5 py-3.5 text-center"
+    >
+      <span className="block text-2xl font-bold text-teal-primary">10,000+</span>
+      <span className="block text-xs text-text-secondary">Patients Treated</span>
+    </motion.div>
+
+    <div className="container relative z-10 pt-[55vh] lg:pt-28 pb-16">
+      {/* Text column */}
+      <div className="max-w-xl">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -89,30 +132,13 @@ const Hero = () => (
           </a>
         </motion.div>
       </div>
-
-      {/* Right — placeholder */}
-      <motion.div
-        initial={{ opacity: 0, scale: 0.9 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ delay: 0.8, duration: 1 }}
-        className="hidden lg:block relative"
-      >
-        <div className="relative w-full aspect-[4/3] max-w-lg mx-auto rounded-3xl overflow-hidden">
-          <img src={heroImage} alt="Doctor consulting with a mother and child at Lynda Michelle Medical Centre" className="w-full h-full object-cover" />
-          {/* Badge */}
-          <div className="absolute bottom-4 right-4 bg-white/10 backdrop-blur-md border border-white/10 rounded-2xl px-4 py-3 text-center">
-            <span className="block text-2xl font-bold text-teal-primary">10,000+</span>
-            <span className="block text-xs text-text-secondary">Patients Treated</span>
-          </div>
-        </div>
-      </motion.div>
     </div>
 
     {/* Scroll indicator */}
     <motion.div
       animate={{ y: [0, 8, 0] }}
       transition={{ duration: 1.5, repeat: Infinity }}
-      className="absolute bottom-8 left-1/2 -translate-x-1/2 text-text-secondary/50"
+      className="absolute bottom-8 left-1/2 -translate-x-1/2 text-text-secondary/50 z-10"
     >
       <ChevronDown className="w-6 h-6" />
     </motion.div>
