@@ -13,7 +13,7 @@ import WhatsAppButtonNew from "@/components/WhatsAppButtonNew";
 import ScrollToTopNew from "@/components/ScrollToTopNew";
 
 const Index = () => (
-  <div className="min-h-screen bg-bg-dark">
+  <div className="min-h-screen bg-bg-dark overflow-x-hidden">
     <Navbar />
     <main>
       <Hero />
