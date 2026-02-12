@@ -59,10 +59,10 @@ const Hero = () => (
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 1.6 }}
-      className="hidden lg:block absolute bottom-[18vh] right-8 z-20 bg-white/10 backdrop-blur-md border border-white/10 rounded-2xl px-5 py-3.5 text-center"
+      className="hidden lg:block absolute bottom-[18vh] right-8 z-20 bg-black/50 backdrop-blur-lg border border-white/10 rounded-2xl px-5 py-3.5 text-center"
     >
       <span className="block text-2xl font-bold text-teal-primary">10,000+</span>
-      <span className="block text-xs text-text-secondary">Patients Treated</span>
+      <span className="block text-xs text-white/90">Patients Treated</span>
     </motion.div>
 
     <div className="container relative z-10 pt-[55vh] lg:pt-28 pb-16">

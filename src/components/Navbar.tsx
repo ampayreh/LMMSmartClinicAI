@@ -22,7 +22,7 @@ const Navbar = () => {
         transition={{ duration: 0.3 }}
         className="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[calc(100%-2rem)] max-w-3xl"
       >
-        <div className="flex items-center justify-between rounded-full bg-white/[0.07] backdrop-blur-xl border border-white/[0.08] shadow-2xl px-5 py-2.5 md:px-6 md:py-3">
+        <div className="flex items-center justify-between rounded-full bg-black/60 backdrop-blur-xl border border-white/[0.08] shadow-2xl px-5 py-2.5 md:px-6 md:py-3">
           <a href="#" className="flex items-center gap-2">
             <span className="text-xl font-heading font-[800] text-teal-primary">LMM</span>
             <span className="hidden sm:inline text-sm font-semibold text-text-primary">Lynda Michelle</span>
@@ -30,7 +30,7 @@ const Navbar = () => {
 
           <div className="hidden md:flex items-center gap-6">
             {LINKS.map((l) => (
-              <a key={l.href} href={l.href} className="text-sm text-text-secondary hover:text-teal-primary transition-colors">
+              <a key={l.href} href={l.href} className="text-sm text-white/90 hover:text-teal-primary transition-colors">
                 {l.label}
               </a>
             ))}
