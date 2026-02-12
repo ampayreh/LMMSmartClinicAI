@@ -22,7 +22,7 @@ const Hero = () => (
       />
     ))}
 
-    <div className="container relative z-10 grid grid-cols-1 lg:grid-cols-[1fr] gap-12 items-center pt-28 pb-16 lg:max-w-[55%] lg:ml-0 lg:mr-auto">
+    <div className="container relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center pt-28 pb-16">
       {/* Left */}
       <div>
         <motion.div
@@ -91,26 +91,19 @@ const Hero = () => (
       </div>
 
       {/* Right — placeholder */}
-      {/* Hero image — fades in from the left */}
       <motion.div
-        initial={{ opacity: 0, scale: 0.95 }}
+        initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
-        transition={{ delay: 0.8, duration: 1.2 }}
-        className="hidden lg:block absolute inset-y-0 right-0 w-[55%]"
+        transition={{ delay: 0.8, duration: 1 }}
+        className="hidden lg:block relative"
       >
-        <img
-          src={heroImage}
-          alt="Doctor consulting with a mother and child at Lynda Michelle Medical Centre"
-          className="w-full h-full object-cover"
-        />
-        {/* Left fade blend into content */}
-        <div className="absolute inset-0 bg-gradient-to-r from-bg-dark via-bg-dark/70 to-transparent" />
-        {/* Bottom fade */}
-        <div className="absolute inset-0 bg-gradient-to-t from-bg-dark via-transparent to-bg-dark/40" />
-        {/* Badge */}
-        <div className="absolute bottom-24 right-8 bg-white/10 backdrop-blur-md border border-white/10 rounded-2xl px-5 py-4 text-center z-10">
-          <span className="block text-2xl font-bold text-teal-primary">10,000+</span>
-          <span className="block text-xs text-text-secondary">Patients Treated</span>
+        <div className="relative w-full aspect-[4/3] max-w-lg mx-auto rounded-3xl overflow-hidden">
+          <img src={heroImage} alt="Doctor consulting with a mother and child at Lynda Michelle Medical Centre" className="w-full h-full object-cover" />
+          {/* Badge */}
+          <div className="absolute bottom-4 right-4 bg-white/10 backdrop-blur-md border border-white/10 rounded-2xl px-4 py-3 text-center">
+            <span className="block text-2xl font-bold text-teal-primary">10,000+</span>
+            <span className="block text-xs text-text-secondary">Patients Treated</span>
+          </div>
         </div>
       </motion.div>
     </div>
