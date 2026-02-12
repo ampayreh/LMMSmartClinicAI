@@ -76,7 +76,7 @@ const Future = () => {
         whileInView={{ opacity: 1, scale: 1 }}
         viewport={{ once: true }}
         transition={{ duration: 1 }}
-        className="relative w-full min-h-[300px] md:min-h-[60vh]"
+        className="relative w-full min-h-[250px] md:min-h-[400px] lg:min-h-[60vh]"
         style={{
           maskImage: "linear-gradient(to bottom, black 50%, transparent 100%)",
           WebkitMaskImage: "linear-gradient(to bottom, black 50%, transparent 100%)",
@@ -85,7 +85,7 @@ const Future = () => {
         <img
           src={futureHospitalImage}
           alt="Architectural render of the future Lynda Michelle Modern Hospital"
-          className="w-full h-full min-h-[300px] md:min-h-[60vh] object-cover"
+          className="w-full h-full min-h-[250px] md:min-h-[400px] lg:min-h-[60vh] object-cover"
         />
         {/* Subtle overlay for readability */}
         <div
@@ -97,7 +97,7 @@ const Future = () => {
       </motion.div>
 
       {/* Content below image */}
-      <div className="container max-w-4xl px-6 pb-20 md:pb-32">
+      <div className="container max-w-4xl md:max-w-2xl lg:max-w-4xl px-6 md:px-8 py-12 md:py-16 pb-20 md:pb-32">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -112,7 +112,7 @@ const Future = () => {
           </p>
         </motion.div>
 
-        <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 max-w-3xl mx-auto">
+        <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 max-w-3xl mx-auto text-left">
           {FEATURES.map((f) => (
             <div key={f} className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-teal-glow flex-shrink-0 mt-0.5" />
@@ -124,7 +124,7 @@ const Future = () => {
         <div className="mt-10 text-center">
           <a
             href="#contact"
-            className="inline-block bg-teal-primary text-white px-8 py-3.5 rounded-full font-semibold text-sm hover:shadow-lg transition-all"
+            className="inline-block w-full sm:w-auto bg-teal-primary text-white px-8 py-3.5 rounded-full font-semibold text-sm hover:shadow-lg transition-all"
           >
             Partner With Us
           </a>

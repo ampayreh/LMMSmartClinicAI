@@ -22,15 +22,25 @@ const Hero = () => (
       />
     ))}
 
-    {/* Mobile hero image */}
-    <div className="lg:hidden absolute inset-x-0 top-0 h-[50vh] z-0">
+    {/* Mobile/tablet hero image (below lg) */}
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ delay: 0.3, duration: 1 }}
+      className="lg:hidden absolute inset-x-0 top-0 h-[45vh] md:h-[60vh] z-0"
+      style={{
+        maskImage: "linear-gradient(to bottom, black 40%, transparent 100%)",
+        WebkitMaskImage: "linear-gradient(to bottom, black 40%, transparent 100%)",
+      }}
+    >
       <img
         src={heroImage}
         alt="Doctor consulting with a mother and child at Lynda Michelle Medical Centre"
         className="w-full h-full object-cover"
       />
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-bg-dark" />
-    </div>
+    </motion.div>
+    {/* Extra dark overlay for text readability on tablet */}
+    <div className="lg:hidden absolute inset-x-0 top-0 h-[45vh] md:h-[60vh] z-[1] pointer-events-none bg-gradient-to-r from-bg-dark/80 via-bg-dark/40 to-transparent md:from-bg-dark/70 md:via-bg-dark/30" />
 
     {/* Desktop hero image — large, edge-to-edge right, masked */}
     <motion.div
@@ -65,7 +75,7 @@ const Hero = () => (
       <span className="block text-xs text-white/90">Patients Treated</span>
     </motion.div>
 
-    <div className="container relative z-10 pt-[55vh] lg:pt-28 pb-16">
+    <div className="container relative z-10 pt-[48vh] md:pt-[62vh] lg:pt-28 pb-16 px-6 md:px-8">
       {/* Text column */}
       <div className="max-w-xl">
         <motion.div
