@@ -54,57 +54,80 @@ const Future = () => {
   const inView = useInView(ref, { once: true, amount: 0.3 });
 
   return (
-    <section id="future" ref={ref} className="bg-warm-cream py-20 md:py-32">
-      <div className="container max-w-6xl">
+    <section id="future" ref={ref} className="bg-warm-cream">
+      {/* Header */}
+      <div className="container max-w-6xl pt-20 md:pt-32 pb-10 md:pb-14">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-16"
+          className="text-center"
         >
           <span className="text-sm font-semibold uppercase tracking-[0.2em] text-teal-glow">Our Future</span>
           <h2 className="mt-3 font-heading font-bold text-text-dark" style={{ fontSize: "clamp(2rem, 4vw, 3.5rem)" }}>
             Building Tomorrow's Hospital
           </h2>
         </motion.div>
+      </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="rounded-3xl overflow-hidden shadow-xl"
-          >
-            <img src={futureHospitalImage} alt="Architectural render of the future Lynda Michelle Modern Hospital" className="w-full h-full object-cover" />
-          </motion.div>
+      {/* Full-width image with bottom fade */}
+      <motion.div
+        initial={{ opacity: 0, scale: 0.98 }}
+        whileInView={{ opacity: 1, scale: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 1 }}
+        className="relative w-full min-h-[300px] md:min-h-[60vh]"
+        style={{
+          maskImage: "linear-gradient(to bottom, black 50%, transparent 100%)",
+          WebkitMaskImage: "linear-gradient(to bottom, black 50%, transparent 100%)",
+        }}
+      >
+        <img
+          src={futureHospitalImage}
+          alt="Architectural render of the future Lynda Michelle Modern Hospital"
+          className="w-full h-full min-h-[300px] md:min-h-[60vh] object-cover"
+        />
+        {/* Subtle overlay for readability */}
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            background: "linear-gradient(to bottom, transparent 60%, rgba(255,251,240,0.3) 100%)",
+          }}
+        />
+      </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0, x: 40 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-          >
-            <span className="text-sm font-semibold uppercase tracking-[0.2em] text-teal-glow">Hospital Expansion</span>
-            <h3 className="mt-3 font-heading text-2xl md:text-3xl font-bold text-text-dark">A Vision for Comprehensive Care</h3>
-            <p className="mt-4 text-text-dark/70 leading-relaxed">
-              Our planned multi-story medical facility will transform Lynda Michelle Medical Centre into a full-service hospital. The expansion will include inpatient wards, a modern surgical theatre, an advanced diagnostic center, staff housing, and fully accessible facilities with ramps and dedicated parking.
-            </p>
-            <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {FEATURES.map((f) => (
-                <div key={f} className="flex items-start gap-3">
-                  <CheckCircle className="w-5 h-5 text-teal-glow flex-shrink-0 mt-0.5" />
-                  <span className="text-sm text-text-dark/80">{f}</span>
-                </div>
-              ))}
+      {/* Content below image */}
+      <div className="container max-w-4xl px-6 pb-20 md:pb-32">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+          className="text-center"
+        >
+          <span className="text-sm font-semibold uppercase tracking-[0.2em] text-teal-glow">Hospital Expansion</span>
+          <h3 className="mt-3 font-heading text-2xl md:text-3xl font-bold text-text-dark">A Vision for Comprehensive Care</h3>
+          <p className="mt-4 text-text-dark/70 leading-relaxed max-w-2xl mx-auto">
+            Our planned multi-story medical facility will transform Lynda Michelle Medical Centre into a full-service hospital. The expansion will include inpatient wards, a modern surgical theatre, an advanced diagnostic center, staff housing, and fully accessible facilities with ramps and dedicated parking.
+          </p>
+        </motion.div>
+
+        <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 max-w-3xl mx-auto">
+          {FEATURES.map((f) => (
+            <div key={f} className="flex items-start gap-3">
+              <CheckCircle className="w-5 h-5 text-teal-glow flex-shrink-0 mt-0.5" />
+              <span className="text-sm text-text-dark/80">{f}</span>
             </div>
-            <a
-              href="#contact"
-              className="mt-8 inline-block bg-teal-primary text-white px-8 py-3.5 rounded-full font-semibold text-sm hover:shadow-lg transition-all"
-            >
-              Partner With Us
-            </a>
-          </motion.div>
+          ))}
+        </div>
+
+        <div className="mt-10 text-center">
+          <a
+            href="#contact"
+            className="inline-block bg-teal-primary text-white px-8 py-3.5 rounded-full font-semibold text-sm hover:shadow-lg transition-all"
+          >
+            Partner With Us
+          </a>
         </div>
       </div>
     </section>
