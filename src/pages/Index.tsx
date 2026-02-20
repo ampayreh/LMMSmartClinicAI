@@ -11,6 +11,7 @@ import Contact from "@/components/Contact";
 import FooterNew from "@/components/FooterNew";
 import WhatsAppButtonNew from "@/components/WhatsAppButtonNew";
 import ScrollToTopNew from "@/components/ScrollToTopNew";
+import ChatWidget from "@/components/ChatWidget";
 
 const Index = () => (
   <div className="min-h-screen bg-bg-dark overflow-x-hidden">
@@ -34,6 +35,7 @@ const Index = () => (
     </main>
     <FooterNew />
     <WhatsAppButtonNew />
+    <ChatWidget />
     <ScrollToTopNew />
   </div>
 );
