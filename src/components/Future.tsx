@@ -86,6 +86,7 @@ const Future = () => {
           src={futureHospitalImage}
           alt="Architectural render of the future Lynda Michelle Modern Hospital"
           className="w-full h-full min-h-[250px] md:min-h-[400px] lg:min-h-[60vh] object-cover"
+          loading="lazy"
         />
         {/* Subtle overlay for readability */}
         <div

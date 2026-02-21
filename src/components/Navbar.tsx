@@ -30,7 +30,7 @@ const Navbar = () => {
         <div className="flex items-center justify-between w-full max-w-3xl rounded-full bg-black/80 backdrop-blur-xl border border-white/[0.12] shadow-2xl px-5 py-2.5 lg:px-6 lg:py-3">
           <a href="#" className="flex items-center gap-2 shrink-0">
             <span className="text-xl font-heading font-[800] text-teal-primary">LMM</span>
-            <span className="hidden sm:inline text-sm font-semibold text-white/90">Lynda Michelle</span>
+            <span className="hidden sm:inline text-sm font-semibold text-white/90">Lynda Michelle Medical Centre</span>
           </a>
 
           <div className="hidden lg:flex items-center gap-6">
@@ -99,6 +99,7 @@ const Navbar = () => {
               transition={{ delay: 0.5 }}
               className="mt-6 text-center text-white/60 text-sm space-y-1"
             >
+              <p>+256 741 008 049 (WhatsApp)</p>
               <p>+256 772 590 967</p>
               <p>admin@lyndamichellemed.com</p>
             </motion.div>

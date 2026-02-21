@@ -1,4 +1,5 @@
 import { Facebook, Instagram } from "lucide-react";
+import QRCode from "./QRCode";
 
 const QUICK_LINKS = [
   { label: "Services", href: "#services" },
@@ -22,8 +23,8 @@ const FooterNew = () => (
     <div className="container max-w-6xl grid grid-cols-1 md:grid-cols-4 gap-12">
       <div>
         <div className="flex items-center gap-2 mb-3">
-          <span className="text-xl font-heading font-[800] text-teal-primary">LMM</span>
-          <span className="text-lg font-semibold text-text-primary">Lynda Michelle</span>
+      <span className="text-xl font-heading font-[800] text-teal-primary">LMM</span>
+          <span className="text-lg font-semibold text-text-primary">Lynda Michelle Medical Centre</span>
         </div>
         <p className="text-sm text-text-secondary leading-relaxed">
           Providing compassionate, accessible healthcare to families in Wakiso District, Uganda.
@@ -61,14 +62,20 @@ const FooterNew = () => (
       <div>
         <h4 className="text-sm font-semibold uppercase tracking-wider text-text-primary mb-4">Contact</h4>
         <div className="space-y-2 text-sm text-text-secondary">
-          <p>+256 772 590 967</p>
+          <p>+256 741 008 049 <span className="text-text-secondary/50">(WhatsApp)</span></p>
+          <p>+256 772 590 967 <span className="text-text-secondary/50">(Founder)</span></p>
           <p>admin@lyndamichellemed.com</p>
           <p>Plot 1246, Budo-Kimbejja, Nsangi, Wakiso District</p>
         </div>
       </div>
     </div>
 
-    <div className="container max-w-6xl mt-12 pt-8 border-t border-glass-border flex flex-col sm:flex-row justify-between items-center gap-2">
+    {/* QR Code */}
+    <div className="container max-w-6xl mt-12 pt-8 border-t border-glass-border">
+      <QRCode />
+    </div>
+
+    <div className="container max-w-6xl mt-8 pt-8 border-t border-glass-border flex flex-col sm:flex-row justify-between items-center gap-2">
       <p className="text-xs text-text-secondary/60">© 2026 Lynda Michelle Medical Centre Ltd. All rights reserved.</p>
       <p className="text-xs text-text-secondary/40">Built with care for our community</p>
     </div>

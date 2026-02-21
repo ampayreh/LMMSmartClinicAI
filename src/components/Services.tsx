@@ -73,7 +73,7 @@ const Services = () => {
         <div className="md:hidden">
           <div ref={scrollRef} className="services-carousel scrollbar-hide overflow-x-auto flex gap-4 px-1 pb-4">
             {CARDS.map((c) => (
-              <div key={c.title} className="snap-center flex-shrink-0 w-[85vw] rounded-2xl p-6 bg-white border border-warm-cream-dark/50 shadow-sm">
+              <div key={c.title} className="snap-center flex-shrink-0 w-[80vw] max-w-[320px] rounded-2xl p-6 bg-white border border-warm-cream-dark/50 shadow-sm">
                 <div className="w-12 h-12 rounded-xl bg-teal-primary/10 flex items-center justify-center">
                   <c.icon className="w-6 h-6 text-teal-primary" />
                 </div>
