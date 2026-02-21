@@ -3,7 +3,7 @@ import { QRCodeSVG } from "qrcode.react";
 const QRCodePage = () => (
   <div className="min-h-screen bg-white flex flex-col items-center justify-center p-8">
     <h1 className="text-2xl font-bold text-gray-900 mb-1">Lynda Michelle Medical Centre</h1>
-    <p className="text-sm text-gray-500 mb-8">Scan to visit our website</p>
+    <p className="text-sm text-gray-500 mb-8">Smart Clinic AI</p>
     <div className="bg-white p-6 rounded-3xl shadow-xl border border-gray-100">
       <QRCodeSVG
         value="https://lyndamichellemed.lovable.app"
