@@ -16,7 +16,7 @@ const Hero = () => (
     {BLOBS.map((b, i) => (
       <motion.div
         key={i}
-        className={`absolute ${b.pos} ${b.color} w-[200px] h-[200px] md:w-[500px] md:h-[500px] rounded-full blur-[60px] md:blur-[120px] opacity-30 mix-blend-hard-light will-change-transform`}
+        className={`absolute ${b.pos} ${b.color} w-[150px] h-[150px] md:w-[400px] md:h-[400px] rounded-full blur-[60px] md:blur-[120px] opacity-20 mix-blend-hard-light will-change-transform`}
         animate={{ x: [0, 100, -50, 0], y: [0, -80, 60, 0], scale: [1, 1.2, 0.9, 1] }}
         transition={{ duration: b.dur, repeat: Infinity, ease: "linear" }}
       />

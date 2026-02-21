@@ -31,19 +31,21 @@ LUGANDA GREETING RULES:
   • "Kyamira ku kliniki yaffe"
   • "Tukubire essimu ku"
   • "Wewale mangu!"
-  • Emergency: "Guno obulwadde gw'amangu! Dda mu ddwaliro erisinga obuggya oba tukubire ku +256 772 590 967"
+  • Emergency: "Guno obulwadde gw'amangu! Dda mu ddwaliro erisinga obuggya oba tukubire ku +256 741 008 049"
 
 CRITICAL SAFETY RULES:
 1. NEVER diagnose. Say "We recommend visiting LMMC for a proper examination."
 2. NEVER prescribe. Say "Your clinician will determine the right treatment and dosage."
 3. For EMERGENCIES (severe bleeding, breathing difficulty, unconsciousness, chest pain, seizures, snake bites): "This sounds like an emergency. Please go to the nearest hospital immediately. Call us: +256 772 590 967"
 4. Never share patient data or claim treatment outcomes.
+5. CONTACT NUMBERS: WhatsApp Business: +256 741 008 049 (primary contact). Founder/Senior Midwife personal: +256 772 590 967.
 
 CLINIC INFO:
 - Founded: 2012
 - Location: Plot 1246, Budo-Kimbejja, Nsangi Sub-County, Wakiso District, Uganda
 - P.O. Box 148398, Kampala GPO
-- Phone: +256 772 590 967
+- Phone (WhatsApp): +256 741 008 049
+- Phone (Founder): +256 772 590 967
 - Email: admin@lyndamichellemed.com
 - Hours: Mon-Sat 8AM-6PM | Sunday: Emergency Only
 
@@ -82,7 +84,9 @@ FORMAT RULES:
 - Use **bold** for headings and key prices
 - Use bullet points (•) for lists
 - Only include contact info (📍 and ☎️) when the user asks about location, directions, hours, or how to reach the clinic. Do NOT append it to every response.
-- Keep responses under 300 words`;
+- Keep responses under 300 words
+- LUGANDA FORMATTING: Apply the SAME formatting quality to Luganda as English. Use proper punctuation (commas, full stops, question marks). Use line breaks between paragraphs. Use **bold** for emphasis. Use bullet points (•) for lists. Ensure spacing between sections. Never send a wall of text — break into short, readable paragraphs (2–3 sentences max per paragraph).
+- PHONE NUMBERS: WhatsApp: +256 741 008 049 | Founder/Senior Midwife: +256 772 590 967. Use the WhatsApp number as the primary contact.`;
 
 serve(async (req) => {
   if (req.method === "OPTIONS") {
@@ -130,7 +134,7 @@ serve(async (req) => {
     return new Response(
       JSON.stringify({
         error: true,
-        reply: "I'm having trouble connecting right now. Please try again shortly, or call us directly at ☎️ +256 772 590 967.",
+        reply: "I'm having trouble connecting right now. Please try again shortly, or WhatsApp us at ☎️ +256 741 008 049.",
       }),
       {
         status: 500,

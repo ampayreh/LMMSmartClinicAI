@@ -16,7 +16,7 @@ const ROW1 = TESTIMONIALS.slice(0, 4);
 const ROW2 = TESTIMONIALS.slice(4);
 
 const Card = ({ t }: { t: typeof TESTIMONIALS[0] }) => (
-  <div className="flex-shrink-0 w-[350px] p-6 rounded-2xl bg-glass-bg backdrop-blur-md border border-glass-border mx-3">
+  <div className="flex-shrink-0 w-[300px] sm:w-[350px] p-6 rounded-2xl bg-glass-bg backdrop-blur-md border border-glass-border mx-3">
     <div className="flex gap-1">
       {Array.from({ length: 5 }).map((_, i) => (
         <Star key={i} className="w-4 h-4 fill-amber-accent text-amber-accent" />

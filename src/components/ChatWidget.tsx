@@ -54,7 +54,7 @@ const ChatWidget = () => {
       } catch {
         setMessages((prev) => [
           ...prev,
-          { role: "assistant", content: "I'm having trouble right now. Please try again or call us at ☎️ +256 772 590 967." },
+          { role: "assistant", content: "I'm having trouble right now. Please try again or WhatsApp us at ☎️ +256 741 008 049." },
         ]);
       } finally {
         setIsLoading(false);
