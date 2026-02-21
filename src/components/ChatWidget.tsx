@@ -3,7 +3,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { MessageCircle, X, Send } from "lucide-react";
 import ChatMessage from "./ChatMessage";
 import ChatSuggestions from "./ChatSuggestions";
-import { getMockResponse } from "@/lib/chatService";
+import { getAIResponse } from "@/lib/chatService";
 
 type Message = { role: "user" | "assistant"; content: string };
 
@@ -39,19 +39,25 @@ const ChatWidget = () => {
   }, [isOpen]);
 
   const sendMessage = useCallback(
-    (text: string) => {
+    async (text: string) => {
       if (!text.trim() || isLoading) return;
       const userMsg: Message = { role: "user", content: text.trim() };
-      setMessages((prev) => [...prev, userMsg]);
+      const updatedMessages = [...messages, userMsg];
+      setMessages(updatedMessages);
       setInput("");
       setIsLoading(true);
 
-      // Simulate network delay
-      setTimeout(() => {
-        const reply = getMockResponse(text);
+      try {
+        const reply = await getAIResponse(updatedMessages);
         setMessages((prev) => [...prev, { role: "assistant", content: reply }]);
+      } catch {
+        setMessages((prev) => [
+          ...prev,
+          { role: "assistant", content: "I'm having trouble right now. Please try again or call us at ☎️ +256 772 590 967." },
+        ]);
+      } finally {
         setIsLoading(false);
-      }, 800 + Math.random() * 700);
+      }
     },
     [isLoading]
   );

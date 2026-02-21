@@ -1,12 +1,32 @@
+import { supabase } from "@/integrations/supabase/client";
+
+type Message = { role: "user" | "assistant"; content: string };
+
+export async function getAIResponse(messages: Message[]): Promise<string> {
+  try {
+    const { data, error } = await supabase.functions.invoke("chat", {
+      body: { messages },
+    });
+
+    if (error) throw error;
+    if (data?.reply) return data.reply;
+    throw new Error("No reply from AI");
+  } catch (e) {
+    console.warn("AI chat failed, falling back to mock:", e);
+    const lastUserMsg = [...messages].reverse().find((m) => m.role === "user");
+    return getMockResponse(lastUserMsg?.content || "");
+  }
+}
+
 export function getMockResponse(userMessage: string): string {
   const msg = userMessage.toLowerCase();
 
   if (msg.includes("malaria")) {
-    return "Based on your concern about malaria, here's what to expect at LMMC:\n\n🔬 **Malaria RDT Test:** 5,000 UGX\n💊 **Treatment (if positive):**\n• P-Alaxin tablets (full course): 23,000 UGX\n• OR Lonart tablets: 21,000 UGX\n• Paracetamol for fever: 250 UGX/tablet\n\n💰 **Estimated total visit:** 30,000–45,000 UGX\n\nFor children, syrup formulations are available.\n\n⚠️ We recommend visiting LMMC for a proper test. Self-diagnosis can be dangerous.\n\n📍 Plot 1246, Budo-Kimbejja | ☎️ +256 775 620 879";
+    return "Based on your concern about malaria, here's what to expect at LMMC:\n\n🔬 **Malaria RDT Test:** 5,000 UGX\n💊 **Treatment (if positive):**\n• P-Alaxin tablets (full course): 23,000 UGX\n• OR Lonart tablets: 21,000 UGX\n• Paracetamol for fever: 250 UGX/tablet\n\n💰 **Estimated total visit:** 30,000–45,000 UGX\n\nFor children, syrup formulations are available.\n\n⚠️ We recommend visiting LMMC for a proper test. Self-diagnosis can be dangerous.\n\n📍 Plot 1246, Budo-Kimbejja | ☎️ +256 772 590 967";
   }
 
   if (msg.includes("fever") || msg.includes("headache")) {
-    return "I'm sorry to hear you're not feeling well. Fever and headache are common symptoms in our region and could indicate several conditions including malaria, which is prevalent in Wakiso District.\n\n🏥 **We recommend visiting LMMC for:**\n• Malaria RDT test: 5,000 UGX\n• General consultation: 10,000–15,000 UGX\n• Blood sugar check (if needed): 5,000 UGX\n\n💊 While you prepare to visit, stay hydrated and rest.\n\n⚠️ If you experience severe headache, confusion, difficulty breathing, or very high fever, please come immediately or call us.\n\n📍 Mon–Sat: 8AM–6PM | ☎️ +256 775 620 879";
+    return "I'm sorry to hear you're not feeling well. Fever and headache are common symptoms in our region and could indicate several conditions including malaria, which is prevalent in Wakiso District.\n\n🏥 **We recommend visiting LMMC for:**\n• Malaria RDT test: 5,000 UGX\n• General consultation: 10,000–15,000 UGX\n• Blood sugar check (if needed): 5,000 UGX\n\n💊 While you prepare to visit, stay hydrated and rest.\n\n⚠️ If you experience severe headache, confusion, difficulty breathing, or very high fever, please come immediately or call us.\n\n📍 Mon–Sat: 8AM–6PM | ☎️ +256 772 590 967";
   }
 
   if (msg.includes("service")) {
@@ -14,15 +34,15 @@ export function getMockResponse(userMessage: string): string {
   }
 
   if (msg.includes("hour") || msg.includes("time") || msg.includes("open")) {
-    return "🕐 **LMMC Operating Hours:**\n\n• Monday–Saturday: 8:00 AM – 6:00 PM\n• Sunday: Emergency Services Only\n\n📍 **Location:** Plot 1246, Budo-Kimbejja, Nsangi, Wakiso District\n📫 P.O. Box 148398, Kampala GPO\n☎️ +256 775 620 879\n📧 admin@lyndamichellemed.com\n💬 WhatsApp: +256 775 620 879\n\nWe welcome walk-ins! No appointment needed for OPD consultations.";
+    return "🕐 **LMMC Operating Hours:**\n\n• Monday–Saturday: 8:00 AM – 6:00 PM\n• Sunday: Emergency Services Only\n\n📍 **Location:** Plot 1246, Budo-Kimbejja, Nsangi, Wakiso District\n📫 P.O. Box 148398, Kampala GPO\n☎️ +256 772 590 967\n📧 admin@lyndamichellemed.com\n💬 WhatsApp: +256 772 590 967\n\nWe welcome walk-ins! No appointment needed for OPD consultations.";
   }
 
   if (msg.includes("pregnant") || msg.includes("antenatal") || msg.includes("anc") || msg.includes("baby") || msg.includes("delivery")) {
-    return "Congratulations and welcome! Our maternal health services include:\n\n🤰 **Antenatal Care (ANC):**\n• ANC card (first visit): 4,000 UGX\n• Pregnancy test (HCG): 2,000 UGX\n• HIV test: 5,000 UGX\n• Syphilis test: 5,000 UGX\n• Blood sugar: 5,000 UGX\n• Supplements (folic acid, iron, multivitamins): ~300 UGX/day\n\n🏥 **Estimated first ANC visit:** 25,000–35,000 UGX\n📋 **Follow-up visits:** 10,000–15,000 UGX each\n\n👶 **Delivery:**\n• Mama kit (essential supplies): 25,000 UGX\n• Safe delivery services available with experienced midwives\n\n👩‍⚕️ Our registered midwife Jenipher Nakyejjusa leads our maternal health program, in partnership with Marie Stopes International.\n\n📍 Visit us Mon–Sat 8AM–6PM | ☎️ +256 775 620 879";
+    return "Congratulations and welcome! Our maternal health services include:\n\n🤰 **Antenatal Care (ANC):**\n• ANC card (first visit): 4,000 UGX\n• Pregnancy test (HCG): 2,000 UGX\n• HIV test: 5,000 UGX\n• Syphilis test: 5,000 UGX\n• Blood sugar: 5,000 UGX\n• Supplements (folic acid, iron, multivitamins): ~300 UGX/day\n\n🏥 **Estimated first ANC visit:** 25,000–35,000 UGX\n📋 **Follow-up visits:** 10,000–15,000 UGX each\n\n👶 **Delivery:**\n• Mama kit (essential supplies): 25,000 UGX\n• Safe delivery services available with experienced midwives\n\n👩‍⚕️ Our registered midwife Jenipher Nakyejjusa leads our maternal health program, in partnership with Marie Stopes International.\n\n📍 Visit us Mon–Sat 8AM–6PM | ☎️ +256 772 590 967";
   }
 
   if (msg.includes("family planning") || msg.includes("contraceptive") || msg.includes("birth control")) {
-    return "We offer comprehensive family planning services in partnership with Marie Stopes International:\n\n💊 **Pills:** Lydia contraceptives — 3,000 UGX/month\n💉 **Injectable:** Lydia 150mg — 5,000 UGX (3-month protection)\n📌 **Implants:**\n• Implanon (3 years): 20,000 UGX\n• Jadelle (5 years): 25,000 UGX\n🔗 **IUD** (up to 10 years): 30,000 UGX\n🆘 **Emergency contraception:** Lydia emergency — 5,000 UGX\n\nAll methods include free counseling. Our midwife will help you choose the best option for your needs.\n\n📍 Visit us Mon–Sat 8AM–6PM | ☎️ +256 775 620 879";
+    return "We offer comprehensive family planning services in partnership with Marie Stopes International:\n\n💊 **Pills:** Lydia contraceptives — 3,000 UGX/month\n💉 **Injectable:** Lydia 150mg — 5,000 UGX (3-month protection)\n📌 **Implants:**\n• Implanon (3 years): 20,000 UGX\n• Jadelle (5 years): 25,000 UGX\n🔗 **IUD** (up to 10 years): 30,000 UGX\n🆘 **Emergency contraception:** Lydia emergency — 5,000 UGX\n\nAll methods include free counseling. Our midwife will help you choose the best option for your needs.\n\n📍 Visit us Mon–Sat 8AM–6PM | ☎️ +256 772 590 967";
   }
 
   if (msg.includes("cost") || msg.includes("price") || msg.includes("how much") || msg.includes("expensive") || msg.includes("cheap") || msg.includes("afford")) {
@@ -30,8 +50,8 @@ export function getMockResponse(userMessage: string): string {
   }
 
   if (msg.includes("hiv") || msg.includes("test")) {
-    return "We offer confidential testing services:\n\n🔬 **Available Tests:**\n• HIV test: 5,000 UGX (confidential, results same day)\n• Malaria RDT: 5,000 UGX\n• Syphilis test: 5,000 UGX\n• Pregnancy test (HCG): 2,000 UGX\n• H. Pylori test: 5,000 UGX\n• Blood sugar (RBS): 5,000 UGX\n\nAll tests are conducted by trained lab staff with quick turnaround.\n\nWe partner with PEPFAR & USAID for HIV testing, prevention, and treatment support.\n\n📍 Walk-ins welcome Mon–Sat 8AM–6PM | ☎️ +256 775 620 879";
+    return "We offer confidential testing services:\n\n🔬 **Available Tests:**\n• HIV test: 5,000 UGX (confidential, results same day)\n• Malaria RDT: 5,000 UGX\n• Syphilis test: 5,000 UGX\n• Pregnancy test (HCG): 2,000 UGX\n• H. Pylori test: 5,000 UGX\n• Blood sugar (RBS): 5,000 UGX\n\nAll tests are conducted by trained lab staff with quick turnaround.\n\nWe partner with PEPFAR & USAID for HIV testing, prevention, and treatment support.\n\n📍 Walk-ins welcome Mon–Sat 8AM–6PM | ☎️ +256 772 590 967";
   }
 
-  return "Thank you for reaching out! I can help you with:\n\n• Information about our 8 medical services\n• Estimated costs for treatments and tests\n• Operating hours and location\n• How to prepare for your visit\n• Maternal health and family planning\n\nCould you tell me more about what you need? Or feel free to call us directly at ☎️ +256 775 620 879.\n\n📍 Plot 1246, Budo-Kimbejja, Nsangi, Wakiso District\n🕐 Mon–Sat: 8AM–6PM";
+  return "Thank you for reaching out! I can help you with:\n\n• Information about our 8 medical services\n• Estimated costs for treatments and tests\n• Operating hours and location\n• How to prepare for your visit\n• Maternal health and family planning\n\nCould you tell me more about what you need? Or feel free to call us directly at ☎️ +256 772 590 967.\n\n📍 Plot 1246, Budo-Kimbejja, Nsangi, Wakiso District\n🕐 Mon–Sat: 8AM–6PM";
 }
