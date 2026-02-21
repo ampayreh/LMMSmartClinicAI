@@ -27,7 +27,7 @@ const Navbar = () => {
         transition={{ duration: 0.3 }}
         className="fixed top-4 inset-x-0 z-[60] flex justify-center px-4"
       >
-        <div className="flex items-center justify-between w-full max-w-3xl rounded-full bg-black/80 backdrop-blur-xl border border-white/[0.12] shadow-2xl px-5 py-2.5 lg:px-6 lg:py-3">
+        <div className="flex items-center justify-between w-full max-w-4xl rounded-full bg-black/80 backdrop-blur-xl border border-white/[0.12] shadow-2xl px-5 py-2.5 lg:px-8 lg:py-3">
           <a href="#" className="flex items-center gap-2 shrink-0">
             <span className="text-xl font-heading font-[800] text-teal-primary">LMM</span>
             <span className="hidden sm:inline text-sm font-semibold text-white/90">Lynda Michelle Medical Centre</span>
