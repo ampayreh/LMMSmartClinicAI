@@ -29,13 +29,10 @@ const FooterNew = () => (
           Providing compassionate, accessible healthcare to families in Wakiso District, Uganda.
         </p>
         <div className="mt-6 flex gap-3">
-          <a href="#" aria-label="Facebook" className="w-9 h-9 rounded-full bg-white/5 border border-white/10 hover:bg-teal-primary/20 hover:border-teal-primary/30 transition-all flex items-center justify-center">
+          <a href="https://www.facebook.com/lyndamichellemedicalcentre" target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="w-9 h-9 rounded-full bg-white/5 border border-white/10 hover:bg-teal-primary/20 hover:border-teal-primary/30 transition-all flex items-center justify-center">
             <Facebook className="w-4 h-4 text-text-secondary" />
           </a>
-          <a href="#" aria-label="X (Twitter)" className="w-9 h-9 rounded-full bg-white/5 border border-white/10 hover:bg-teal-primary/20 hover:border-teal-primary/30 transition-all flex items-center justify-center">
-            <svg className="w-4 h-4 text-text-secondary" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-          </a>
-          <a href="#" aria-label="Instagram" className="w-9 h-9 rounded-full bg-white/5 border border-white/10 hover:bg-teal-primary/20 hover:border-teal-primary/30 transition-all flex items-center justify-center">
+          <a href="https://www.instagram.com/lyndamichellemedicalcentre" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="w-9 h-9 rounded-full bg-white/5 border border-white/10 hover:bg-teal-primary/20 hover:border-teal-primary/30 transition-all flex items-center justify-center">
             <Instagram className="w-4 h-4 text-text-secondary" />
           </a>
         </div>
