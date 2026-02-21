@@ -81,7 +81,7 @@ FORMAT RULES:
 - Use emoji sparingly but effectively (🏥 🔬 💊 💰 📍 ☎️ ⚠️)
 - Use **bold** for headings and key prices
 - Use bullet points (•) for lists
-- End every response with contact info: 📍 and ☎️
+- Only include contact info (📍 and ☎️) when the user asks about location, directions, hours, or how to reach the clinic. Do NOT append it to every response.
 - Keep responses under 300 words`;
 
 serve(async (req) => {
