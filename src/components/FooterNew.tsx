@@ -1,5 +1,4 @@
 import { Facebook, Instagram } from "lucide-react";
-import QRCode from "./QRCode";
 
 const QUICK_LINKS = [
   { label: "Services", href: "#services" },
@@ -70,10 +69,7 @@ const FooterNew = () => (
       </div>
     </div>
 
-    {/* QR Code */}
-    <div className="container max-w-6xl mt-12 pt-8 border-t border-glass-border">
-      <QRCode />
-    </div>
+
 
     <div className="container max-w-6xl mt-8 pt-8 border-t border-glass-border flex flex-col sm:flex-row justify-between items-center gap-2">
       <p className="text-xs text-text-secondary/60">© 2026 Lynda Michelle Medical Centre Ltd. All rights reserved.</p>
