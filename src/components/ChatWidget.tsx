@@ -18,6 +18,7 @@ const ChatWidget = () => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [chatHover, setChatHover] = useState(false);
   const bottomRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -59,23 +60,37 @@ const ChatWidget = () => {
         setIsLoading(false);
       }
     },
-    [isLoading]
+    [isLoading, messages]
   );
 
   const hasUserMessages = messages.some((m) => m.role === "user");
 
   return (
     <>
-      {/* Trigger button */}
+      {/* AI Chat FAB - stacked above WhatsApp */}
       <motion.button
         initial={{ scale: 0, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         transition={{ delay: 2.5, type: "spring" }}
         onClick={() => setIsOpen((o) => !o)}
-        className="fixed bottom-6 left-6 z-50"
+        onMouseEnter={() => setChatHover(true)}
+        onMouseLeave={() => setChatHover(false)}
+        className="fixed bottom-24 right-6 z-50"
         aria-label={isOpen ? "Close chat" : "Open chat assistant"}
       >
-        <div className="relative">
+        <div className="relative flex items-center">
+          <AnimatePresence>
+            {chatHover && !isOpen && (
+              <motion.span
+                initial={{ opacity: 0, x: 8 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: 8 }}
+                className="absolute right-16 bg-black/70 text-white text-xs px-2 py-1 rounded-full whitespace-nowrap"
+              >
+                Ask AI
+              </motion.span>
+            )}
+          </AnimatePresence>
           {!isOpen && (
             <div className="absolute inset-0 rounded-full bg-teal-primary/30 animate-ping" />
           )}
@@ -102,7 +117,7 @@ const ChatWidget = () => {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
             transition={{ duration: 0.25 }}
-            className="fixed bottom-24 left-6 z-50 w-[380px] h-[520px] max-md:w-[calc(100vw-48px)] max-md:h-[70vh] rounded-2xl bg-bg-dark/95 backdrop-blur-xl border border-white/10 shadow-2xl overflow-hidden flex flex-col"
+            className="fixed bottom-[7.5rem] right-6 z-50 w-[380px] h-[520px] max-md:w-[calc(100vw-48px)] max-md:h-[70vh] max-md:bottom-24 max-md:right-6 rounded-2xl bg-bg-dark/95 backdrop-blur-xl border border-white/10 shadow-2xl overflow-hidden flex flex-col"
           >
             {/* Header */}
             <div className="h-14 px-4 flex items-center justify-between bg-white/5 border-b border-white/10 shrink-0">
