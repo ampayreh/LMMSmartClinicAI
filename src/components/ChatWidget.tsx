@@ -75,7 +75,7 @@ const ChatWidget = () => {
         onClick={() => setIsOpen((o) => !o)}
         onMouseEnter={() => setChatHover(true)}
         onMouseLeave={() => setChatHover(false)}
-        className="fixed bottom-24 right-6 z-50"
+        className="fixed bottom-[4.5rem] right-6 z-50"
         aria-label={isOpen ? "Close chat" : "Open chat assistant"}
       >
         <div className="relative flex items-center">
@@ -94,11 +94,11 @@ const ChatWidget = () => {
           {!isOpen && (
             <div className="absolute inset-0 rounded-full bg-teal-primary/30 animate-ping" />
           )}
-          <div className="relative w-14 h-14 rounded-full bg-teal-primary flex items-center justify-center shadow-lg hover:scale-110 hover:shadow-[0_0_20px_rgba(45,212,168,0.3)] transition-all">
+          <div className="relative w-12 h-12 rounded-full bg-teal-primary flex items-center justify-center shadow-lg hover:scale-110 hover:shadow-[0_0_20px_rgba(45,212,168,0.3)] transition-all">
             {isOpen ? (
-              <X className="w-7 h-7 text-bg-dark" />
+              <X className="w-6 h-6 text-bg-dark" />
             ) : (
-              <MessageCircle className="w-7 h-7 text-bg-dark" />
+              <MessageCircle className="w-6 h-6 text-bg-dark" />
             )}
           </div>
           {!isOpen && (
@@ -117,7 +117,7 @@ const ChatWidget = () => {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
             transition={{ duration: 0.25 }}
-            className="fixed bottom-[7.5rem] right-6 z-50 w-[380px] h-[520px] max-md:w-[calc(100vw-48px)] max-md:h-[70vh] max-md:bottom-24 max-md:right-6 rounded-2xl bg-bg-dark/95 backdrop-blur-xl border border-white/10 shadow-2xl overflow-hidden flex flex-col"
+            className="fixed bottom-[7rem] right-6 z-50 w-[380px] h-[520px] max-md:w-[calc(100vw-48px)] max-md:h-[70vh] max-md:bottom-[4.5rem] max-md:right-6 rounded-2xl bg-bg-dark/95 backdrop-blur-xl border border-white/10 shadow-2xl overflow-hidden flex flex-col"
           >
             {/* Header */}
             <div className="h-14 px-4 flex items-center justify-between bg-white/5 border-b border-white/10 shrink-0">
