@@ -10,7 +10,7 @@ type Message = { role: "user" | "assistant"; content: string };
 const WELCOME_MESSAGE: Message = {
   role: "assistant",
   content:
-    "Welcome to Lynda Michelle Medical Centre! 👋 I'm your clinic assistant. I can help you with:\n\n• Our services and operating hours\n• Estimated costs for treatments\n• How to prepare for your visit\n• General health guidance\n\nHow can I help you today?",
+    "Welcome to Lynda Michelle Medical Centre! 👋 I'm your clinic assistant. I can help you with:\n\n• Our services and operating hours\n\n• Estimated costs for treatments\n\n• How to prepare for your visit\n\n• General health guidance\n\nHow can I help you today?",
 };
 
 const ChatWidget = () => {
