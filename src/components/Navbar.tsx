@@ -99,7 +99,7 @@ const Navbar = () => {
               transition={{ delay: 0.5 }}
               className="mt-6 text-center text-white/60 text-sm space-y-1"
             >
-              <p>+256 775 620 879</p>
+              <p>+256 772 590 967</p>
               <p>admin@lyndamichellemed.com</p>
             </motion.div>
           </motion.div>

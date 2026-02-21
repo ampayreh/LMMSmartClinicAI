@@ -64,7 +64,7 @@ const FooterNew = () => (
       <div>
         <h4 className="text-sm font-semibold uppercase tracking-wider text-text-primary mb-4">Contact</h4>
         <div className="space-y-2 text-sm text-text-secondary">
-          <p>+256 775 620 879</p>
+          <p>+256 772 590 967</p>
           <p>admin@lyndamichellemed.com</p>
           <p>Plot 1246, Budo-Kimbejja, Nsangi, Wakiso District</p>
         </div>

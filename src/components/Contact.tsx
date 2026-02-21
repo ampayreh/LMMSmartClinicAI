@@ -41,7 +41,7 @@ const Contact = () => {
           >
             {[
               { icon: MapPin, label: "Visit Us", value: "Plot 1246, Budo-Kimbejja, Nsangi, Wakiso District, Uganda" },
-              { icon: Phone, label: "Call Us", value: "+256 775 620 879" },
+              { icon: Phone, label: "Call Us", value: "+256 772 590 967" },
               { icon: Mail, label: "Email Us", value: "admin@lyndamichellemed.com" },
             ].map((c) => (
               <div key={c.label} className="flex items-start gap-4">
