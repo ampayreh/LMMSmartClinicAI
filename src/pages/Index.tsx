@@ -20,17 +20,13 @@ const Index = () => (
       <Hero />
       <KenteStrip />
       <Stats />
-      <KenteStrip />
       <Services />
       <KenteStrip />
       <About />
-      <KenteStrip />
       <Team />
-      <KenteStrip />
       <Testimonials />
       <KenteStrip />
       <Future />
-      <KenteStrip />
       <Contact />
     </main>
     <FooterNew />
