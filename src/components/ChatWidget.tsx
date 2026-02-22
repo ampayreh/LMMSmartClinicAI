@@ -148,7 +148,7 @@ const ChatWidget = () => {
                 <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
                 <div>
                   <p className="text-sm font-semibold text-text-primary leading-tight">
-                    LMMC Assistant
+                    LMM Smart Assistant
                   </p>
                   <p className="text-xs text-text-secondary">
                     {language === "lg" ? "Ku mutimbagano" : "Online"}
