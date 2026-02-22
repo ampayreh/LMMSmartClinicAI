@@ -94,11 +94,15 @@ serve(async (req) => {
   }
 
   try {
-    const { messages } = await req.json();
+    const { messages, language } = await req.json();
     const OPENAI_API_KEY = Deno.env.get("OPENAI_API_KEY");
     if (!OPENAI_API_KEY) {
       throw new Error("OPENAI_API_KEY is not configured");
     }
+
+    const langInstruction = language === "lg"
+      ? "\n\nIMPORTANT: The user has chosen Luganda as their preferred language. Respond ENTIRELY in Luganda for this conversation. Keep medical terms, drug names, test names, and prices in English/numerals. Apply proper formatting with bold, bullets, and line breaks."
+      : "\n\nIMPORTANT: The user has chosen English as their preferred language. Respond ENTIRELY in English for this conversation.";
 
     const response = await fetch("https://api.openai.com/v1/chat/completions", {
       method: "POST",
@@ -109,7 +113,7 @@ serve(async (req) => {
       body: JSON.stringify({
         model: "gpt-4.1-mini",
         messages: [
-          { role: "system", content: SYSTEM_PROMPT },
+          { role: "system", content: SYSTEM_PROMPT + langInstruction },
           ...messages,
         ],
         temperature: 0.3,

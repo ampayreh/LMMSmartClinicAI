@@ -2,10 +2,10 @@ import { supabase } from "@/integrations/supabase/client";
 
 type Message = { role: "user" | "assistant"; content: string };
 
-export async function getAIResponse(messages: Message[]): Promise<string> {
+export async function getAIResponse(messages: Message[], language: "en" | "lg" = "en"): Promise<string> {
   try {
     const { data, error } = await supabase.functions.invoke("chat", {
-      body: { messages },
+      body: { messages, language },
     });
 
     if (error) throw error;
@@ -14,13 +14,27 @@ export async function getAIResponse(messages: Message[]): Promise<string> {
   } catch (e) {
     console.warn("AI chat failed, falling back to mock:", e);
     const lastUserMsg = [...messages].reverse().find((m) => m.role === "user");
-    return getMockResponse(lastUserMsg?.content || "");
+    return getMockResponse(lastUserMsg?.content || "", language);
   }
 }
 
-export function getMockResponse(userMessage: string): string {
+export function getMockResponse(userMessage: string, language: "en" | "lg" = "en"): string {
   const msg = userMessage.toLowerCase();
 
+  if (language === "lg") {
+    if (msg.includes("musujja") || msg.includes("malaria")) {
+      return "Ku nsonga y'omusujja gwe buwuka, bino by'osuubira ku LMMC:\n\n🔬 **Okukebera Malaria (RDT):** 5,000 UGX\n💊 **Obujjanjabi (bw'oba olina omusujja):**\n• P-Alaxin (ekkoosi yonna): 23,000 UGX\n• Oba Lonart: 21,000 UGX\n• Paracetamol: 250 UGX/kipiira\n\n💰 **Omuwendo ogw'okugereka:** 30,000–45,000 UGX\n\n⚠️ Tukusaba ojje ku LMMC okukebererwa obulungi.";
+    }
+    if (msg.includes("mpeereza") || msg.includes("service")) {
+      return "Lynda Michelle Medical Centre erina empeereza 8 ennene:\n\n1️⃣ **OPD** — Okulaba abalwadde bonna\n2️⃣ **Obulamu bw'Abakyala** — ANC, okuzaala obulungi, enteekateeka y'amaka\n3️⃣ **Laabu** — Malaria, HIV, syphilis, n'ebirala\n4️⃣ **Okugema** — Abaana n'abakulu\n5️⃣ **Famasi** — Eddagala 178\n6️⃣ **Okulongoosa Okutono** — Ebiwundu, okutungako\n7️⃣ **Eby'obulamu mu Kitundu** — Okuyigiriza\n8️⃣ **Okujjanjaba Awaka** — Abakadde n'abalwadde\n\nOyagala okumanya ebisingawo ku mpeereza yonna?";
+    }
+    if (msg.includes("ssaawa") || msg.includes("guggula")) {
+      return "🕐 **Essaawa ez'okukola ku LMMC:**\n\n• Bbalaza–Lwamukaaga: 8:00 AM – 6:00 PM\n• Ssabbiiti: Empeereza z'amangu zokka\n\n📍 Plot 1246, Budo-Kimbejja, Nsangi\n☎️ +256 772 590 967";
+    }
+    return "Weebale okukoma! Nsobola okukuyamba ku:\n\n• Empeereza zaffe 8\n• Emiwendo gy'obujjanjabi\n• Essaawa ez'okukola\n• Engeri gy'weetegekera okujja\n\nMbuulira by'oyagala okumanya! Oba kuba ku ☎️ +256 772 590 967.";
+  }
+
+  // English fallback (existing)
   if (msg.includes("malaria")) {
     return "Based on your concern about malaria, here's what to expect at LMMC:\n\n🔬 **Malaria RDT Test:** 5,000 UGX\n💊 **Treatment (if positive):**\n• P-Alaxin tablets (full course): 23,000 UGX\n• OR Lonart tablets: 21,000 UGX\n• Paracetamol for fever: 250 UGX/tablet\n\n💰 **Estimated total visit:** 30,000–45,000 UGX\n\nFor children, syrup formulations are available.\n\n⚠️ We recommend visiting LMMC for a proper test. Self-diagnosis can be dangerous.\n\n📍 Plot 1246, Budo-Kimbejja | ☎️ +256 772 590 967";
   }
