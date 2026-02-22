@@ -32,6 +32,7 @@ const ChatWidget = () => {
   const inputRef = useRef<HTMLInputElement>(null);
 
   const hasUserMessages = messages.some((m) => m.role === "user");
+  const lastMessageRef = useRef<HTMLDivElement>(null);
 
   // Add welcome message after language selection
   useEffect(() => {
@@ -40,10 +41,10 @@ const ChatWidget = () => {
     }
   }, [language, messages.length]);
 
-  // Auto-scroll only after user has sent a message
+  // Scroll to the start of the latest assistant reply so user reads from top
   useEffect(() => {
-    if (hasUserMessages || isLoading) {
-      bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+    if (hasUserMessages && !isLoading && messages.length > 0 && messages[messages.length - 1].role === "assistant") {
+      lastMessageRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
     }
   }, [messages, isLoading, hasUserMessages]);
 
@@ -229,7 +230,9 @@ const ChatWidget = () => {
                 {/* Messages */}
                 <div className="flex-1 overflow-y-auto p-4 space-y-3 scrollbar-hide">
                   {messages.map((m, i) => (
-                    <ChatMessage key={i} role={m.role} content={m.content} />
+                    <div key={i} ref={i === messages.length - 1 && m.role === "assistant" ? lastMessageRef : undefined}>
+                      <ChatMessage role={m.role} content={m.content} />
+                    </div>
                   ))}
 
                   {/* Typing indicator */}
