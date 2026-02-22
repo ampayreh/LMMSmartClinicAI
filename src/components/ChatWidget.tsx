@@ -6,15 +6,24 @@ import ChatSuggestions from "./ChatSuggestions";
 import { getAIResponse } from "@/lib/chatService";
 
 type Message = { role: "user" | "assistant"; content: string };
+type Language = "en" | "lg" | null;
 
-const WELCOME_MESSAGE: Message = {
-  role: "assistant",
-  content:
-    "Welcome to Lynda Michelle Medical Centre! 👋 I'm your clinic assistant. I can help you with:\n\n• Our services and operating hours\n\n• Estimated costs for treatments\n\n• How to prepare for your visit\n\n• General health guidance\n\nHow can I help you today?",
+const WELCOME_MESSAGES: Record<"en" | "lg", Message> = {
+  en: {
+    role: "assistant",
+    content:
+      "Welcome to Lynda Michelle Medical Centre! 👋 I'm your clinic assistant. I can help you with:\n\n• Our services and operating hours\n\n• Estimated costs for treatments\n\n• How to prepare for your visit\n\n• General health guidance\n\nHow can I help you today?",
+  },
+  lg: {
+    role: "assistant",
+    content:
+      "Tukulabye ku Lynda Michelle Medical Centre! 👋 Nze omuyambi wo mu ddwaliro. Nsobola okukuyamba ku:\n\n• Empeereza zaffe n'essaawa ez'okukola\n\n• Ebiwereza eby'obujjanjabi\n\n• Engeri gy'weetegekera okujja\n\n• Obulezi obw'awamu\n\nNkuyambe ntya leero?",
+  },
 };
 
 const ChatWidget = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [language, setLanguage] = useState<Language>(null);
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -22,26 +31,36 @@ const ChatWidget = () => {
   const bottomRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  // Add welcome message on first open
+  // Add welcome message after language selection
   useEffect(() => {
-    if (isOpen && messages.length === 0) {
-      setMessages([WELCOME_MESSAGE]);
+    if (language && messages.length === 0) {
+      setMessages([WELCOME_MESSAGES[language]]);
     }
-  }, [isOpen, messages.length]);
+  }, [language, messages.length]);
 
   // Auto-scroll
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, isLoading]);
 
-  // Focus input on open
+  // Focus input on language selected
   useEffect(() => {
-    if (isOpen) setTimeout(() => inputRef.current?.focus(), 300);
-  }, [isOpen]);
+    if (language) setTimeout(() => inputRef.current?.focus(), 300);
+  }, [language]);
+
+  const selectLanguage = (lang: "en" | "lg") => {
+    setLanguage(lang);
+  };
+
+  const resetChat = () => {
+    setLanguage(null);
+    setMessages([]);
+    setInput("");
+  };
 
   const sendMessage = useCallback(
     async (text: string) => {
-      if (!text.trim() || isLoading) return;
+      if (!text.trim() || isLoading || !language) return;
       const userMsg: Message = { role: "user", content: text.trim() };
       const updatedMessages = [...messages, userMsg];
       setMessages(updatedMessages);
@@ -49,25 +68,29 @@ const ChatWidget = () => {
       setIsLoading(true);
 
       try {
-        const reply = await getAIResponse(updatedMessages);
+        const reply = await getAIResponse(updatedMessages, language);
         setMessages((prev) => [...prev, { role: "assistant", content: reply }]);
       } catch {
+        const errorMsg =
+          language === "lg"
+            ? "Nsonyiwa, waliwo obuzibu. Gezaako nate oba tuwandiikire ku WhatsApp ☎️ +256 741 008 049."
+            : "I'm having trouble right now. Please try again or WhatsApp us at ☎️ +256 741 008 049.";
         setMessages((prev) => [
           ...prev,
-          { role: "assistant", content: "I'm having trouble right now. Please try again or WhatsApp us at ☎️ +256 741 008 049." },
+          { role: "assistant", content: errorMsg },
         ]);
       } finally {
         setIsLoading(false);
       }
     },
-    [isLoading, messages]
+    [isLoading, messages, language]
   );
 
   const hasUserMessages = messages.some((m) => m.role === "user");
 
   return (
     <>
-      {/* AI Chat FAB - stacked above WhatsApp */}
+      {/* AI Chat FAB */}
       <motion.button
         initial={{ scale: 0, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
@@ -127,60 +150,126 @@ const ChatWidget = () => {
                   <p className="text-sm font-semibold text-text-primary leading-tight">
                     LMMC Assistant
                   </p>
-                  <p className="text-xs text-text-secondary">Online</p>
+                  <p className="text-xs text-text-secondary">
+                    {language === "lg" ? "Ku mutimbagano" : "Online"}
+                  </p>
                 </div>
               </div>
-              <button
-                onClick={() => setIsOpen(false)}
-                className="text-text-secondary hover:text-white transition-colors"
-                aria-label="Close chat"
-              >
-                <X className="w-5 h-5" />
-              </button>
+              <div className="flex items-center gap-2">
+                {language && (
+                  <button
+                    onClick={resetChat}
+                    className="text-xs text-text-secondary hover:text-teal-primary transition-colors px-2 py-1 rounded border border-white/10 hover:border-teal-primary/30"
+                    aria-label="Change language"
+                  >
+                    {language === "en" ? "🇬🇧 EN" : "🇺🇬 LG"}
+                  </button>
+                )}
+                <button
+                  onClick={() => setIsOpen(false)}
+                  className="text-text-secondary hover:text-white transition-colors"
+                  aria-label="Close chat"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
             </div>
 
-            {/* Messages */}
-            <div className="flex-1 overflow-y-auto p-4 space-y-3 scrollbar-hide">
-              {messages.map((m, i) => (
-                <ChatMessage key={i} role={m.role} content={m.content} />
-              ))}
-
-              {/* Typing indicator */}
-              {isLoading && (
-                <div className="mr-auto max-w-[85%] bg-white/5 px-4 py-3 rounded-2xl rounded-bl-md flex gap-1.5">
-                  <span className="w-2 h-2 rounded-full bg-text-secondary animate-bounce [animation-delay:0ms]" />
-                  <span className="w-2 h-2 rounded-full bg-text-secondary animate-bounce [animation-delay:150ms]" />
-                  <span className="w-2 h-2 rounded-full bg-text-secondary animate-bounce [animation-delay:300ms]" />
+            {/* Language Selection or Chat */}
+            {!language ? (
+              <div className="flex-1 flex flex-col items-center justify-center p-6 gap-6">
+                <div className="text-center space-y-2">
+                  <div className="w-16 h-16 rounded-full bg-teal-primary/10 flex items-center justify-center mx-auto mb-4">
+                    <MessageCircle className="w-8 h-8 text-teal-primary" />
+                  </div>
+                  <h3 className="text-lg font-semibold text-text-primary">
+                    Choose your language
+                  </h3>
+                  <p className="text-sm text-text-secondary">
+                    Londa olulimi lw'oyagala
+                  </p>
                 </div>
-              )}
+                <div className="flex flex-col gap-3 w-full max-w-[240px]">
+                  <button
+                    onClick={() => selectLanguage("en")}
+                    className="flex items-center gap-3 px-5 py-4 rounded-xl bg-white/5 border border-white/10 hover:bg-teal-primary/10 hover:border-teal-primary/30 transition-all group"
+                  >
+                    <span className="text-2xl">🇬🇧</span>
+                    <div className="text-left">
+                      <p className="text-sm font-medium text-text-primary group-hover:text-teal-primary transition-colors">
+                        English
+                      </p>
+                      <p className="text-xs text-text-secondary">
+                        Continue in English
+                      </p>
+                    </div>
+                  </button>
+                  <button
+                    onClick={() => selectLanguage("lg")}
+                    className="flex items-center gap-3 px-5 py-4 rounded-xl bg-white/5 border border-white/10 hover:bg-teal-primary/10 hover:border-teal-primary/30 transition-all group"
+                  >
+                    <span className="text-2xl">🇺🇬</span>
+                    <div className="text-left">
+                      <p className="text-sm font-medium text-text-primary group-hover:text-teal-primary transition-colors">
+                        Luganda
+                      </p>
+                      <p className="text-xs text-text-secondary">
+                        Weyongere mu Luganda
+                      </p>
+                    </div>
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <>
+                {/* Messages */}
+                <div className="flex-1 overflow-y-auto p-4 space-y-3 scrollbar-hide">
+                  {messages.map((m, i) => (
+                    <ChatMessage key={i} role={m.role} content={m.content} />
+                  ))}
 
-              {/* Suggestions */}
-              {!hasUserMessages && !isLoading && (
-                <ChatSuggestions onSelect={sendMessage} />
-              )}
+                  {/* Typing indicator */}
+                  {isLoading && (
+                    <div className="mr-auto max-w-[85%] bg-white/5 px-4 py-3 rounded-2xl rounded-bl-md flex gap-1.5">
+                      <span className="w-2 h-2 rounded-full bg-text-secondary animate-bounce [animation-delay:0ms]" />
+                      <span className="w-2 h-2 rounded-full bg-text-secondary animate-bounce [animation-delay:150ms]" />
+                      <span className="w-2 h-2 rounded-full bg-text-secondary animate-bounce [animation-delay:300ms]" />
+                    </div>
+                  )}
 
-              <div ref={bottomRef} />
-            </div>
+                  {/* Suggestions */}
+                  {!hasUserMessages && !isLoading && (
+                    <ChatSuggestions onSelect={sendMessage} language={language} />
+                  )}
 
-            {/* Input */}
-            <div className="h-14 px-3 flex items-center gap-2 bg-white/5 border-t border-white/10 shrink-0">
-              <input
-                ref={inputRef}
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
-                onKeyDown={(e) => e.key === "Enter" && sendMessage(input)}
-                placeholder="Ask about our services..."
-                className="flex-1 bg-transparent text-text-primary text-sm placeholder:text-text-secondary/50 outline-none"
-              />
-              <button
-                onClick={() => sendMessage(input)}
-                disabled={!input.trim() || isLoading}
-                className="w-9 h-9 rounded-full bg-teal-primary flex items-center justify-center hover:bg-teal-glow transition-colors disabled:opacity-40 disabled:cursor-not-allowed shrink-0"
-                aria-label="Send message"
-              >
-                <Send className="w-4 h-4 text-bg-dark" />
-              </button>
-            </div>
+                  <div ref={bottomRef} />
+                </div>
+
+                {/* Input */}
+                <div className="h-14 px-3 flex items-center gap-2 bg-white/5 border-t border-white/10 shrink-0">
+                  <input
+                    ref={inputRef}
+                    value={input}
+                    onChange={(e) => setInput(e.target.value)}
+                    onKeyDown={(e) => e.key === "Enter" && sendMessage(input)}
+                    placeholder={
+                      language === "lg"
+                        ? "Buuza ku mpeereza zaffe..."
+                        : "Ask about our services..."
+                    }
+                    className="flex-1 bg-transparent text-text-primary text-sm placeholder:text-text-secondary/50 outline-none"
+                  />
+                  <button
+                    onClick={() => sendMessage(input)}
+                    disabled={!input.trim() || isLoading}
+                    className="w-9 h-9 rounded-full bg-teal-primary flex items-center justify-center hover:bg-teal-glow transition-colors disabled:opacity-40 disabled:cursor-not-allowed shrink-0"
+                    aria-label="Send message"
+                  >
+                    <Send className="w-4 h-4 text-bg-dark" />
+                  </button>
+                </div>
+              </>
+            )}
           </motion.div>
         )}
       </AnimatePresence>
