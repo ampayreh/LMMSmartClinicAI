@@ -140,7 +140,7 @@ const ChatWidget = () => {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
             transition={{ duration: 0.25 }}
-            className="fixed overflow-hidden flex flex-col bg-bg-dark/95 backdrop-blur-xl border border-white/10 shadow-2xl md:z-50 md:bottom-[7rem] md:right-6 md:w-[380px] md:h-[70vh] md:max-h-[600px] md:rounded-2xl max-md:inset-0 max-md:z-[70] max-md:rounded-none"
+            className="fixed overflow-hidden flex flex-col bg-bg-dark/95 backdrop-blur-xl border border-white/10 shadow-2xl md:z-50 md:bottom-[7rem] md:right-6 md:w-[380px] md:h-[70vh] md:max-h-[600px] md:rounded-2xl max-md:inset-0 max-md:z-[70] max-md:rounded-none max-md:w-screen max-md:max-w-full max-md:overflow-x-hidden"
           >
             {/* Header */}
             <div className="h-14 px-4 flex items-center justify-between bg-white/5 border-b border-white/10 shrink-0">
@@ -246,7 +246,7 @@ const ChatWidget = () => {
                 </div>
 
                 {/* Input */}
-                <div className="h-14 px-3 flex items-center gap-2 bg-white/5 border-t border-white/10 shrink-0">
+                <div className="h-14 px-3 flex items-center gap-2 bg-white/5 border-t border-white/10 shrink-0 w-full min-w-0">
                   <input
                     ref={inputRef}
                     value={input}
@@ -257,7 +257,7 @@ const ChatWidget = () => {
                         ? "Buuza ku mpeereza zaffe..."
                         : "Ask about our services..."
                     }
-                    className="flex-1 bg-transparent text-text-primary text-sm placeholder:text-text-secondary/50 outline-none"
+                    className="flex-1 min-w-0 bg-transparent text-text-primary text-sm placeholder:text-text-secondary/50 outline-none"
                   />
                   <button
                     onClick={() => sendMessage(input)}
