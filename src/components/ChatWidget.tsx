@@ -31,6 +31,8 @@ const ChatWidget = () => {
   const bottomRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
+  const hasUserMessages = messages.some((m) => m.role === "user");
+
   // Add welcome message after language selection
   useEffect(() => {
     if (language && messages.length === 0) {
@@ -38,10 +40,12 @@ const ChatWidget = () => {
     }
   }, [language, messages.length]);
 
-  // Auto-scroll
+  // Auto-scroll only after user has sent a message
   useEffect(() => {
-    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages, isLoading]);
+    if (hasUserMessages || isLoading) {
+      bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [messages, isLoading, hasUserMessages]);
 
   // Focus input on language selected
   useEffect(() => {
@@ -86,7 +90,6 @@ const ChatWidget = () => {
     [isLoading, messages, language]
   );
 
-  const hasUserMessages = messages.some((m) => m.role === "user");
 
   return (
     <>
