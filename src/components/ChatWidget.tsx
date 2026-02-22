@@ -140,7 +140,8 @@ const ChatWidget = () => {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
             transition={{ duration: 0.25 }}
-            className="fixed overflow-hidden flex flex-col bg-bg-dark/95 backdrop-blur-xl border border-white/10 shadow-2xl md:z-50 md:bottom-[7rem] md:right-6 md:w-[380px] md:h-[70vh] md:max-h-[600px] md:rounded-2xl max-md:inset-0 max-md:z-[70] max-md:rounded-none max-md:w-screen max-md:max-w-full max-md:overflow-x-hidden"
+            className="fixed overflow-hidden flex flex-col bg-bg-dark/95 backdrop-blur-xl border border-white/10 shadow-2xl md:z-50 md:bottom-[7rem] md:right-6 md:w-[380px] md:h-[70vh] md:max-h-[600px] md:rounded-2xl max-md:top-0 max-md:left-0 max-md:right-0 max-md:bottom-0 max-md:w-[100vw] max-md:h-[100dvh] max-md:z-[70] max-md:rounded-none"
+            style={{ maxWidth: '100vw' }}
           >
             {/* Header */}
             <div className="h-14 px-4 flex items-center justify-between bg-white/5 border-b border-white/10 shrink-0">
@@ -246,7 +247,7 @@ const ChatWidget = () => {
                 </div>
 
                 {/* Input */}
-                <div className="h-14 px-3 flex items-center gap-2 bg-white/5 border-t border-white/10 shrink-0 w-full min-w-0">
+                <div className="px-3 flex items-center gap-2 bg-white/5 border-t border-white/10 shrink-0 w-full min-w-0" style={{ minHeight: '3.5rem', paddingBottom: 'env(safe-area-inset-bottom, 0px)' }}>
                   <input
                     ref={inputRef}
                     value={input}
