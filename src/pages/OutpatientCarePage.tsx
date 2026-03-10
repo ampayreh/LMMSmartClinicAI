@@ -23,7 +23,7 @@ const OutpatientCarePage = () => {
       <section className="py-20 lg:py-24">
         <div className="container mx-auto px-6 max-w-4xl space-y-8">
           {[
-            { title: "General Consultations", desc: "See a clinician for diagnosis and treatment of common conditions — fever, infections, respiratory illness, pain management, skin conditions, and more.", items: ["Clinical assessment and diagnosis", "Treatment and prescription", "Referral to specialists when needed", "Follow-up care planning"] },
+            { title: "General Consultations", desc: "See a clinician for diagnosis and treatment of common conditions, including fever, infections, respiratory illness, pain management, skin conditions, and more.", items: ["Clinical assessment and diagnosis", "Treatment and prescription", "Referral to specialists when needed", "Follow-up care planning"] },
             { title: "Chronic Disease Management", desc: "Ongoing care for patients managing conditions like hypertension, diabetes, and other chronic illnesses.", items: ["Regular health monitoring", "Medication management", "Lifestyle and nutrition counseling", "Blood sugar and blood pressure checks"] },
             { title: "Minor Surgery & Wound Care", desc: "On-site management of wounds, suturing, abscess drainage, and other minor surgical procedures.", items: ["Wound cleaning and dressing", "Suturing", "Abscess incision and drainage", "Post-procedure follow-up"] },
             { title: "Child & Paediatric Care", desc: "Healthcare for infants, children, and adolescents — illness treatment, growth monitoring, and immunization.", items: ["Paediatric consultations", "Immunization per national schedule", "Growth and nutrition monitoring", "Common childhood illness treatment"] },

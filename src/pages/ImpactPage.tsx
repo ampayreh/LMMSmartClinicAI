@@ -14,7 +14,7 @@ const PARTNERS = [
 ];
 
 const ImpactPage = () => {
-  useSEO({ title: "Impact & Partnerships", description: "How Lynda Michelle Medical Centre serves the Budo-Kimbejja community — our catchment area, outreach model, and partnerships." });
+  useSEO({ title: "Impact & Partnerships", description: "How Lynda Michelle Medical Centre serves the Budo-Kimbejja community: our catchment area, outreach model, and partnerships." });
 
   return (
     <>
@@ -28,7 +28,6 @@ const ImpactPage = () => {
         </div>
       </section>
 
-      {/* Catchment */}
       <section className="py-20 lg:py-24">
         <div className="container mx-auto px-6 max-w-4xl">
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}>
@@ -49,7 +48,6 @@ const ImpactPage = () => {
         </div>
       </section>
 
-      {/* Service Reach */}
       <section className="py-16 bg-primary text-primary-foreground">
         <div className="container mx-auto px-6">
           <div className="grid sm:grid-cols-3 gap-8 text-center">
@@ -68,7 +66,6 @@ const ImpactPage = () => {
         </div>
       </section>
 
-      {/* Partnerships */}
       <section className="py-20 lg:py-24">
         <div className="container mx-auto px-6 max-w-4xl">
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} className="mb-10">
@@ -89,7 +86,6 @@ const ImpactPage = () => {
         </div>
       </section>
 
-      {/* Partner CTA */}
       <section className="py-16 bg-muted/50 border-t border-border">
         <div className="container mx-auto px-6 text-center">
           <h2 className="text-2xl font-heading font-bold text-foreground mb-3">Interested in Partnering?</h2>

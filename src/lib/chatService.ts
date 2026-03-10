@@ -12,60 +12,71 @@ export async function getAIResponse(messages: Message[], language: "en" | "lg" =
     if (data?.reply) return data.reply;
     throw new Error("No reply from AI");
   } catch (e) {
-    console.warn("AI chat failed, falling back to mock:", e);
+    console.warn("AI chat failed, falling back to local responses:", e);
     const lastUserMsg = [...messages].reverse().find((m) => m.role === "user");
-    return getMockResponse(lastUserMsg?.content || "", language);
+    return getLocalResponse(lastUserMsg?.content || "", language);
   }
 }
 
-export function getMockResponse(userMessage: string, language: "en" | "lg" = "en"): string {
+const DISCLAIMER_EN = "\n\n_This assistant provides general information only and does not offer medical advice, diagnosis, or treatment. For health concerns, please visit us or call +256 741 008 049._";
+const DISCLAIMER_LG = "\n\n_Omuyambi ono akuwa amawulire agawamu bokka. Takuwa bulezi. Bw'oba olina ensonga z'obulamu, tujje oba okuba ku +256 741 008 049._";
+
+export function getLocalResponse(userMessage: string, language: "en" | "lg" = "en"): string {
   const msg = userMessage.toLowerCase();
 
   if (language === "lg") {
-    if (msg.includes("musujja") || msg.includes("malaria")) {
-      return "Ku nsonga y'omusujja gwe buwuka, bino by'osuubira ku LMMC:\n\n🔬 **Okukebera Malaria (RDT):** 5,000 UGX\n💊 **Obujjanjabi (bw'oba olina omusujja):**\n• P-Alaxin (ekkoosi yonna): 23,000 UGX\n• Oba Lonart: 21,000 UGX\n• Paracetamol: 250 UGX/kipiira\n\n💰 **Omuwendo ogw'okugereka:** 30,000–45,000 UGX\n\n⚠️ Tukusaba ojje ku LMMC okukebererwa obulungi.";
-    }
     if (msg.includes("mpeereza") || msg.includes("service")) {
-      return "Lynda Michelle Medical Centre erina empeereza 8 ennene:\n\n1️⃣ **OPD** — Okulaba abalwadde bonna\n2️⃣ **Obulamu bw'Abakyala** — ANC, okuzaala obulungi, enteekateeka y'amaka\n3️⃣ **Laabu** — Malaria, HIV, syphilis, n'ebirala\n4️⃣ **Okugema** — Abaana n'abakulu\n5️⃣ **Famasi** — Eddagala 178\n6️⃣ **Okulongoosa Okutono** — Ebiwundu, okutungako\n7️⃣ **Eby'obulamu mu Kitundu** — Okuyigiriza\n8️⃣ **Okujjanjaba Awaka** — Abakadde n'abalwadde\n\nOyagala okumanya ebisingawo ku mpeereza yonna?";
+      return "Lynda Michelle Medical Centre erina empeereza 8 ennene:\n\n1️⃣ **OPD** : Okulaba abalwadde bonna\n2️⃣ **Obulamu bw'Abakyala** : ANC, okuzaala obulungi, enteekateeka y'amaka\n3️⃣ **Laabu** : Malaria, HIV, syphilis, n'ebirala\n4️⃣ **Okugema** : Abaana n'abakulu\n5️⃣ **Famasi** : Eddagala\n6️⃣ **Okulongoosa Okutono** : Ebiwundu, okutungako\n7️⃣ **Eby'obulamu mu Kitundu** : Okuyigiriza\n8️⃣ **Okujjanjaba Awaka** : Abakadde n'abalwadde\n\nOyagala okumanya ebisingawo ku mpeereza yonna?" + DISCLAIMER_LG;
     }
     if (msg.includes("ssaawa") || msg.includes("guggula")) {
-      return "🕐 **Essaawa ez'okukola ku LMMC:**\n\n• Bbalaza–Lwamukaaga: 8:00 AM – 6:00 PM\n• Ssabbiiti: Empeereza z'amangu zokka\n\n📍 Plot 1246, Budo-Kimbejja, Nsangi\n☎️ +256 772 590 967";
+      return "🕐 **Essaawa ez'okukola ku LMMC:**\n\n• Bbalaza okutuuka Lwamukaaga: 8:00 AM – 6:00 PM\n• Ssabbiiti: Empeereza z'amangu zokka\n\n📍 Plot 1246, Budo-Kimbejja, Nsangi\n☎️ +256 772 590 967" + DISCLAIMER_LG;
     }
-    return "Weebale okukoma! Nsobola okukuyamba ku:\n\n• Empeereza zaffe 8\n• Emiwendo gy'obujjanjabi\n• Essaawa ez'okukola\n• Engeri gy'weetegekera okujja\n\nMbuulira by'oyagala okumanya! Oba kuba ku ☎️ +256 772 590 967.";
+    if (msg.includes("wa") || msg.includes("kifo") || msg.includes("direction")) {
+      return "📍 **Engeri gy'otujjirako:**\n\nTuli ku Plot 1246, Budo-Kimbejja, Nsangi Sub-County, Wakiso District.\n\nTutuukirira okuva mu Buddo, Kyengera, ne Nsangi.\n\n☎️ Bw'oyagala obuyambi ku kkubo, tuwandiikire ku WhatsApp: +256 741 008 049" + DISCLAIMER_LG;
+    }
+    return "Weebale okukoma! Nsobola okukuyamba ku:\n\n• Empeereza zaffe 8\n• Essaawa ez'okukola\n• Engeri gy'otujjirako\n• Engeri gy'weetegekera okujja\n\nMbuulira by'oyagala okumanya! Oba kuba ku ☎️ +256 741 008 049." + DISCLAIMER_LG;
   }
 
-  // English fallback (existing)
-  if (msg.includes("malaria")) {
-    return "Based on your concern about malaria, here's what to expect at LMMC:\n\n🔬 **Malaria RDT Test:** 5,000 UGX\n💊 **Treatment (if positive):**\n• P-Alaxin tablets (full course): 23,000 UGX\n• OR Lonart tablets: 21,000 UGX\n• Paracetamol for fever: 250 UGX/tablet\n\n💰 **Estimated total visit:** 30,000–45,000 UGX\n\nFor children, syrup formulations are available.\n\n⚠️ We recommend visiting LMMC for a proper test. Self-diagnosis can be dangerous.\n\n📍 Plot 1246, Budo-Kimbejja | ☎️ +256 772 590 967";
-  }
-
-  if (msg.includes("fever") || msg.includes("headache")) {
-    return "I'm sorry to hear you're not feeling well. Fever and headache are common symptoms in our region and could indicate several conditions including malaria, which is prevalent in Wakiso District.\n\n🏥 **We recommend visiting LMMC for:**\n• Malaria RDT test: 5,000 UGX\n• General consultation: 10,000–15,000 UGX\n• Blood sugar check (if needed): 5,000 UGX\n\n💊 While you prepare to visit, stay hydrated and rest.\n\n⚠️ If you experience severe headache, confusion, difficulty breathing, or very high fever, please come immediately or call us.\n\n📍 Mon–Sat: 8AM–6PM | ☎️ +256 772 590 967";
-  }
-
+  // English responses (navigation, hours, services, directions, booking only)
   if (msg.includes("service")) {
-    return "Lynda Michelle Medical Centre offers 8 core services:\n\n1️⃣ **Outpatient Care (OPD)** — General consultations for all ages\n2️⃣ **Maternal & Reproductive Health** — ANC, safe deliveries, family planning\n3️⃣ **Laboratory & Diagnostics** — Malaria, HIV, syphilis, pregnancy tests & more\n4️⃣ **Immunization** — Child & adult vaccinations\n5️⃣ **Pharmacy** — 178 medications in stock\n6️⃣ **Minor Surgery** — Wound care, suturing, abscess drainage\n7️⃣ **Community Health Education** — Outreach programs\n8️⃣ **Home-Based Care** — Visits for elderly & homebound patients\n\nWould you like details about any specific service?";
+    return "Lynda Michelle Medical Centre offers 8 core services:\n\n1️⃣ **Outpatient Care (OPD)** : General consultations for all ages\n2️⃣ **Maternal & Reproductive Health** : ANC, safe deliveries, family planning\n3️⃣ **Laboratory & Diagnostics** : Malaria, HIV, syphilis, pregnancy tests and more\n4️⃣ **Immunization** : Child and adult vaccinations\n5️⃣ **Pharmacy** : Essential medicines\n6️⃣ **Minor Surgery** : Wound care, suturing, abscess drainage\n7️⃣ **Community Health Education** : Outreach programmes\n8️⃣ **Home-Based Care** : Visits for elderly and homebound patients\n\nWould you like to know more about a specific service?" + DISCLAIMER_EN;
   }
 
   if (msg.includes("hour") || msg.includes("time") || msg.includes("open")) {
-    return "🕐 **LMMC Operating Hours:**\n\n• Monday–Saturday: 8:00 AM – 6:00 PM\n• Sunday: Emergency Services Only\n\n📍 **Location:** Plot 1246, Budo-Kimbejja, Nsangi, Wakiso District\n📫 P.O. Box 148398, Kampala GPO\n☎️ +256 772 590 967\n📧 admin@lyndamichellemed.com\n💬 WhatsApp: +256 772 590 967\n\nWe welcome walk-ins! No appointment needed for OPD consultations.";
+    return "🕐 **LMMC Operating Hours:**\n\n• Monday to Saturday: 8:00 AM – 6:00 PM\n• Sunday: Emergency Services Only\n\n📍 **Location:** Plot 1246, Budo-Kimbejja, Nsangi, Wakiso District\n📫 P.O. Box 148398, Kampala GPO\n☎️ +256 772 590 967\n📧 admin@lyndamichellemed.com\n💬 WhatsApp: +256 741 008 049\n\nWe welcome walk-ins. No appointment is needed for OPD consultations." + DISCLAIMER_EN;
   }
 
-  if (msg.includes("pregnant") || msg.includes("antenatal") || msg.includes("anc") || msg.includes("baby") || msg.includes("delivery")) {
-    return "Congratulations and welcome! Our maternal health services include:\n\n🤰 **Antenatal Care (ANC):**\n• ANC card (first visit): 4,000 UGX\n• Pregnancy test (HCG): 2,000 UGX\n• HIV test: 5,000 UGX\n• Syphilis test: 5,000 UGX\n• Blood sugar: 5,000 UGX\n• Supplements (folic acid, iron, multivitamins): ~300 UGX/day\n\n🏥 **Estimated first ANC visit:** 25,000–35,000 UGX\n📋 **Follow-up visits:** 10,000–15,000 UGX each\n\n👶 **Delivery:**\n• Mama kit (essential supplies): 25,000 UGX\n• Safe delivery services available with experienced midwives\n\n👩‍⚕️ Our registered midwife Jenipher Nakyejjusa leads our maternal health program, in partnership with Marie Stopes International.\n\n📍 Visit us Mon–Sat 8AM–6PM | ☎️ +256 772 590 967";
+  if (msg.includes("direction") || msg.includes("where") || msg.includes("location") || msg.includes("map") || msg.includes("find")) {
+    return "📍 **How to find us:**\n\nWe are located at Plot 1246, Budo-Kimbejja, Nsangi Sub-County, Wakiso District, Uganda.\n\nThe clinic is accessible from Buddo, Kyengera, and surrounding areas in Nsangi.\n\n☎️ For directions, WhatsApp us at +256 741 008 049 and we'll guide you." + DISCLAIMER_EN;
+  }
+
+  if (msg.includes("book") || msg.includes("appointment") || msg.includes("visit")) {
+    return "📋 **How to visit us:**\n\nWalk-in consultations are welcome Monday to Saturday, 8:00 AM to 6:00 PM. No appointment is required for outpatient visits.\n\nFor planned visits or maternal care, you can call ahead to reduce wait times:\n☎️ +256 741 008 049 (WhatsApp)\n☎️ +256 772 590 967\n\nPlease bring any previous medical records, current medications, and a valid form of identification." + DISCLAIMER_EN;
+  }
+
+  if (msg.includes("maternal") || msg.includes("pregnant") || msg.includes("antenatal") || msg.includes("anc") || msg.includes("delivery") || msg.includes("baby")) {
+    return "🤰 **Maternal & Reproductive Health Services:**\n\nWe provide comprehensive care for mothers and families, including:\n• Antenatal care (ANC)\n• Safe deliveries with a registered midwife\n• Postnatal and post-abortion care\n• Family planning counselling and methods\n• Youth-friendly sexual and reproductive health services\n\nOur maternal health programme operates in partnership with Marie Stopes Uganda.\n\n📍 Visit us Monday to Saturday, 8 AM to 6 PM\n☎️ +256 741 008 049" + DISCLAIMER_EN;
   }
 
   if (msg.includes("family planning") || msg.includes("contraceptive") || msg.includes("birth control")) {
-    return "We offer comprehensive family planning services in partnership with Marie Stopes International:\n\n💊 **Pills:** Lydia contraceptives — 3,000 UGX/month\n💉 **Injectable:** Lydia 150mg — 5,000 UGX (3-month protection)\n📌 **Implants:**\n• Implanon (3 years): 20,000 UGX\n• Jadelle (5 years): 25,000 UGX\n🔗 **IUD** (up to 10 years): 30,000 UGX\n🆘 **Emergency contraception:** Lydia emergency — 5,000 UGX\n\nAll methods include free counseling. Our midwife will help you choose the best option for your needs.\n\n📍 Visit us Mon–Sat 8AM–6PM | ☎️ +256 772 590 967";
+    return "💊 **Family Planning Services:**\n\nWe offer a range of family planning methods, including pills, injectables, implants, IUDs, and emergency contraception. All methods include free counselling to help you choose the best option.\n\nOur services are delivered in partnership with Marie Stopes Uganda.\n\nFor specific details and availability, visit us or call:\n☎️ +256 741 008 049 (WhatsApp)\n📍 Monday to Saturday, 8 AM to 6 PM" + DISCLAIMER_EN;
   }
 
-  if (msg.includes("cost") || msg.includes("price") || msg.includes("how much") || msg.includes("expensive") || msg.includes("cheap") || msg.includes("afford")) {
-    return "Here are estimated costs for common services at LMMC (in UGX):\n\n🏥 **Consultations:** 10,000–15,000\n🔬 **Lab Tests:**\n• Malaria RDT: 5,000\n• HIV test: 5,000\n• Pregnancy test: 2,000\n• Blood sugar: 5,000\n\n💊 **Common Treatments:**\n• Malaria (full course): 30,000–45,000\n• UTI/STI antibiotics: 20,000–40,000\n• Cold/flu treatment: 15,000–25,000\n\n🤰 **Maternal:**\n• First ANC visit: 25,000–35,000\n• Mama kit: 25,000\n• Family planning: 3,000–30,000\n\n💡 These are estimates. Your clinician will confirm exact costs based on your needs.\n\nWould you like details about a specific treatment?";
+  if (msg.includes("lab") || msg.includes("test") || msg.includes("diagnos")) {
+    return "🔬 **Laboratory & Diagnostics:**\n\nWe offer on-site rapid diagnostic testing with same-day results, including tests for malaria, HIV (confidential), syphilis, pregnancy, blood sugar, H. Pylori, and more.\n\nWalk-ins are welcome. No appointment needed.\n\n📍 Monday to Saturday, 8 AM to 6 PM\n☎️ +256 741 008 049" + DISCLAIMER_EN;
   }
 
-  if (msg.includes("hiv") || msg.includes("test")) {
-    return "We offer confidential testing services:\n\n🔬 **Available Tests:**\n• HIV test: 5,000 UGX (confidential, results same day)\n• Malaria RDT: 5,000 UGX\n• Syphilis test: 5,000 UGX\n• Pregnancy test (HCG): 2,000 UGX\n• H. Pylori test: 5,000 UGX\n• Blood sugar (RBS): 5,000 UGX\n\nAll tests are conducted by trained lab staff with quick turnaround.\n\nWe partner with PEPFAR & USAID for HIV testing, prevention, and treatment support.\n\n📍 Walk-ins welcome Mon–Sat 8AM–6PM | ☎️ +256 772 590 967";
+  if (msg.includes("pharmacy") || msg.includes("medicine") || msg.includes("drug")) {
+    return "💊 **Pharmacy:**\n\nOur on-site pharmacy stocks essential medicines for common conditions, maternal health, chronic disease, and paediatric care. Medicines are sourced through Joint Medical Stores and other approved suppliers.\n\nYour clinician will prescribe what you need and you can collect it on-site.\n\n📍 Monday to Saturday, 8 AM to 6 PM" + DISCLAIMER_EN;
   }
 
-  return "Thank you for reaching out! I can help you with:\n\n• Information about our 8 medical services\n• Estimated costs for treatments and tests\n• Operating hours and location\n• How to prepare for your visit\n• Maternal health and family planning\n\nCould you tell me more about what you need? Or feel free to call us directly at ☎️ +256 772 590 967.\n\n📍 Plot 1246, Budo-Kimbejja, Nsangi, Wakiso District\n🕐 Mon–Sat: 8AM–6PM";
+  if (msg.includes("cost") || msg.includes("price") || msg.includes("how much") || msg.includes("expensive") || msg.includes("afford") || msg.includes("pay")) {
+    return "💰 **Costs and Payment:**\n\nWe strive to keep our services affordable for the community. Costs vary depending on the service and treatment required.\n\nWe accept cash and mobile money. For specific pricing, please visit us or call ahead:\n☎️ +256 741 008 049 (WhatsApp)\n☎️ +256 772 590 967\n\n📍 Monday to Saturday, 8 AM to 6 PM" + DISCLAIMER_EN;
+  }
+
+  if (msg.includes("whatsapp")) {
+    return "💬 **WhatsApp:**\n\nYou can reach us on WhatsApp at +256 741 008 049 for inquiries, directions, or to prepare for your visit.\n\nOur team responds during operating hours: Monday to Saturday, 8 AM to 6 PM." + DISCLAIMER_EN;
+  }
+
+  return "Thank you for reaching out! I can help you with:\n\n• Our 8 healthcare services\n• Operating hours and location\n• Directions to the clinic\n• How to book or prepare for a visit\n• Maternal health and family planning information\n• Lab and pharmacy services\n\nWhat would you like to know? You can also call us directly at ☎️ +256 741 008 049.\n\n📍 Plot 1246, Budo-Kimbejja, Nsangi, Wakiso District\n🕐 Monday to Saturday: 8 AM to 6 PM" + DISCLAIMER_EN;
 }

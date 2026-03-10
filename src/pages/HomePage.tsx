@@ -95,7 +95,7 @@ const HomePage = () => {
               Comprehensive Healthcare, Close to Home
             </h2>
             <p className="text-muted-foreground mt-4 leading-relaxed">
-              From prenatal care to community health education, we deliver a full spectrum of primary healthcare services tailored to the needs of families in peri-urban Wakiso.
+              At the heart of our mission is the health of mothers and children. We provide comprehensive antenatal care, safe deliveries, family planning, postnatal support, and youth-friendly sexual and reproductive health services, all led by our experienced midwife in partnership with Marie Stopes Uganda.
             </p>
           </motion.div>
 
