@@ -52,7 +52,7 @@ const MaternalHealthPage = () => {
               <Shield className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
               <div>
                 <h3 className="font-semibold text-foreground mb-1">When to seek urgent care</h3>
-                <p className="text-sm text-muted-foreground leading-relaxed">If you experience severe bleeding, high fever, severe headache or vision changes during pregnancy, reduced baby movement, or difficulty breathing — please come to the clinic immediately or call +256 741 008 049.</p>
+                <p className="text-sm text-muted-foreground leading-relaxed">If you experience severe bleeding, high fever, severe headache or vision changes during pregnancy, reduced baby movement, or difficulty breathing, please come to the clinic immediately or call +256 741 008 049.</p>
               </div>
             </div>
           </div>

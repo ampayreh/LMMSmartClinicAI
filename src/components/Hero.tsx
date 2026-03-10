@@ -64,7 +64,7 @@ const Hero = () => (
       />
     </motion.div>
 
-    {/* Badge — floating over bottom-right of image */}
+    {/* Badge - floating over bottom-right of image */}
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}

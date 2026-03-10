@@ -251,7 +251,7 @@ const HomePage = () => {
               Building the Future of Community Healthcare
             </h2>
             <p className="text-muted-foreground leading-relaxed mb-8">
-              We are planning a phased expansion into a multi-service hospital facility — including expanded maternity capacity, advanced diagnostics, inpatient wards, and a modern surgical theatre. This is our vision for the next chapter.
+              We are planning a phased expansion into a multi-service hospital facility, including expanded maternity capacity, advanced diagnostics, inpatient wards, and a modern surgical theatre. This is our vision for the next chapter.
             </p>
             <div className="flex flex-wrap justify-center gap-4">
               <Link to="/future" className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-6 py-3 rounded-lg font-semibold hover:bg-forest-light transition-colors">

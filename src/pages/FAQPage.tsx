@@ -30,7 +30,7 @@ const FAQS = [
 ];
 
 const FAQPage = () => {
-  useSEO({ title: "Frequently Asked Questions", description: "Find answers to common questions about visiting Lynda Michelle Medical Centre — appointments, maternal care, lab tests, payments, and more." });
+  useSEO({ title: "Frequently Asked Questions", description: "Find answers to common questions about visiting Lynda Michelle Medical Centre: appointments, maternal care, lab tests, payments, and more." });
 
   return (
     <>

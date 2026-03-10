@@ -16,7 +16,7 @@ const TEAM = [
 ];
 
 const LeadershipPage = () => {
-  useSEO({ title: "Leadership & Governance", description: "Meet the leadership team at Lynda Michelle Medical Centre — our values, governance approach, and commitment to quality healthcare." });
+  useSEO({ title: "Leadership & Governance", description: "Meet the leadership team at Lynda Michelle Medical Centre: our values, governance approach, and commitment to quality healthcare." });
 
   return (
     <>
