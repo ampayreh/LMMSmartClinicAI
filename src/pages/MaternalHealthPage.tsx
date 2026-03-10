@@ -6,7 +6,7 @@ import { useSEO } from "@/hooks/useSEO";
 const fadeUp = { hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0 } };
 
 const MaternalHealthPage = () => {
-  useSEO({ title: "Maternal, Reproductive & Child Health", description: "Comprehensive maternal and reproductive health services at Lynda Michelle Medical Centre — antenatal care, safe deliveries, family planning, postnatal support." });
+  useSEO({ title: "Maternal, Reproductive & Child Health", description: "Comprehensive maternal and reproductive health services at Lynda Michelle Medical Centre: antenatal care, safe deliveries, family planning, postnatal support." });
 
   return (
     <>
