@@ -205,7 +205,7 @@ const HomePage = () => {
               Rooted in Our Community
             </h2>
             <p className="text-white/80 mt-4 leading-relaxed">
-              We serve households, schools, churches, and trading centres across Budo-Kimbejja, Nsangi, Kyengera, and the wider Buddo corridor — reaching families where they live, work, and gather.
+              We serve households, schools, churches, and trading centres across Budo-Kimbejja, Nsangi, Kyengera, and the wider Buddo corridor, reaching families where they live, work, and gather.
             </p>
           </motion.div>
 
