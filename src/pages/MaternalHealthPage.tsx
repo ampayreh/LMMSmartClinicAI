@@ -15,7 +15,7 @@ const MaternalHealthPage = () => {
           <motion.div initial="hidden" animate="visible" variants={fadeUp} className="max-w-2xl">
             <Link to="/services" className="text-sm text-primary font-medium hover:underline">← All Services</Link>
             <h1 className="text-4xl md:text-5xl font-heading font-bold text-foreground mt-4 mb-6">Maternal, Reproductive & Child Health</h1>
-            <p className="text-lg text-muted-foreground leading-relaxed">Our flagship service area — comprehensive care for mothers, children, and families at every stage, led by our experienced registered midwife in partnership with Marie Stopes Uganda.</p>
+            <p className="text-lg text-muted-foreground leading-relaxed">Our flagship service area: comprehensive care for mothers, children, and families at every stage, led by our experienced registered midwife in partnership with Marie Stopes Uganda.</p>
           </motion.div>
         </div>
       </section>
