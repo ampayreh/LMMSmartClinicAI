@@ -15,7 +15,7 @@ const TIMELINE = [
 ];
 
 const VALUES = [
-  { icon: Heart, title: "Compassion", desc: "Every patient is treated with warmth, dignity, and respect — regardless of background or circumstance." },
+  { icon: Heart, title: "Compassion", desc: "Every patient is treated with warmth, dignity, and respect, regardless of background or circumstance." },
   { icon: Shield, title: "Integrity", desc: "We are honest, transparent, and accountable in all aspects of care delivery and institutional governance." },
   { icon: Users, title: "Community", desc: "We are rooted in Budo-Kimbejja. Our programmes are designed around the real needs of our neighbours." },
   { icon: Eye, title: "Excellence", desc: "We pursue continuous improvement in clinical quality, patient safety, and service delivery." },
