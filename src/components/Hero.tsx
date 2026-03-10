@@ -42,7 +42,7 @@ const Hero = () => (
     {/* Extra dark overlay for text readability on tablet */}
     <div className="lg:hidden absolute inset-x-0 top-0 h-[45vh] md:h-[60vh] z-[1] pointer-events-none bg-gradient-to-r from-bg-dark/80 via-bg-dark/40 to-transparent md:from-bg-dark/70 md:via-bg-dark/30" />
 
-    {/* Desktop hero image — large, edge-to-edge right, masked */}
+    {/* Desktop hero image - large, edge-to-edge right, masked */}
     <motion.div
       initial={{ opacity: 0, scale: 1.02 }}
       animate={{ opacity: 1, scale: 1 }}
