@@ -1,15 +1,15 @@
 const suggestionsEn = [
   "What services do you offer?",
-  "How much does a malaria test cost?",
-  "I have a headache and fever",
   "What are your operating hours?",
+  "How do I get to the clinic?",
+  "How do I book a visit?",
 ];
 
 const suggestionsLg = [
   "Mpeereza ki ze mulina?",
-  "Okukebera omusujja gwe buwuka kumeka?",
-  "Nnina okugulumiza omutwe n'omusujja",
   "Muggula essaawa mmeka?",
+  "Ntuuka ntya ku ddwaliro?",
+  "Mbookingi ntya okujja?",
 ];
 
 interface ChatSuggestionsProps {
