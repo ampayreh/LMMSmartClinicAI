@@ -95,7 +95,7 @@ const HomePage = () => {
               Comprehensive Healthcare, Close to Home
             </h2>
             <p className="text-muted-foreground mt-4 leading-relaxed">
-              From prenatal care to community health education, we deliver a full spectrum of primary healthcare services tailored to the needs of families in peri-urban Wakiso.
+              At the heart of our mission is the health of mothers and children. We provide comprehensive antenatal care, safe deliveries, family planning, postnatal support, and youth-friendly sexual and reproductive health services, all led by our experienced midwife in partnership with Marie Stopes Uganda.
             </p>
           </motion.div>
 
@@ -175,7 +175,7 @@ const HomePage = () => {
                 Maternal & Reproductive Health
               </h2>
               <p className="text-muted-foreground leading-relaxed mb-6">
-                At the heart of our mission is the health of mothers and children. We provide comprehensive antenatal care, safe deliveries, family planning, postnatal support, and youth-friendly sexual and reproductive health services — all led by our experienced midwife, in partnership with Marie Stopes Uganda.
+                At the heart of our mission is the health of mothers and children. We provide comprehensive antenatal care, safe deliveries, family planning, postnatal support, and youth-friendly sexual and reproductive health services, all led by our experienced midwife in partnership with Marie Stopes Uganda.
               </p>
               <ul className="space-y-3 mb-6">
                 {["Antenatal care and safe deliveries", "Family planning counseling and methods", "Postnatal and post-abortion care", "Youth-friendly SRH services"].map((item) => (
@@ -205,7 +205,7 @@ const HomePage = () => {
               Rooted in Our Community
             </h2>
             <p className="text-white/80 mt-4 leading-relaxed">
-              We serve households, schools, churches, and trading centres across Budo-Kimbejja, Nsangi, Kyengera, and the wider Buddo corridor — reaching families where they live, work, and gather.
+              We serve households, schools, churches, and trading centres across Budo-Kimbejja, Nsangi, Kyengera, and the wider Buddo corridor, reaching families where they live, work, and gather.
             </p>
           </motion.div>
 
@@ -251,7 +251,7 @@ const HomePage = () => {
               Building the Future of Community Healthcare
             </h2>
             <p className="text-muted-foreground leading-relaxed mb-8">
-              We are planning a phased expansion into a multi-service hospital facility — including expanded maternity capacity, advanced diagnostics, inpatient wards, and a modern surgical theatre. This is our vision for the next chapter.
+              We are planning a phased expansion into a multi-service hospital facility, including expanded maternity capacity, advanced diagnostics, inpatient wards, and a modern surgical theatre. This is our vision for the next chapter.
             </p>
             <div className="flex flex-wrap justify-center gap-4">
               <Link to="/future" className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-6 py-3 rounded-lg font-semibold hover:bg-forest-light transition-colors">

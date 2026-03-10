@@ -1,7 +1,7 @@
 import { useSEO } from "@/hooks/useSEO";
 
 const PrivacyPage = () => {
-  useSEO({ title: "Privacy Policy", description: "Privacy policy for Lynda Michelle Medical Centre — how we collect, use, and protect your information." });
+  useSEO({ title: "Privacy Policy", description: "Privacy policy for Lynda Michelle Medical Centre: how we collect, use, and protect your information." });
 
   return (
     <section className="py-16 lg:py-24">

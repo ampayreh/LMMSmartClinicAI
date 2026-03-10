@@ -8,33 +8,33 @@ const fadeUp = { hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0 } };
 
 const PHASES = [
   {
-    phase: "Phase 0 — Current Platform",
+    phase: "Phase 0: Current Platform",
     status: "Active",
-    desc: "The existing clinic at Plot 1246, Budo-Kimbejja serves as the operational foundation — delivering 8 core services, serving 9,700+ people, and demonstrating sustained community demand.",
+    desc: "The existing clinic at Plot 1246, Budo-Kimbejja serves as the operational foundation, delivering 8 core services, serving 9,700+ people, and demonstrating sustained community demand.",
     items: ["Maternal & reproductive health services", "Outpatient consultations & pharmacy", "Laboratory & rapid diagnostics", "Community outreach & immunization", "Established partnerships with Marie Stopes Uganda & JMS"],
   },
   {
-    phase: "Phase 1 — Foundation & Systems",
+    phase: "Phase 1: Foundation & Systems",
     status: "Planned",
     desc: "Strengthening the operational core: expanded maternity capacity, digital management systems, supply chain security, outreach vehicle, and essential infrastructure upgrades.",
     items: ["Expanded maternity wing", "Digital clinic management system", "Stock security & JMS supply chain", "Outreach vehicle for community health", "Staff training & development"],
   },
   {
-    phase: "Phase 2 — Diagnostics & Service Deepening",
+    phase: "Phase 2: Diagnostics & Service Deepening",
     status: "Planned",
-    desc: "Adding advanced diagnostic capability and expanding the range of services — ultrasound, enhanced laboratory, and specialist consultation capacity.",
+    desc: "Adding advanced diagnostic capability and expanding the range of services, including ultrasound, enhanced laboratory, and specialist consultation capacity.",
     items: ["Advanced diagnostic equipment", "Enhanced laboratory services", "Specialist consultation capacity", "Expanded pharmacy inventory"],
   },
   {
-    phase: "Phase 3 — Hospital Infrastructure",
+    phase: "Phase 3: Hospital Infrastructure",
     status: "Vision",
     desc: "The full hospital buildout: inpatient wards, private rooms, modern surgical theatre, staff housing, community spaces, and full accessibility features.",
-    items: ["Inpatient wards & private rooms", "Modern surgical theatre", "Staff & nurse housing", "Community meeting spaces", "Full accessibility — ramps, parking, signage"],
+    items: ["Inpatient wards & private rooms", "Modern surgical theatre", "Staff & nurse housing", "Community meeting spaces", "Full accessibility: ramps, parking, signage"],
   },
 ];
 
 const FutureHospitalPage = () => {
-  useSEO({ title: "Future Hospital & Expansion", description: "Our phased expansion plan — from community clinic to multi-service hospital facility. Learn about our vision for the future of healthcare in Budo-Kimbejja." });
+  useSEO({ title: "Future Hospital & Expansion", description: "Our phased expansion plan, from community clinic to multi-service hospital facility. Learn about our vision for the future of healthcare in Budo-Kimbejja." });
 
   return (
     <>
@@ -50,13 +50,12 @@ const FutureHospitalPage = () => {
               Building the Future of Community Healthcare
             </h1>
             <p className="text-lg text-white/80 leading-relaxed">
-              We are planning a disciplined, phased expansion from our current clinic platform into a comprehensive multi-service hospital facility — one that meets the growing healthcare needs of Budo-Kimbejja and the wider Nsangi community.
+              We are planning a disciplined, phased expansion from our current clinic platform into a comprehensive multi-service hospital facility, one that meets the growing healthcare needs of Budo-Kimbejja and the wider Nsangi community.
             </p>
           </motion.div>
         </div>
       </section>
 
-      {/* Roadmap */}
       <section className="py-20 lg:py-24">
         <div className="container mx-auto px-6">
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} className="text-center max-w-2xl mx-auto mb-14">
@@ -90,7 +89,6 @@ const FutureHospitalPage = () => {
         </div>
       </section>
 
-      {/* Partner CTA */}
       <section className="py-16 bg-primary">
         <div className="container mx-auto px-6 text-center">
           <h2 className="text-2xl md:text-3xl font-heading font-bold text-white mb-4">Partner in This Vision</h2>

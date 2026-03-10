@@ -12,12 +12,12 @@ const WELCOME_MESSAGES: Record<"en" | "lg", Message> = {
   en: {
     role: "assistant",
     content:
-      "Welcome to Lynda Michelle Medical Centre! 👋 I'm your clinic assistant. I can help you with:\n\n• Our services and operating hours\n\n• Estimated costs for treatments\n\n• How to prepare for your visit\n\n• General health guidance\n\nHow can I help you today?",
+      "Welcome to Lynda Michelle Medical Centre! 👋 I can help you with:\n\n• Our services and operating hours\n\n• Directions to the clinic\n\n• How to prepare for your visit\n\n• Booking and contact information\n\n_This assistant provides general information only and does not offer medical advice._\n\nHow can I help you today?",
   },
   lg: {
     role: "assistant",
     content:
-      "Tukulabye ku Lynda Michelle Medical Centre! 👋 Nze omuyambi wo mu ddwaliro. Nsobola okukuyamba ku:\n\n• Empeereza zaffe n'essaawa ez'okukola\n\n• Ebiwereza eby'obujjanjabi\n\n• Engeri gy'weetegekera okujja\n\n• Obulezi obw'awamu\n\nNkuyambe ntya leero?",
+      "Tukulabye ku Lynda Michelle Medical Centre! 👋 Nsobola okukuyamba ku:\n\n• Empeereza zaffe n'essaawa ez'okukola\n\n• Engeri gy'otujjirako\n\n• Engeri gy'weetegekera okujja\n\n• Okubookingi n'okututuukirira\n\n_Omuyambi ono akuwa amawulire agawamu bokka. Takuwa bulezi._\n\nNkuyambe ntya leero?",
   },
 };
 
@@ -34,21 +34,18 @@ const ChatWidget = () => {
   const hasUserMessages = messages.some((m) => m.role === "user");
   const lastMessageRef = useRef<HTMLDivElement>(null);
 
-  // Add welcome message after language selection
   useEffect(() => {
     if (language && messages.length === 0) {
       setMessages([WELCOME_MESSAGES[language]]);
     }
   }, [language, messages.length]);
 
-  // Scroll to the start of the latest assistant reply so user reads from top
   useEffect(() => {
     if (hasUserMessages && !isLoading && messages.length > 0 && messages[messages.length - 1].role === "assistant") {
       lastMessageRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
     }
   }, [messages, isLoading, hasUserMessages]);
 
-  // Focus input on language selected
   useEffect(() => {
     if (language) setTimeout(() => inputRef.current?.focus(), 300);
   }, [language]);
@@ -91,7 +88,6 @@ const ChatWidget = () => {
     [isLoading, messages, language]
   );
 
-
   return (
     <>
       {/* AI Chat FAB */}
@@ -114,7 +110,7 @@ const ChatWidget = () => {
                 exit={{ opacity: 0, x: 8 }}
                 className="absolute right-16 bg-black/70 text-white text-xs px-2 py-1 rounded-full whitespace-nowrap"
               >
-                Ask AI
+                Ask us
               </motion.span>
             )}
           </AnimatePresence>
@@ -128,11 +124,6 @@ const ChatWidget = () => {
               <MessageCircle className="w-6 h-6 text-bg-dark" />
             )}
           </div>
-          {!isOpen && (
-            <span className="absolute -top-1 -right-1 bg-amber-accent text-bg-dark w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold">
-              AI
-            </span>
-          )}
         </div>
       </motion.button>
 
@@ -153,7 +144,7 @@ const ChatWidget = () => {
                 <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
                 <div>
                   <p className="text-sm font-semibold text-text-primary leading-tight">
-                    LMM Smart Assistant
+                    LMM Assistant
                   </p>
                   <p className="text-xs text-text-secondary">
                     {language === "lg" ? "Ku mutimbagano" : "Online"}
@@ -262,7 +253,7 @@ const ChatWidget = () => {
                     placeholder={
                       language === "lg"
                         ? "Buuza ku mpeereza zaffe..."
-                        : "Ask about our services..."
+                        : "Ask about hours, services, directions..."
                     }
                     className="flex-1 min-w-0 bg-transparent text-text-primary text-sm placeholder:text-text-secondary/50 outline-none"
                   />

@@ -11,13 +11,13 @@ const SERVICES = [
   { icon: TestTube, title: "Laboratory & Diagnostics", desc: "On-site rapid diagnostic testing including malaria, HIV, syphilis, pregnancy, blood sugar, and H. Pylori. Results available same day.", href: "/services/lab-diagnostics", highlight: false },
   { icon: Pill, title: "Pharmacy", desc: "A well-stocked pharmacy with essential medicines for common conditions, maternal health, chronic disease, and paediatric care.", href: "/services/lab-diagnostics", highlight: false },
   { icon: Syringe, title: "Immunization", desc: "Child and adult vaccinations following the national immunization schedule, delivered as part of routine care and community outreach days.", href: "/services/community-outreach", highlight: false },
-  { icon: Scissors, title: "Minor Surgery & Wound Care", desc: "Wound management, suturing, abscess drainage, and minor surgical procedures performed on-site.", href: "/services/outpatient-care", highlight: false },
+  { icon: Scissors, title: "Minor Surgery & Wound Care", desc: "Wound management, suturing, abscess drainage, and other minor surgical procedures performed on-site.", href: "/services/outpatient-care", highlight: false },
   { icon: Users, title: "Community Health Education", desc: "Outreach programmes, immunization-day education, and community-based health promotion targeting families, schools, and local groups.", href: "/services/community-outreach", highlight: false },
-  { icon: Home, title: "Home-Based Care", desc: "Visits for elderly, homebound, and post-delivery patients — continuing our domiciliary care heritage.", href: "/services/community-outreach", highlight: false },
+  { icon: Home, title: "Home-Based Care", desc: "Visits for elderly, homebound, and post-delivery patients, continuing our domiciliary care heritage.", href: "/services/community-outreach", highlight: false },
 ];
 
 const ServicesPage = () => {
-  useSEO({ title: "Our Services", description: "Explore the 8 core healthcare services offered at Lynda Michelle Medical Centre — from maternal health and outpatient care to diagnostics, pharmacy, and community outreach." });
+  useSEO({ title: "Our Services", description: "Explore the 8 core healthcare services offered at Lynda Michelle Medical Centre, from maternal health and outpatient care to diagnostics, pharmacy, and community outreach." });
 
   return (
     <>
@@ -60,11 +60,10 @@ const ServicesPage = () => {
         </div>
       </section>
 
-      {/* CTA */}
       <section className="py-16 bg-primary">
         <div className="container mx-auto px-6 text-center">
           <h2 className="text-2xl md:text-3xl font-heading font-bold text-white mb-4">Need Care? We're Here for You.</h2>
-          <p className="text-white/80 mb-6">Walk-ins welcome Monday–Saturday, 8 AM – 6 PM.</p>
+          <p className="text-white/80 mb-6">Walk-ins welcome Monday to Saturday, 8 AM to 6 PM.</p>
           <div className="flex flex-wrap justify-center gap-4">
             <Link to="/contact" className="bg-white text-forest-dark px-6 py-3 rounded-lg font-semibold hover:bg-white/90 transition-colors">
               Book a Visit

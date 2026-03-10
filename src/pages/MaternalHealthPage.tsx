@@ -6,7 +6,7 @@ import { useSEO } from "@/hooks/useSEO";
 const fadeUp = { hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0 } };
 
 const MaternalHealthPage = () => {
-  useSEO({ title: "Maternal, Reproductive & Child Health", description: "Comprehensive maternal and reproductive health services at Lynda Michelle Medical Centre — antenatal care, safe deliveries, family planning, postnatal support." });
+  useSEO({ title: "Maternal, Reproductive & Child Health", description: "Comprehensive maternal and reproductive health services at Lynda Michelle Medical Centre: antenatal care, safe deliveries, family planning, postnatal support." });
 
   return (
     <>
@@ -15,7 +15,7 @@ const MaternalHealthPage = () => {
           <motion.div initial="hidden" animate="visible" variants={fadeUp} className="max-w-2xl">
             <Link to="/services" className="text-sm text-primary font-medium hover:underline">← All Services</Link>
             <h1 className="text-4xl md:text-5xl font-heading font-bold text-foreground mt-4 mb-6">Maternal, Reproductive & Child Health</h1>
-            <p className="text-lg text-muted-foreground leading-relaxed">Our flagship service area — comprehensive care for mothers, children, and families at every stage, led by our experienced registered midwife in partnership with Marie Stopes Uganda.</p>
+            <p className="text-lg text-muted-foreground leading-relaxed">Our flagship service area: comprehensive care for mothers, children, and families at every stage, led by our experienced registered midwife in partnership with Marie Stopes Uganda.</p>
           </motion.div>
         </div>
       </section>
@@ -52,7 +52,7 @@ const MaternalHealthPage = () => {
               <Shield className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
               <div>
                 <h3 className="font-semibold text-foreground mb-1">When to seek urgent care</h3>
-                <p className="text-sm text-muted-foreground leading-relaxed">If you experience severe bleeding, high fever, severe headache or vision changes during pregnancy, reduced baby movement, or difficulty breathing — please come to the clinic immediately or call +256 741 008 049.</p>
+                <p className="text-sm text-muted-foreground leading-relaxed">If you experience severe bleeding, high fever, severe headache or vision changes during pregnancy, reduced baby movement, or difficulty breathing, please come to the clinic immediately or call +256 741 008 049.</p>
               </div>
             </div>
           </div>

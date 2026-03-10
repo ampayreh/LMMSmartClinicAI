@@ -7,7 +7,7 @@ import founderImage from "@/assets/team-lydia.jpeg";
 const fadeUp = { hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0 } };
 
 const FounderStoryPage = () => {
-  useSEO({ title: "Founder Story & Institutional Timeline", description: "The story of Lydia Idah Tugumisirize and the founding of Lynda Michelle Medical Centre — from domiciliary care roots to a trusted community health institution." });
+  useSEO({ title: "Founder Story & Institutional Timeline", description: "The story of Lydia Idah Tugumisirize and the founding of Lynda Michelle Medical Centre, from domiciliary care roots to a trusted community health institution." });
 
   return (
     <>
@@ -30,15 +30,15 @@ const FounderStoryPage = () => {
         <div className="container mx-auto px-6 max-w-3xl space-y-8">
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} className="prose prose-lg max-w-none">
             <h2 className="text-2xl font-heading font-bold text-foreground">Lydia Idah Tugumisirize</h2>
-            <p className="text-muted-foreground leading-relaxed">Lydia Idah Tugumisirize is a senior midwife and registered private nurse-midwife with a long clinical and administrative background spanning decades of service. Her career has been defined by a commitment to maternal and community health — particularly for underserved families in peri-urban Uganda.</p>
-            <p className="text-muted-foreground leading-relaxed">Before establishing Lynda Michelle Medical Centre, Lydia's care roots included Nakasozi Domiciliary Clinic, where she provided home-based nursing and midwifery services directly to families in their homes — a practice that continues to shape the institution's community-oriented approach.</p>
+            <p className="text-muted-foreground leading-relaxed">Lydia Idah Tugumisirize is a senior midwife and registered private nurse-midwife with a long clinical and administrative background spanning decades of service. Her career has been defined by a commitment to maternal and community health, particularly for underserved families in peri-urban Uganda.</p>
+            <p className="text-muted-foreground leading-relaxed">Before establishing Lynda Michelle Medical Centre, Lydia's care roots included Nakasozi Domiciliary Clinic, where she provided home-based nursing and midwifery services directly to families in their homes. This practice continues to shape the institution's community-oriented approach.</p>
 
             <h2 className="text-2xl font-heading font-bold text-foreground mt-10">The Memorial Origin</h2>
             <p className="text-muted-foreground leading-relaxed">Lynda Michelle Medical Centre is named in memory of Lynda Michelle Muhumuza. This memorial origin anchors the institution in a deeply personal mission: ensuring that families in Budo-Kimbejja and Nsangi have access to dignified, professional, and compassionate healthcare.</p>
 
             <h2 className="text-2xl font-heading font-bold text-foreground mt-10">From Clinic to Institution</h2>
             <p className="text-muted-foreground leading-relaxed">Established in 2012 at Plot 1246, Budo-Kimbejja, the centre has grown from a small community clinic into a trusted healthcare institution offering 8 core services, partnering with Marie Stopes Uganda for reproductive health, and collaborating with the Ministry of Health and Joint Medical Stores.</p>
-            <p className="text-muted-foreground leading-relaxed">Today, Lynda Michelle Medical Centre is a founder-led, woman-led, family-owned healthcare enterprise — operationally serious, community-rooted, and planning for growth.</p>
+            <p className="text-muted-foreground leading-relaxed">Today, Lynda Michelle Medical Centre is a founder-led, woman-led, family-owned healthcare enterprise: operationally serious, community-rooted, and planning for growth.</p>
           </motion.div>
 
           <div className="flex flex-wrap gap-4 pt-4">
