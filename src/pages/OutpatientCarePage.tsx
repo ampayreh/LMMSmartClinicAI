@@ -15,7 +15,7 @@ const OutpatientCarePage = () => {
           <motion.div initial="hidden" animate="visible" variants={fadeUp} className="max-w-2xl">
             <Link to="/services" className="text-sm text-primary font-medium hover:underline">← All Services</Link>
             <h1 className="text-4xl md:text-5xl font-heading font-bold text-foreground mt-4 mb-6">Outpatient & Family Care</h1>
-            <p className="text-lg text-muted-foreground leading-relaxed">Walk-in and planned consultations for acute illness, chronic conditions, preventive health, and general family healthcare — for patients of all ages.</p>
+            <p className="text-lg text-muted-foreground leading-relaxed">Walk-in and planned consultations for acute illness, chronic conditions, preventive health, and general family healthcare for patients of all ages.</p>
           </motion.div>
         </div>
       </section>
