@@ -8,7 +8,7 @@ const fadeUp = { hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0 } };
 
 const TIMELINE = [
   { year: "Early Roots", title: "Nakasozi Domiciliary Clinic", desc: "The foundations of community-based care were established through domiciliary nursing and midwifery practice, serving families directly in their homes." },
-  { year: "2012", title: "Lynda Michelle Medical Centre Founded", desc: "Named in memory of Lynda Michelle Muhumuza, the centre was established at Plot 1246, Budo-Kimbejja, Nsangi, Wakiso District — formalizing years of community healthcare service." },
+  { year: "2012", title: "Lynda Michelle Medical Centre Founded", desc: "Named in memory of Lynda Michelle Muhumuza, the centre was established at Plot 1246, Budo-Kimbejja, Nsangi, Wakiso District, formalizing years of community healthcare service." },
   { year: "Growth", title: "Expanding Services & Partnerships", desc: "The centre expanded to offer 8 core services, partnering with Marie Stopes Uganda for reproductive health and collaborating with the Ministry of Health and Joint Medical Stores." },
   { year: "Present", title: "A Trusted Community Institution", desc: "Today, Lynda Michelle Medical Centre serves thousands of patients annually across maternal health, outpatient care, diagnostics, pharmacy, and community outreach." },
   { year: "Future", title: "Hospital Expansion Vision", desc: "Plans are underway for a phased expansion into a multi-service hospital facility, including expanded maternity capacity, diagnostics, inpatient care, and surgical capability." },
