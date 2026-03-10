@@ -15,7 +15,7 @@ const CommunityOutreachPage = () => {
           <motion.div initial="hidden" animate="visible" variants={fadeUp} className="max-w-2xl">
             <Link to="/services" className="text-sm text-primary font-medium hover:underline">← All Services</Link>
             <h1 className="text-4xl md:text-5xl font-heading font-bold text-foreground mt-4 mb-6">Community Outreach & Home-Based Care</h1>
-            <p className="text-lg text-muted-foreground leading-relaxed">Extending healthcare beyond our clinic walls — through community education, immunization outreach, and home visits for those who need care where they live.</p>
+            <p className="text-lg text-muted-foreground leading-relaxed">Extending healthcare beyond our clinic walls through community education, immunization outreach, and home visits for those who need care where they live.</p>
           </motion.div>
         </div>
       </section>

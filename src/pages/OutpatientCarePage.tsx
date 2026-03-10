@@ -46,7 +46,7 @@ const OutpatientCarePage = () => {
               <Shield className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
               <div>
                 <h3 className="font-semibold text-foreground mb-1">When to seek urgent care</h3>
-                <p className="text-sm text-muted-foreground">For severe chest pain, difficulty breathing, uncontrolled bleeding, seizures, loss of consciousness, or snake bites — come immediately or call +256 741 008 049.</p>
+                <p className="text-sm text-muted-foreground">For severe chest pain, difficulty breathing, uncontrolled bleeding, seizures, loss of consciousness, or snake bites, please come immediately or call +256 741 008 049.</p>
               </div>
             </div>
           </div>

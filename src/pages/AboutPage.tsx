@@ -22,7 +22,7 @@ const VALUES = [
 ];
 
 const AboutPage = () => {
-  useSEO({ title: "About Us", description: "Learn about Lynda Michelle Medical Centre — a founder-led, woman-led community healthcare institution serving Budo-Kimbejja and Nsangi since 2012." });
+  useSEO({ title: "About Us", description: "Learn about Lynda Michelle Medical Centre, a founder-led, woman-led community healthcare institution serving Budo-Kimbejja and Nsangi since 2012." });
 
   return (
     <>

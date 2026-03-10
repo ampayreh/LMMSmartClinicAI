@@ -6,7 +6,7 @@ import { useSEO } from "@/hooks/useSEO";
 const fadeUp = { hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0 } };
 
 const CareersPage = () => {
-  useSEO({ title: "Careers", description: "Join Lynda Michelle Medical Centre — meaningful healthcare work rooted in community service, dignity, and growth." });
+  useSEO({ title: "Careers", description: "Join Lynda Michelle Medical Centre. Meaningful healthcare work rooted in community service, dignity, and growth." });
 
   return (
     <>

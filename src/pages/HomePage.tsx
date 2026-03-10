@@ -175,7 +175,7 @@ const HomePage = () => {
                 Maternal & Reproductive Health
               </h2>
               <p className="text-muted-foreground leading-relaxed mb-6">
-                At the heart of our mission is the health of mothers and children. We provide comprehensive antenatal care, safe deliveries, family planning, postnatal support, and youth-friendly sexual and reproductive health services — all led by our experienced midwife, in partnership with Marie Stopes Uganda.
+                At the heart of our mission is the health of mothers and children. We provide comprehensive antenatal care, safe deliveries, family planning, postnatal support, and youth-friendly sexual and reproductive health services, all led by our experienced midwife in partnership with Marie Stopes Uganda.
               </p>
               <ul className="space-y-3 mb-6">
                 {["Antenatal care and safe deliveries", "Family planning counseling and methods", "Postnatal and post-abortion care", "Youth-friendly SRH services"].map((item) => (
