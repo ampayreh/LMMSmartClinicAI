@@ -105,7 +105,7 @@ const ContactPage = () => {
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-foreground mb-1.5">Message</label>
-                    <textarea value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })} rows={4} className="w-full px-4 py-2.5 rounded-lg border border-border bg-background text-foreground text-sm focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none transition resize-none" placeholder="Tell us more about your needs..." />
+                    <textarea value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })} rows={4} maxLength={1000} className="w-full px-4 py-2.5 rounded-lg border border-border bg-background text-foreground text-sm focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none transition resize-none" placeholder="Tell us more about your needs..." />
                   </div>
                   <button type="submit" className="w-full bg-primary text-primary-foreground py-3 rounded-lg font-semibold hover:bg-forest-light transition-colors">
                     Submit Inquiry
