@@ -248,8 +248,9 @@ const ChatWidget = () => {
                   <input
                     ref={inputRef}
                     value={input}
-                    onChange={(e) => setInput(e.target.value)}
+                    onChange={(e) => setInput(e.target.value.slice(0, 500))}
                     onKeyDown={(e) => e.key === "Enter" && sendMessage(input)}
+                    maxLength={500}
                     placeholder={
                       language === "lg"
                         ? "Buuza ku mpeereza zaffe..."
