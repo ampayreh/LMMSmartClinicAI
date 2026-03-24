@@ -6,6 +6,79 @@ const corsHeaders = {
     "authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version",
 };
 
+// ---------- Rate limiter (in-memory, per-IP) ----------
+const rateLimitMap = new Map<string, { count: number; resetAt: number }>();
+const RATE_LIMIT_WINDOW_MS = 60_000; // 1 minute
+const RATE_LIMIT_MAX = 20; // 20 requests per minute per IP
+
+function isRateLimited(ip: string): boolean {
+  const now = Date.now();
+  const entry = rateLimitMap.get(ip);
+  if (!entry || now > entry.resetAt) {
+    rateLimitMap.set(ip, { count: 1, resetAt: now + RATE_LIMIT_WINDOW_MS });
+    return false;
+  }
+  entry.count++;
+  return entry.count > RATE_LIMIT_MAX;
+}
+
+// Periodically clean stale entries (every 5 minutes)
+setInterval(() => {
+  const now = Date.now();
+  for (const [ip, entry] of rateLimitMap) {
+    if (now > entry.resetAt) rateLimitMap.delete(ip);
+  }
+}, 300_000);
+
+// ---------- Input validation ----------
+const VALID_ROLES = new Set(["user", "assistant"]);
+const MAX_MESSAGES = 20;
+const MAX_CONTENT_LENGTH = 2000;
+const VALID_LANGUAGES = new Set(["en", "lg"]);
+
+function validatePayload(body: unknown): { messages: Array<{ role: string; content: string }>; language: string } | string {
+  if (!body || typeof body !== "object") return "Invalid request body";
+
+  const { messages, language } = body as Record<string, unknown>;
+
+  // Validate language
+  if (language !== undefined && !VALID_LANGUAGES.has(language as string)) {
+    return "Invalid language. Must be 'en' or 'lg'.";
+  }
+
+  // Validate messages array
+  if (!Array.isArray(messages)) return "Messages must be an array.";
+  if (messages.length === 0) return "Messages array cannot be empty.";
+  if (messages.length > MAX_MESSAGES) return `Too many messages. Maximum is ${MAX_MESSAGES}.`;
+
+  const sanitized: Array<{ role: string; content: string }> = [];
+
+  for (let i = 0; i < messages.length; i++) {
+    const msg = messages[i];
+    if (!msg || typeof msg !== "object") return `Message at index ${i} is invalid.`;
+
+    const { role, content } = msg as Record<string, unknown>;
+
+    // Only allow user and assistant roles — block system role injection
+    if (typeof role !== "string" || !VALID_ROLES.has(role)) {
+      return `Invalid role at index ${i}. Only 'user' and 'assistant' are allowed.`;
+    }
+
+    if (typeof content !== "string" || content.trim().length === 0) {
+      return `Empty content at index ${i}.`;
+    }
+
+    if (content.length > MAX_CONTENT_LENGTH) {
+      return `Message at index ${i} exceeds ${MAX_CONTENT_LENGTH} character limit.`;
+    }
+
+    sanitized.push({ role, content: content.trim() });
+  }
+
+  return { messages: sanitized, language: (language as string) || "en" };
+}
+
+// ---------- System prompt ----------
 const SYSTEM_PROMPT = `You are the LMMC Smart Clinic Assistant for Lynda Michelle Medical Centre, a community healthcare provider in Budo-Kimbejja, Nsangi, Wakiso District, Uganda. You help patients understand services, estimate costs, and prepare for visits.
 
 IDENTITY & TONE:
@@ -17,7 +90,7 @@ IDENTITY & TONE:
   • If the user mixes English and Luganda (even one Luganda word like "mukola", "ki", "wa", "ku", "mu", "bwe", etc.), respond in the SAME MIX of English and Luganda. Do NOT switch to English-only. Match the user's language style.
   • Be smart about detecting Luganda words even when mixed with English. Common Luganda words: mukola, ki, kki, wa, ku, mu, bwe, nga, nti, ate, era, naye, bulungi, nnyo, ssente, ddwaliro, omusawo, abalwadde, etc.
   • Default assumption: if the language is truly ambiguous with no identifiable Luganda words, respond in English only.
-  • The suggested question buttons on the chat are in English — so responses to those MUST be in English only.
+  • The suggested question buttons on the chat are in English, so responses to those MUST be in English only.
   • Always keep prices in numerals + UGX regardless of language
 
 LUGANDA GREETING RULES:
@@ -50,22 +123,22 @@ CLINIC INFO:
 - Hours: Mon-Sat 8AM-6PM | Sunday: Emergency Only
 
 STAFF:
-- Dr. Joshua Tugumisirize — Medical Director
-- Jenipher Nakyejjusa — Registered Midwife
-- Lydia Tugumisirize — Senior Nurse & Founder
-- Graeme Tobias Ampeire — Director, operations and strategy
+- Dr. Joshua Tugumisirize, Medical Director
+- Jenipher Nakyejjusa, Registered Midwife
+- Lydia Tugumisirize, Senior Nurse & Founder
+- Graeme Tobias Ampeire, Director, operations and strategy
 
 PARTNERS: Marie Stopes International, PEPFAR, USAID, JMS, Ministry of Health Uganda
 
 8 SERVICES:
-1. Outpatient Care (OPD) — consultations 10,000-15,000 UGX, ~41% revenue
-2. Maternal & Reproductive Health — ANC, deliveries, family planning, ~15% revenue
-3. Laboratory & Diagnostics — malaria, HIV, syphilis, pregnancy, blood sugar tests, ~8% revenue
-4. Immunization — child & adult per national schedule
-5. Pharmacy — 178 drugs in stock, ~12% revenue
-6. Minor Surgery — wound care, suturing, abscess drainage
-7. Community Health Education — outreach programs
-8. Home-Based Care — elderly & homebound visits
+1. Outpatient Care (OPD): consultations 10,000-15,000 UGX, ~41% revenue
+2. Maternal & Reproductive Health: ANC, deliveries, family planning, ~15% revenue
+3. Laboratory & Diagnostics: malaria, HIV, syphilis, pregnancy, blood sugar tests, ~8% revenue
+4. Immunization: child & adult per national schedule
+5. Pharmacy: 178 drugs in stock, ~12% revenue
+6. Minor Surgery: wound care, suturing, abscess drainage
+7. Community Health Education: outreach programs
+8. Home-Based Care: elderly & homebound visits
 
 KEY PRICES (UGX):
 Lab: Malaria RDT 5,000 | HIV 5,000 | Syphilis 5,000 | Pregnancy (HCG) 2,000 | H.Pylori 5,000 | Blood sugar 5,000
@@ -85,7 +158,7 @@ FORMAT RULES:
 - Use bullet points (•) for lists
 - Only include contact info (📍 and ☎️) when the user asks about location, directions, hours, or how to reach the clinic. Do NOT append it to every response.
 - Keep responses under 300 words
-- LUGANDA FORMATTING: Apply the SAME formatting quality to Luganda as English. Use proper punctuation (commas, full stops, question marks). Use line breaks between paragraphs. Use **bold** for emphasis. Use bullet points (•) for lists. Ensure spacing between sections. Never send a wall of text — break into short, readable paragraphs (2–3 sentences max per paragraph).
+- LUGANDA FORMATTING: Apply the SAME formatting quality to Luganda as English. Use proper punctuation (commas, full stops, question marks). Use line breaks between paragraphs. Use **bold** for emphasis. Use bullet points (•) for lists. Ensure spacing between sections. Never send a wall of text, break into short, readable paragraphs (2-3 sentences max per paragraph).
 - PHONE NUMBERS: WhatsApp: +256 741 008 049 | Founder/Senior Midwife: +256 772 590 967. Use the WhatsApp number as the primary contact.`;
 
 serve(async (req) => {
@@ -93,8 +166,34 @@ serve(async (req) => {
     return new Response(null, { headers: corsHeaders });
   }
 
+  // ---------- Rate limiting ----------
+  const clientIP =
+    req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
+    req.headers.get("cf-connecting-ip") ||
+    req.headers.get("x-real-ip") ||
+    "unknown";
+
+  if (isRateLimited(clientIP)) {
+    return new Response(
+      JSON.stringify({ error: true, reply: "Too many requests. Please wait a moment and try again." }),
+      { status: 429, headers: { ...corsHeaders, "Content-Type": "application/json", "Retry-After": "60" } }
+    );
+  }
+
   try {
-    const { messages, language } = await req.json();
+    const rawBody = await req.json();
+
+    // ---------- Validate input ----------
+    const result = validatePayload(rawBody);
+    if (typeof result === "string") {
+      return new Response(
+        JSON.stringify({ error: true, reply: result }),
+        { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    const { messages, language } = result;
+
     const OPENAI_API_KEY = Deno.env.get("OPENAI_API_KEY");
     if (!OPENAI_API_KEY) {
       throw new Error("OPENAI_API_KEY is not configured");
