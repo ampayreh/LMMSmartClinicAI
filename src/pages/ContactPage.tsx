@@ -86,7 +86,7 @@ const ContactPage = () => {
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-foreground mb-1.5">Phone Number *</label>
-                      <input value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} className="w-full px-4 py-2.5 rounded-lg border border-border bg-background text-foreground text-sm focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none transition" placeholder="+256..." required />
+                      <input value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} maxLength={20} className="w-full px-4 py-2.5 rounded-lg border border-border bg-background text-foreground text-sm focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none transition" placeholder="+256..." required />
                     </div>
                   </div>
                   <div>
