@@ -4,8 +4,17 @@ type Message = { role: "user" | "assistant"; content: string };
 
 export async function getAIResponse(messages: Message[], language: "en" | "lg" = "en"): Promise<string> {
   try {
+    // Client-side validation before sending
+    const validLang = language === "lg" ? "lg" : "en";
+    const sanitized = messages
+      .filter((m) => (m.role === "user" || m.role === "assistant") && typeof m.content === "string" && m.content.trim().length > 0)
+      .slice(-20)
+      .map((m) => ({ role: m.role, content: m.content.slice(0, 2000).trim() }));
+
+    if (sanitized.length === 0) throw new Error("No valid messages");
+
     const { data, error } = await supabase.functions.invoke("chat", {
-      body: { messages, language },
+      body: { messages: sanitized, language: validLang },
     });
 
     if (error) throw error;
