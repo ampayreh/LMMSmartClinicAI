@@ -134,8 +134,37 @@ supabase functions deploy chat
 | Backend | Supabase Edge Functions (Deno) |
 | AI | Claude (Sonnet + Haiku) via AWS Bedrock |
 | Safety | AWS Bedrock Guardrails, structural intent routing |
+| Analytics | Python + Claude tool use on anonymized operational data |
 | Database | Supabase (Postgres) with pg_trgm, full-text search |
 | Hosting | Supabase (Edge Functions + Postgres + Auth) |
+
+## Financial Trend Analytics
+
+The `analytics/` module provides Claude-assisted analysis of the clinic's operational trends across 73 months (June 2019 – February 2026), covering 10 income service lines and 14 expenditure categories.
+
+**All data is anonymized.** Revenue and expenditure are expressed as index values (base year 2021 = 100) and within-period percentage shares. No raw currency amounts appear anywhere in committed code. The underlying patterns — service-line mix shifts, seasonality, margin dynamics — are real; the absolute scale is removed. See [DECISIONS.md](DECISIONS.md) §8.
+
+```bash
+# Summary of available data (no API call)
+python -m analytics.trend_analyzer --dry-run
+
+# Full Claude-assisted narrative analysis
+python -m analytics.trend_analyzer
+
+# Focus on a specific year
+python -m analytics.trend_analyzer --year 2023
+
+# JSON output with metrics
+python -m analytics.trend_analyzer --format json --output analysis.json
+```
+
+The analyzer uses a `query_clinic_trends` tool — Claude makes 3–5 tool calls per analysis to query annual summaries, monthly trends, service-line evolution, and expenditure breakdowns, then produces a grounded narrative brief.
+
+Key patterns visible in the data:
+- **Service-line diversification**: Family Planning dominated in 2019 (46.7% of revenue); by 2023, Treatment (39.3%) and Delivery (17.2%) led; in 2025, a new Scan service line appeared at 17.8%
+- **COVID-19 impact**: 2020 showed a -24.9% net margin driven by construction and "other" expenditure spikes
+- **Cost control improvement**: Expenditure index dropped from 81.0 (2021) to 26.4 (2025) while revenue recovered to 75.7
+- **Data quality**: A 2024 recording gap (revenue index 10.0 on 7 months) is flagged as a likely data-entry hiatus, not an operational decline
 
 ## What This Does Not Do
 
