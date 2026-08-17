@@ -462,6 +462,41 @@ function outOfScopeResponse(language: string): string {
   );
 }
 
+function bookingResponse(language: string): string {
+  if (language === "lg") {
+    return (
+      "📅 **Okuteekawo enteekateeka ku LMMC**\n\n" +
+      "Tukkiriza okujja wonna mu budde bw'okukola — tewetaagisa kuteekawo ddi.\n\n" +
+      "**Amasaawa g'okukola:**\n" +
+      "Lw'okubiri – Lw'okutaano: 8:00 AM – 6:00 PM\n" +
+      "Lwa Mukaaga: 9:00 AM – 2:00 PM\n" +
+      "Lwasande: Tuzibidde (okuggyako ebyamangu)\n\n" +
+      "Bw'oba oyagala okuteekawo obudde bw'enjawulo, tukubire:\n" +
+      "☎️ **+256 772 590 967**\n" +
+      "💬 **+256 741 008 049** (WhatsApp)\n\n" +
+      "**By'olina okuleeta:**\n" +
+      "• Kaadi y'obulamu (bw'oba onayo)\n" +
+      "• Eddagala ly'oba okozesa kati\n" +
+      "• Empapula z'omusawo (bw'oba osinziira awamu)"
+    );
+  }
+  return (
+    "📅 **Booking an Appointment at LMMC**\n\n" +
+    "We welcome walk-in visits during our operating hours — no appointment is required.\n\n" +
+    "**Operating hours:**\n" +
+    "Monday – Friday: 8:00 AM – 6:00 PM\n" +
+    "Saturday: 9:00 AM – 2:00 PM\n" +
+    "Sunday: Closed (except emergencies)\n\n" +
+    "To book a specific time slot, please call us directly:\n" +
+    "☎️ **+256 772 590 967** (Senior Midwife / Founder)\n" +
+    "💬 **+256 741 008 049** (WhatsApp)\n\n" +
+    "**What to bring:**\n" +
+    "• Health card (if you have one)\n" +
+    "• Current medications\n" +
+    "• Referral documents (if applicable)"
+  );
+}
+
 // ──────────────────────────────────────────────────────────
 // Main handler
 // ──────────────────────────────────────────────────────────
@@ -517,6 +552,16 @@ serve(async (req) => {
     if (intent === "out_of_scope") {
       return new Response(
         JSON.stringify({ reply: outOfScopeResponse(language) }),
+        { headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    // ── Step 3b: Booking — fixed template, no model call ──
+    // LMMC does not have an online booking system. The template directs
+    // patients to call/WhatsApp the clinic and lists walk-in hours.
+    if (intent === "booking") {
+      return new Response(
+        JSON.stringify({ reply: bookingResponse(language) }),
         { headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
     }
