@@ -184,3 +184,37 @@ The tradeoff is that a database outage could cause missed escalation records. Th
 mitigated by the Edge Function's error logging (Supabase logs are retained and
 alertable) and by the fact that genuine emergencies will also produce a phone call,
 which is the primary escalation channel regardless.
+
+---
+
+## 8. Financial data anonymization: index values and percentage shares, not raw amounts
+
+**Chosen:** All financial data in the analytics module is expressed as index values
+(base year 2021 = 100) and within-period percentage shares. No raw currency amounts
+appear anywhere in committed code.
+
+**Rejected:**
+- Committing raw UGX figures (violates the clinic's financial privacy).
+- Purely synthetic/random data (loses the real operational patterns that make the
+  analysis meaningful).
+- Omitting financial data entirely (misses the opportunity to demonstrate service-line
+  analytics on real-world healthcare data).
+
+**Why:** The clinic's identity (Lynda Michelle Medical Centre) is public and intentional
+— this is the clinic's own chatbot. But the internal financial figures (actual revenue,
+actual drug procurement costs, actual salaries) are the clinic owner's private business
+information. The anonymization preserves the analytically interesting patterns:
+
+- Service-line mix shifts (Family Planning dominance in 2019 → Treatment/Delivery
+  growth by 2023 → Scan emergence in 2025)
+- Margin dynamics (COVID-19 expenditure spike in 2020, cost control improvement in 2025)
+- Seasonality and data quality issues (the 2024 recording gap)
+
+These patterns are what a financial analyst or clinic administrator would want to
+discuss with the chatbot. The exact UGX values are not needed for that conversation,
+and their absence makes the data safe to commit publicly.
+
+The base year (2021) was chosen as the first full calendar year of operation with
+complete data. Partial years (2019: 7 months, 2020: 9 months, 2024: recording gap,
+2026: 2 months) are flagged with `months_recorded` and `note` fields so the analyzer
+does not misinterpret low annual indices as revenue declines.
