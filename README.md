@@ -1,7 +1,7 @@
 # LMMC Smart Clinic Assistant
 
 ![AWS Bedrock](https://img.shields.io/badge/AWS-Bedrock_Claude_Haiku_%26_Sonnet-orange?logo=amazon-aws)
-![AWS Lambda](https://img.shields.io/badge/AWS-Lambda_Node.js_20.x-FF9900?logo=awslambda)
+![AWS Lambda](https://img.shields.io/badge/AWS-Lambda_Node.js_22.x-FF9900?logo=awslambda)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.3-blue?logo=typescript)
 ![Supabase](https://img.shields.io/badge/Supabase-PostgreSQL_Formulary-3ECF8E?logo=supabase)
 ![Clinical Safety Evals](https://img.shields.io/badge/Clinical_Safety_Evals-30%2F30_Runs_Passed-brightgreen)

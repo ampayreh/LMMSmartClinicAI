@@ -2,17 +2,53 @@ AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
 Description: LMMC Smart Clinic Assistant — AWS Lambda + Bedrock API
 
+Parameters:
+  SupabaseUrl:
+    Type: String
+    Description: Supabase project URL (e.g. https://xxxxx.supabase.co)
+  SupabaseAnonKey:
+    Type: String
+    NoEcho: true
+    Description: >-
+      Supabase anon/publishable key. The formulary table has a public-read
+      RLS policy, so the anon key is sufficient for search_formulary. Pass
+      SUPABASE_SERVICE_ROLE_KEY separately (not modeled here) if escalation
+      writes need to bypass RLS.
+  BedrockGuardrailId:
+    Type: String
+    Default: ""
+    Description: Optional Bedrock Guardrail ID. Leave blank to skip Guardrails.
+  BedrockGuardrailVersion:
+    Type: String
+    Default: "DRAFT"
+
 Globals:
   Function:
     Timeout: 30
     MemorySize: 512
-    Runtime: nodejs20.x
-    Architecture: arm64
+    # nodejs22.x required: @supabase/supabase-js's RealtimeClient throws at
+    # module-init on Node 20 (no native WebSocket global, crashes the whole
+    # Lambda before the handler runs). Node 22 has native WebSocket support.
+    Runtime: nodejs22.x
+    Architectures:
+      - arm64
     Environment:
       Variables:
-        AWS_DEFAULT_REGION: !Ref AWS::Region
+        # AWS_REGION is a Lambda-reserved key, auto-populated at runtime —
+        # do not set it manually (the code already reads process.env.AWS_REGION
+        # first, falling back to AWS_DEFAULT_REGION, which is not reserved but
+        # also not needed here since Lambda sets AWS_REGION for us).
         ROUTER_MODEL: "us.anthropic.claude-haiku-4-5-20251001-v1:0"
-        MAIN_MODEL: "us.anthropic.claude-sonnet-4-20250514-v1:0"
+        # NOTE: anthropic.claude-sonnet-4-20250514-v1:0 is a LEGACY model ID
+        # in this account (verified this session) — invocation can 404 with
+        # "not actively used in 30 days" even though availability checks
+        # pass. us.anthropic.claude-sonnet-4-6 is the confirmed-working
+        # current-generation equivalent.
+        MAIN_MODEL: "us.anthropic.claude-sonnet-4-6"
+        SUPABASE_URL: !Ref SupabaseUrl
+        SUPABASE_ANON_KEY: !Ref SupabaseAnonKey
+        BEDROCK_GUARDRAIL_ID: !Ref BedrockGuardrailId
+        BEDROCK_GUARDRAIL_VERSION: !Ref BedrockGuardrailVersion
 
 Resources:
   LMMCServiceRole:
@@ -58,15 +94,14 @@ Resources:
             - x-session-id
           AllowMethods:
             - POST
-            - OPTIONS
-
-  LMMCServerlessChatFunctionUrlPermission:
-    Type: AWS::Lambda::Permission
-    Properties:
-      FunctionName: !Ref LMMCServerlessChatFunction
-      Action: lambda:InvokeFunctionUrl
-      Principal: "*"
-      FunctionUrlAuthType: NONE
+          # NOTE: Lambda Function URL CORS handles preflight OPTIONS
+          # requests automatically — "OPTIONS" is not a valid AllowMethods
+          # enum value here (unlike a hand-rolled CORS layer, e.g. the
+          # Supabase Edge Function this replaced). Listing it fails
+          # CloudFormation's property validation.
+      # NOTE: SAM auto-generates the AWS::Lambda::Permission needed for
+      # public invocation when FunctionUrlConfig.AuthType is NONE — do not
+      # add a duplicate Lambda::Permission resource here, it conflicts.
 
 Outputs:
   ChatFunctionUrl:

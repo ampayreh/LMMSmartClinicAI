@@ -218,3 +218,75 @@ The base year (2021) was chosen as the first full calendar year of operation wit
 complete data. Partial years (2019: 7 months, 2020: 9 months, 2024: recording gap,
 2026: 2 months) are flagged with `months_recorded` and `note` fields so the analyzer
 does not misinterpret low annual indices as revenue declines.
+
+---
+
+## 9. Robustness fixes: injection resistance, scope enforcement, AWS Lambda deploy
+
+**Context:** A portfolio review flagged that the clinical-safety eval suite had never
+been run end-to-end against a live deployment. Running it surfaced two real intent-
+routing gaps (prompt injection succeeding, off-topic trivia being answered directly)
+and a chain of five unrelated deployment bugs that had to be fixed before the Lambda
+would even boot. All are documented here since none were obvious from the code alone.
+
+### 9a. Prompt injection / scope enforcement — three-layer fix
+
+**Chosen:**
+1. A deterministic regex pre-filter (`detectInjection`) runs before the intent router,
+   with zero model calls — same fail-closed pattern as emergency detection. Verified
+   against all 10 eval cases: fires on exactly the injection case, zero false positives.
+2. Few-shot examples added to the router's system prompt, plus an explicit rule for
+   off-topic trivia (previously only "questions clearly unrelated to healthcare," which
+   a one-shot Haiku classification didn't reliably apply to benign-sounding trivia).
+3. An explicit anti-injection / stay-in-scope rule added to the main system prompt as
+   defense-in-depth, in case both prior layers miss a novel injection phrasing.
+
+**Why layered, not just one fix:** the router is a probabilistic single-shot
+classification with no structural guarantee. Before this fix, scope enforcement
+depended entirely on the router guessing correctly — this makes it structural where
+it matters (injection) and improves the probabilistic layer's odds everywhere else.
+
+### 9b. AWS Lambda deployment — five bugs found by actually deploying
+
+Each was invisible from reading the code; only surfaced by running `sam deploy` and
+tracing crashes through CloudFormation's `describe-events` API and CloudWatch Logs:
+
+1. **CORS `AllowMethods` rejected `"OPTIONS"`.** `AWS::Lambda::Url`'s CORS schema
+   doesn't accept `OPTIONS` as an allowed method — Function URLs handle CORS
+   preflight automatically without invoking the function. Listing it explicitly
+   (correct for a hand-rolled CORS layer, e.g. the Supabase Edge Function this
+   replaced) fails CloudFormation's pre-deployment property validation.
+2. **Duplicate `Lambda::Permission` resource.** SAM auto-generates the permission
+   needed for public invocation when `FunctionUrlConfig.AuthType: NONE`; a second,
+   manually-authored `Lambda::Permission` resource for the same purpose conflicted.
+3. **`AWS_DEFAULT_REGION` is a Lambda-reserved environment variable key** — cannot be
+   set manually via `Environment.Variables`. The code already fell back to Lambda's
+   auto-populated `AWS_REGION` first, so the manual override was both invalid and
+   unnecessary.
+4. **`@supabase/supabase-js`'s `RealtimeClient` requires a native `WebSocket`
+   global**, which Node.js 20's Lambda runtime doesn't provide — it throws
+   uncaught at module load, crashing the Lambda before the handler ever runs, on
+   every single invocation. Fixed by bumping `Runtime` to `nodejs22.x` (native
+   `WebSocket` support), rather than adding a userland `ws` polyfill dependency.
+5. **Bedrock calls failed with "the security token included in the request is
+   invalid."** The code explicitly passed `AWS_ACCESS_KEY_ID`/`AWS_SECRET_ACCESS_KEY`
+   from the environment into both Bedrock SDK clients — but Lambda's execution role
+   supplies *temporary* STS credentials, which also require `AWS_SESSION_TOKEN`.
+   Passing the access key + secret without the session token produces an
+   authentication failure that reads like a credentials problem, not a missing-field
+   problem. Fixed by detecting Lambda's execution context
+   (`process.env.AWS_LAMBDA_FUNCTION_NAME`) and, when present, not overriding
+   credentials at all — the SDK's default provider chain resolves the execution
+   role's full temporary credential set (including the session token) correctly on
+   its own. The explicit override remains for local development, where long-lived
+   keys don't need a session token, and now also forwards
+   `AWS_SESSION_TOKEN`/`sessionToken` if one happens to be present.
+
+**Also found via this process, not a code bug:** the `formulary` Postgres table
+existed only as a committed migration file — `supabase db push` had never been run
+against this Supabase project, so the table didn't exist live. `search_formulary()`
+silently returned `[]` in that state because Supabase/PostgREST resolves schema
+errors via an `error` field rather than throwing, and the code checked only `data`.
+Fixed the silent-swallow — the code now logs `error` alongside `data` on both the
+full-text and fuzzy-fallback queries — and separately ran the migration against the
+live project.
