@@ -1,5 +1,12 @@
 # LMMC Smart Clinic Assistant
 
+![AWS Bedrock](https://img.shields.io/badge/AWS-Bedrock_Claude_Haiku_%26_Sonnet-orange?logo=amazon-aws)
+![AWS Lambda](https://img.shields.io/badge/AWS-Lambda_Node.js_20.x-FF9900?logo=awslambda)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.3-blue?logo=typescript)
+![Supabase](https://img.shields.io/badge/Supabase-PostgreSQL_Formulary-3ECF8E?logo=supabase)
+![Clinical Safety Evals](https://img.shields.io/badge/Clinical_Safety_Evals-30%2F30_Runs_Passed-brightgreen)
+![License](https://img.shields.io/badge/License-MIT-green)
+
 An AI-powered patient-facing chatbot for [Lynda Michelle Medical Centre](https://lyndamichellemed.com), a community healthcare provider in Wakiso District, Uganda. Helps patients understand services, estimate costs, prepare for visits, and reach the clinic in English and Luganda.
 
 ## Architecture
@@ -7,13 +14,13 @@ An AI-powered patient-facing chatbot for [Lynda Michelle Medical Centre](https:/
 ```
 ┌──────────────────────────────────────────────────────────────────────┐
 │  React Frontend (Vite + TypeScript + Tailwind + shadcn-ui)          │
-│  ChatWidget component → getAIResponse() → Supabase Edge Function    │
+│  ChatWidget → getAIResponse() → AWS Lambda or Supabase Edge Function│
 └──────────────────────────────────┬───────────────────────────────────┘
                                    │
-                    POST /functions/v1/chat
+              POST https://.../chat (or AWS Lambda Function URL)
                                    │
 ┌──────────────────────────────────▼───────────────────────────────────┐
-│  Supabase Edge Function (Deno)                                       │
+│  AWS Lambda / Supabase Function Compute                              │
 │                                                                      │
 │  ┌─────────────┐    ┌─────────────────────────────────────────────┐ │
 │  │ Rate Limiter │───▶│ Input Validation (role allowlist, length)   │ │
