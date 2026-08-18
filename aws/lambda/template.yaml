@@ -60,6 +60,14 @@ Resources:
             - POST
             - OPTIONS
 
+  LMMCServerlessChatFunctionUrlPermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      FunctionName: !Ref LMMCServerlessChatFunction
+      Action: lambda:InvokeFunctionUrl
+      Principal: "*"
+      FunctionUrlAuthType: NONE
+
 Outputs:
   ChatFunctionUrl:
     Description: "Lambda Function URL for LMMC Smart Clinic AI Chat"
