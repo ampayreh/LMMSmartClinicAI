@@ -1,0 +1,19 @@
+{
+  "name": "lmmc-chat-lambda",
+  "version": "1.0.0",
+  "description": "LMMC Smart Clinic Assistant — AWS Lambda Handler",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc"
+  },
+  "dependencies": {
+    "@anthropic-ai/bedrock-sdk": "^0.17.0",
+    "@aws-sdk/client-bedrock-runtime": "^3.500.0",
+    "@supabase/supabase-js": "^2.39.0"
+  },
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.130",
+    "@types/node": "^20.0.0",
+    "typescript": "^5.3.3"
+  }
+}

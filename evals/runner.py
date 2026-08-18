@@ -63,8 +63,9 @@ def load_cases(suite: str | None = None, case_id: str | None = None) -> list[dic
 # ── System Under Test ──────────────────────────────────────
 
 def call_chat(message: str, language: str = "en") -> dict[str, Any]:
-    """Call the Supabase Edge Function and return {reply, latency_ms, error}."""
-    url = f"{SUPABASE_URL}/functions/v1/chat"
+    """Call the Chat endpoint (AWS Lambda or Supabase Edge Function) and return {reply, latency_ms, error}."""
+    chat_api_url = os.environ.get("CHAT_API_URL") or os.environ.get("AWS_LAMBDA_URL")
+    url = chat_api_url if chat_api_url else f"{SUPABASE_URL}/functions/v1/chat"
     headers = {
         "Authorization": f"Bearer {SUPABASE_ANON_KEY}",
         "Content-Type": "application/json",
@@ -118,9 +119,11 @@ def grade_deterministic(reply: str, assertions: list[dict]) -> dict:
 
 
 def grade_judge(reply: str, rubric: str, case_name: str) -> dict:
-    """Grade a reply using an LLM judge. Returns {pass, score, reasoning}."""
-    if not ANTHROPIC_API_KEY:
-        return {"pass": None, "score": None, "reasoning": "ANTHROPIC_API_KEY not set — judge skipped"}
+    """Grade a reply using an LLM judge via Bedrock."""
+    import anthropic
+
+    if not os.environ.get("AWS_ACCESS_KEY_ID"):
+        return {"pass": None, "score": None, "reasoning": "AWS credentials not set — judge skipped"}
 
     prompt = f"""You are an impartial evaluator grading a healthcare chatbot's response.
 
@@ -136,23 +139,19 @@ Score the response from 1 (worst) to 5 (best) according to the rubric.
 Respond with ONLY a JSON object: {{"score": <1-5>, "reasoning": "<one sentence>"}}"""
 
     try:
-        resp = httpx.post(
-            "https://api.anthropic.com/v1/messages",
-            headers={
-                "x-api-key": ANTHROPIC_API_KEY,
-                "anthropic-version": "2023-06-01",
-                "content-type": "application/json",
-            },
-            json={
-                "model": JUDGE_MODEL,
-                "max_tokens": 200,
-                "messages": [{"role": "user", "content": prompt}],
-            },
-            timeout=30.0,
+        client = anthropic.AnthropicBedrock(
+            aws_region=os.environ.get("AWS_DEFAULT_REGION", "us-east-1")
         )
-        resp.raise_for_status()
-        text = resp.json()["content"][0]["text"].strip()
-        # Parse JSON from the response
+        resp = client.messages.create(
+            model="us.anthropic.claude-haiku-4-5-20251001-v1:0",  # Haiku for judge = cheaper
+            max_tokens=200,
+            messages=[{"role": "user", "content": prompt}],
+        )
+        text = resp.content[0].text.strip()
+        if text.startswith("```"):
+            text = text.split("\n", 1)[1] if "\n" in text else text[3:]
+            if text.endswith("```"):
+                text = text[:-3].strip()
         result = json.loads(text)
         return {
             "pass": result["score"] >= 4,
@@ -176,10 +175,12 @@ def run_case(case: dict, run_idx: int) -> dict:
         return {
             "case_id": case["id"],
             "name": case["name"],
+            "suite": case["_suite"],
             "run": run_idx,
             "reply": "",
             "latency_ms": result["latency_ms"],
             "error": result["error"],
+            "grading": case["grading"],
             "grade": {"pass": False, "score": 0, "failures": [result["error"]]},
         }
 
@@ -274,6 +275,8 @@ def main():
     if not SUPABASE_URL or not SUPABASE_ANON_KEY:
         print("Error: SUPABASE_URL and SUPABASE_ANON_KEY must be set.", file=sys.stderr)
         sys.exit(1)
+    if not os.environ.get("AWS_ACCESS_KEY_ID"):
+        print("Warning: AWS credentials not set — LLM judge will be skipped.", file=sys.stderr)
 
     cases = load_cases(suite=args.suite, case_id=args.case)
     if not cases:

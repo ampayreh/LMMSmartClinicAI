@@ -13,12 +13,27 @@ export async function getAIResponse(messages: Message[], language: "en" | "lg" =
 
     if (sanitized.length === 0) throw new Error("No valid messages");
 
-    const { data, error } = await supabase.functions.invoke("chat", {
-      body: { messages: sanitized, language: validLang },
-    });
+    const apiUrl = import.meta.env.VITE_CHAT_API_URL;
+    let reply: string | undefined;
 
-    if (error) throw error;
-    if (data?.reply) return data.reply;
+    if (apiUrl) {
+      const response = await fetch(apiUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ messages: sanitized, language: validLang }),
+      });
+      if (!response.ok) throw new Error(`API returned HTTP ${response.status}`);
+      const data = await response.json();
+      reply = data?.reply;
+    } else {
+      const { data, error } = await supabase.functions.invoke("chat", {
+        body: { messages: sanitized, language: validLang },
+      });
+      if (error) throw error;
+      reply = data?.reply;
+    }
+
+    if (reply) return reply;
     throw new Error("No reply from AI");
   } catch (e) {
     console.warn("AI chat failed, falling back to local responses:", e);
