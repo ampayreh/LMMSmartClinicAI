@@ -578,8 +578,8 @@ export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayPr
 
     // Step 6: Extract response text
     const reply = response.content
-      .filter((b): b is { type: "text"; text: string } => b.type === "text")
-      .map((b) => b.text)
+      .map((b: any) => (b.type === "text" ? b.text : ""))
+      .filter(Boolean)
       .join("\n");
 
     if (!reply) {

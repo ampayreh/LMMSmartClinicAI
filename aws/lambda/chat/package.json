@@ -7,7 +7,7 @@
     "build": "tsc"
   },
   "dependencies": {
-    "@anthropic-ai/bedrock-sdk": "^0.17.0",
+    "@anthropic-ai/bedrock-sdk": "^0.32.0",
     "@aws-sdk/client-bedrock-runtime": "^3.500.0",
     "@supabase/supabase-js": "^2.39.0"
   },
